@@ -1,0 +1,980 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: "Poppins", Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex; /* Utilisation de flexbox pour gérer la mise en page */
+    flex-direction: column; /* Disposition en colonne */
+    min-height: 100vh; /* Hauteur minimale de 100% de la fenêtre */
+    height: auto;   
+    
+}
+
+
+.logo{
+    white-space: nowrap;
+    font-size: 3rem;
+    color: white;
+    margin: 20px;
+    font-weight: bold;
+    letter-spacing: 6px;
+}
+
+.accueil{
+    display: flex;
+    align-items: center;
+    height: 80px;
+}
+
+header{
+    display: flex;
+    background-color: #2A7E12;
+    height: 80px;
+    justify-content: space-between;
+    align-items: center; 
+    position: sticky;
+    width: 100%;
+    z-index: 2;
+    
+}
+
+.navigation{
+    text-decoration: none; 
+    color: white; 
+    font-size: 16px; 
+    font-weight: bold; 
+    letter-spacing: 6px;
+    cursor: pointer;
+}
+
+footer {
+    display: flex;
+    background-color: #515050;
+    height: 100px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    bottom: 0;
+    width: 100%;
+    margin-top: auto; /* Pousse le footer en bas */
+    z-index: 2;
+    position: relative;
+}
+
+.mentions-legales{
+    text-decoration: none;
+    font-size: 16px;
+    color: white;
+    margin: 20px;
+    font-weight: bold;
+    letter-spacing: 6px;
+}
+
+main{
+    padding: 5px;
+}
+
+
+.gapReseaux{
+    font-size: 25px;
+    color: white;
+    margin-left: 10px;
+}
+
+.space, .space2{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  width: 100%;
+}
+
+.space{
+  margin-right: 10px;
+}
+
+.ContainerTitleNav {
+  border: 1px solid black;
+  background-color: white;
+  border-radius: 10px;
+  width: 200px;
+  padding: 7px;
+  position: relative; /* Ajout pour positionner le dropdown correctement */
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.ContainerTitleNavConnect {
+    display: flex;
+    justify-content: end;
+    bottom: 4px;
+    margin-bottom: 5px;
+    position: relative; /* Ajout pour positionner le dropdown correctement */
+    cursor: pointer;
+}
+
+.titleNav, .linkNav, .titleNavHtml {
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.titleNavHtml, .titleNav{
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.titleNav{
+padding-right: 10px;
+}
+
+.InsideNav {
+  visibility: hidden;
+  opacity: 0;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 200px;
+  padding: 7px;
+}
+
+.linkNav {
+  color: black;
+  text-decoration: none;
+  display: block;
+  padding: 5px;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+  margin-top: 200px;
+}
+
+.openbtn{
+  display: none;
+  background-color: #2A7E12;
+  width: 70px;
+  height: 80px;
+  border: none;
+}
+
+.openbtn:hover{
+  background-color: #2C9A0D;
+}
+
+.sidebar {
+  display: none;
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #2A7E12;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: white;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.gapReseauxPop{
+  width: 50px;
+  color: white;
+}
+
+.ReseauxRow{
+    display: flex;
+    flex-direction: row;
+}
+
+.color{
+  color: white;
+  margin: 10%;
+}
+
+input, button{
+    border: 1px solid black;
+}
+
+.imgAccueil{
+    width: 100%;
+    height: auto;
+    position: inherit;
+}
+
+.search-bar{
+    display: flex;
+    margin: auto;
+    justify-content: space-evenly;
+    align-items: center;
+    max-width: 1000px;
+    width: 100%;
+    box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    transform: translateY(-20px);
+}
+
+input, button{
+    padding: 15px;
+    flex-grow: 1;
+    border: 1px solid black;
+    height: 55px;
+    font-size: 1rem;
+}
+
+.date{
+    border: 1px solid black;
+}
+
+.departure{
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.number {
+    max-width: 225px; 
+    width: 100%;
+    font-size: 1rem;
+}
+
+.buttonSearch{
+    padding: 10px 20px; 
+    background-color: #2A7E12; 
+    color: white; 
+    text-decoration: none; 
+    cursor: pointer;
+    height: 55px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.fas.fa-search {
+    font-size: 28px;
+    color: white; 
+}
+
+.frames {
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center; 
+    margin-top: 300px;
+    margin-bottom: 300px;
+}
+
+.Frame1, .Frame2, .Frame3, .Frame4{
+    display: flex;
+    flex-direction: row;
+    width: 340px;
+    height: 403px;
+    margin-top: 71px;
+    margin-bottom: 71px;
+    border-radius: 10px;
+}
+
+.FrameRow{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+}
+
+.div-frame1, .div-frame2, .div-frame3, .div-frame4{
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    max-width: 1000px;
+    width: 100%;
+    gap: 30px;
+    background-color: #fafafa;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    position: absolute;  
+}
+
+.div-frame2, .div-frame3, .div-frame4{
+    visibility: hidden;
+    opacity: 0;
+}
+
+
+.arrow-left1, .arrow-right1, .arrow-left2, .arrow-right2, 
+.arrow-left3, .arrow-right3, .arrow-left4, .arrow-right4{
+    background-color: transparent;
+    border: none;
+    color: black;
+    cursor: pointer;
+}
+
+.text-block{
+    display: flex;
+    word-wrap: break-word;
+    max-width: 543px;
+    width: 100%;
+    height: 348px;
+    text-align: start;
+    font-size: 1.2rem;
+    position: relative;
+    font-weight: 500;
+    
+}
+
+.fleche-droite, .fleche-gauche{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 24px;
+    height: auto;
+}
+
+.seeMore{
+   display: none;
+}
+
+.userNav{   
+    width: 58px;
+    height: auto;
+    border-radius: 50%;
+    overflow: hidden; /* S'assure que l'image débordant en dehors du cercle est masquée */
+    object-fit: cover; /* Permet à l'image de s'ajuster correctement dans le cercle */
+}
+
+/* api geolocalisation */
+
+.autocomplete-suggestions1, .autocomplete-suggestions2 {
+  list-style: none;
+  margin: 0;
+  padding: 5px;
+  position: absolute;
+  background: white;
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 1000;
+  top: -20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.autocomplete-suggestions2{
+    left: 250px;
+}
+
+.autocomplete-suggestions li {
+  padding: 8px;
+  cursor: pointer;
+}
+.autocomplete-suggestions li:hover {
+  background-color: #eee;
+}
+
+.suggestion{
+    padding: 10px;
+    cursor: pointer;
+}
+
+.suggestion:hover {
+    background-color: #f0f0f0;
+}
+
+.suggestions-sur-container {
+    display: flex;
+    justify-content: center;
+}
+
+.suggestions-container {
+  position: relative; /* Nécessaire pour que les suggestions soient positionnées correctement */
+  max-width: 1000px; /* S'assure que le conteneur prend toute la largeur de l'input */
+  width: 100%;
+}
+
+/* Style the navigation menu */
+.topnav {
+    overflow: hidden;
+    background-color: #333;
+    position: relative;
+  }
+  
+  /* Hide the links inside the navigation menu (except for logo/home) */
+  .topnav #myLinks {
+    display: none;
+  }
+  
+  /* Style navigation menu links */
+  .topnav a {
+    color: white;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    display: block;
+  }
+  
+  /* Style the hamburger menu */
+  .topnav a.icon {
+    background: #2A7E12;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  
+  /* Add a grey background color on mouse-over */
+  .topnav a:hover {
+    background-color: #2C9A0D;
+    color: black;
+  }
+  
+  /* Style the active link (or home/logo) */
+  .active {
+    background-color: #04AA6D;
+    color: white;
+  }
+
+  /* notification */ 
+
+.notif-container {
+  position: relative;
+  display: inline-block;
+}
+
+.bellNotif {
+  cursor: pointer;
+  font-size: 24px !important;
+  position: relative;
+  color: white;
+  margin-left: 10px;
+}
+
+.notif-badge {
+  background: red;
+  color: white;
+  font-size: 12px;
+  padding: 1px 7px;
+  border-radius: 50%;
+  position: absolute;
+  top: -8px;
+  right: -8px;
+}
+
+.notification {
+  display: none;
+  position: absolute;
+  top: 35px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  width: 250px;
+  z-index: 1;
+  padding: 10px;
+  flex-direction: column;
+}
+
+.notification.visible {
+  display: flex;
+}
+
+.buttonNotif{
+    background-color: #2A7E12;
+    color: white;
+    font-size: 1rem;
+    width: 100px;
+    height: 40px;
+    padding: 2px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.notif-header {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.notif-container{
+    display: flex;
+    justify-content: center;
+}
+
+.notif-separator{
+    margin: 10px 0 10px 0;
+    width: 100px;
+}
+
+.button-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 3px;
+}
+
+.linkCovoit{
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.linkCovoit:hover{
+    text-decoration: underline;
+}
+
+
+/* Style de la barre de défilement */
+::-webkit-scrollbar {
+    width: 12px; /* Largeur de la scrollbar */
+    height: 12px; /* Hauteur pour la barre horizontale */
+}
+
+/* Couleur et style de la piste de défilement */
+::-webkit-scrollbar-track {
+    background: #f0f0f0; /* Couleur de fond */
+    border-radius: 10px; /* Bords arrondis */
+}
+
+/* Style du curseur de défilement */
+::-webkit-scrollbar-thumb {
+    background: #2A7E12; /* Couleur du curseur */
+    border-radius: 10px; /* Bords arrondis */
+    border: 2px solid #f0f0f0; /* Bordure autour du curseur */
+}
+
+/* Lorsque la scrollbar est survolée */
+::-webkit-scrollbar-thumb:hover {
+    background: #2A7E12; /* Couleur du curseur au survol */
+}
+
+@media screen and (max-width: 1020px)
+{
+    .search-bar{
+        flex-direction: column;
+        max-width: 800px;
+        width: 100%;
+    }
+
+  .autocomplete-suggestions1, .autocomplete-suggestions2 {
+    position: relative; /* pour que la liste s’affiche sous l’input */
+    top: auto;
+    left: auto;
+    width: 100%;
+    max-height: 120px;
+  }
+  
+.autocomplete-suggestions1{
+    bottom: 240px; /* Ajustez cette valeur pour positionner la liste sous l'input de départ */
+     left: 0; /* Aligne les suggestions avec le champ d'arrivée */
+  }
+
+  .autocomplete-suggestions2{
+    bottom: 185px; /* Ajustez cette valeur pour positionner la liste sous l'input d'arrivée */
+    left: 0; /* Aligne les suggestions avec le champ d'arrivée */
+}
+
+  .autocomplete-suggestions2 {
+    left: auto;
+  }
+  
+  .suggestions-container {
+    max-width: 800px;
+  }
+
+    .departure, .arrive, .date, .buttonSearch, .number{
+        max-width: 800px;
+        width: 100%;
+        border-radius: 0;
+    }
+
+    .buttonSearch{
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+    .departure{
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .Frame1, .Frame2, .Frame3, .Frame4{
+        width: 280px;
+        height: 400px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .FrameRow{
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .frames {  
+        margin-top: 400px;
+        margin-bottom: 400px;   
+    }
+
+    .text-block{
+        font-size: 1rem;
+        max-width: 443px;
+        height: 308px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .div-frame1, .div-frame2, .div-frame3, .div-frame4{
+        width: auto;
+        background-color: white;
+        gap: 0;
+    }
+
+    .fleche-gauche{
+        justify-self: end;
+    }
+
+    .fleche-droite, .fleche-gauche{
+        width: 20px;
+    }
+}
+
+
+@media screen and (max-width: 730px)
+{
+    .logo{
+        font-size: 1.8rem;
+        letter-spacing: 4px;
+      }
+    
+      .openbtn, .sidebar{
+        display: block;
+        overflow: hidden;
+      }
+    
+      .menu-principal, .gapReseaux, .mentions-legales, .ContainerTitleNav, .navigation{
+        display: none;
+      }
+    
+      footer{
+        background-color: white;
+        z-index: 0;
+        height: 0;
+      }
+
+       .autocomplete-suggestions1, .autocomplete-suggestions2 {
+    max-height: 100px;
+    padding: 4px;
+  }
+
+  .autocomplete-suggestions1{
+    bottom: 221px; /* Ajustez cette valeur pour positionner la liste sous l'input de départ */
+     left: 0; /* Aligne les suggestions avec le champ d'arrivée */
+  }
+
+  .autocomplete-suggestions2{
+    bottom: 166px; /* Ajustez cette valeur pour positionner la liste sous l'input d'arrivée */
+    left: 0; /* Aligne les suggestions avec le champ d'arrivée */
+}
+  
+  .suggestions-container {
+    max-width: 100%;
+    padding: 0 10px;
+  }
+      .titleNav, .InsideNav{
+        display: none;
+      }
+
+      i {
+        font-size: 1.5rem; 
+      }
+    
+      .full-width-image{
+        display: none;
+      }
+    
+      .search-bar{
+        transform: translateY(0);
+        margin-top: 20px;
+    }
+    
+    .div-frame1, .div-frame2, .div-frame3, .div-frame4{
+        margin-top: 22px;
+    }
+
+    .departure, .arrive, .date, .buttonSearch, .number{
+        font-size: 0.9rem;
+        max-width: 720px;
+        width: 100%;
+        border-radius: 0;
+    }
+
+    .Frame1, .Frame2, .Frame3, .Frame4{
+        width: 170px;
+        height: 250px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .buttonSearch{
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+    .departure{
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .FrameRow{
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .frames { 
+        margin-top: 280px;
+        margin-bottom: 250px;       
+    }
+
+    .text-block{
+        overflow: hidden;
+        font-size: 1rem;
+        max-width: 303px;
+        max-height: 150px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .text-block.expanded {
+        max-height: 500px; /* ou assez grand pour afficher le contenu */
+        overflow: visible;
+      }
+
+    .fleche-gauche{
+        justify-self: end;
+    }
+
+    .fleche-droite, .fleche-gauche{
+        width: 16px;
+    }
+
+    .seeMore{
+        display: block;
+        background-color: white;
+        border: none;
+        margin: auto 0 0 auto;
+    }
+
+      .activeSeeMore{
+        margin-top: 280px;
+      }
+    }
+
+
+@media screen and (max-width: 580px)
+{
+    .departure, .arrive, .date, .buttonSearch, .number{
+        max-width: 670px;
+        width: 100%;
+        border-radius: 0;
+    }
+
+    .Frame1, .Frame2, .Frame3, .Frame4{
+        width: 140px;
+        height: 200px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .FrameRow{
+        flex-direction: column;
+        gap: 10px;
+        width: 200px;
+    }
+
+    .frames{
+        margin-top: 200px;
+        margin-bottom: 200px; 
+    }
+
+    .buttonSearch{
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+    .departure{
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .text-block{
+        overflow: hidden;
+        font-size: 1rem;
+        max-width: 253px;
+        height: 118px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .fleche-gauche{
+        justify-self: end;
+    }
+
+    .fleche-droite, .fleche-gauche{
+        width: 14px;
+    }
+
+    .div-frame1, .div-frame2, .div-frame3, .div-frame4{
+        margin-top: 130px;
+    }
+
+    .text-block.expanded {
+        max-height: 600px; /* ou assez grand pour afficher le contenu */
+      }
+
+      .activeSeeMore{
+        margin-top: 580px;
+      }
+
+      .heightSeeMore{
+        height: 150px;
+      }
+}
+
+@media screen and (max-width: 390px)
+{
+    .departure, .arrive, .date, .buttonSearch, .number{
+        max-width: 640px;
+        width: 100%;
+        border-radius: 0;
+    }
+
+    .Frame1, .Frame2, .Frame3, .Frame4{
+        width: 120px;
+        height: 170px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .FrameRow{
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .buttonSearch{
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+    .departure{
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .frames { 
+        margin-top: 190px;
+        margin-bottom: 190px;    
+    }
+
+    .text-block{
+        overflow: hidden;
+        font-size: 1rem;
+        max-width: 223px;
+        height: 88px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .fleche-gauche{
+        justify-self: end;
+    }
+
+    .fleche-droite, .fleche-gauche{
+        width: 12px;
+    }
+
+    .div-frame1, .div-frame2, .div-frame3, .div-frame4{
+        margin-top: 100px;
+    }
+    
+    .text-block.expanded {
+        max-height: 600px; /* ou assez grand pour afficher le contenu */
+      }
+
+      .activeSeeMore{
+        margin-top: 555px;
+      }
+
+      .heightSeeMore{
+        height: 150px;
+      }
+
+      .notification{
+        width: 200px;
+        right: 0;
+      }
+
+      .bellNotif{
+        margin-left: 0;
+      }
+
+      .space{
+        margin-right: 0;
+      }
+
+      .autocomplete-suggestions1, .autocomplete-suggestions2 {
+    max-height: 90px;
+    font-size: 0.9rem;
+    padding: 3px;
+  }
+  
+  .suggestions-container {
+    max-width: 100%;
+    padding: 0 5px;
+  }
+
+}
+
+@media screen and (max-width: 352px)
+{
+    .autocomplete-suggestions1{
+        bottom: 70px;
+      }
+
+      .autocomplete-suggestions2{
+        bottom: 26px;
+        left: 0; /* Aligne les suggestions avec le champ d'arrivée */
+      }
+
+       .autocomplete-suggestions1{
+    bottom: 221px; /* Ajustez cette valeur pour positionner la liste sous l'input de départ */
+     left: 0; /* Aligne les suggestions avec le champ d'arrivée */
+  }
+
+  .autocomplete-suggestions2{
+    bottom: 166px; /* Ajustez cette valeur pour positionner la liste sous l'input d'arrivée */
+    left: 0; /* Aligne les suggestions avec le champ d'arrivée */
+}
+}

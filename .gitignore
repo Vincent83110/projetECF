@@ -1,0 +1,70 @@
+# ==============================
+#  Fichiers système
+# ==============================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ==============================
+#  Environnement / Configuration
+# ==============================
+.env
+config.php
+config.local.php
+config/*.local.php
+/secrets/
+/private/
+
+# ==============================
+#  Cache / Logs / Sessions
+# ==============================
+/tmp/
+/cache/
+/logs/
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+*.sess
+
+# ==============================
+#  IDE / Editeurs
+# ==============================
+.vscode/
+.idea/
+*.code-workspace
+
+# ==============================
+#  Dépendances
+# ==============================
+vendor/
+node_modules/
+
+# ==============================
+#  Base de données / Sauvegardes
+# ==============================
+*.sql
+*.sqlite
+*.db
+*.dump
+*.backup
+
+# ==============================
+#  Serveur local / XAMPP
+# ==============================
+xamppfiles/
+htdocs/test/
+
+# ==============================
+# Maquettes et documents temporaires
+# ==============================
+*.psd
+*.sketch
+*.xd
+*.fig
+*.png
+*.jpg
+*.jpeg
+*.pdf
+*.docx

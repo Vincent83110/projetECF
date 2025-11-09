@@ -1,0 +1,738 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: "Poppins", Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex; /* Utilisation de flexbox pour gérer la mise en page */
+    flex-direction: column; /* Disposition en colonne */
+    min-height: 100vh; /* Hauteur minimale de 100% de la fenêtre */
+    height: auto;
+}
+
+.logo{
+    white-space: nowrap;
+    font-size: 3rem;
+    color: white;
+    margin: 20px;
+    font-weight: bold;
+    letter-spacing: 6px;
+}
+
+.accueil{
+    display: flex;
+    align-items: center;
+    height: 80px;
+}
+
+header{
+    display: flex;
+    background-color: #2A7E12;
+    height: 80px;
+    justify-content: space-between;
+    align-items: center; 
+    position: sticky;
+    width: 100%;
+    z-index: 2;
+    
+}
+
+.menu-principal{
+    text-decoration: none; 
+    color: white; 
+    font-size: 16px; 
+    font-weight: bold; 
+    letter-spacing: 6px;
+    cursor: pointer;
+}
+
+footer {
+    display: flex;
+    background-color: #515050;
+    height: 100px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    width: 100%;
+    margin-top: auto; /* Pousse le footer en bas */
+    z-index: 2;
+}
+
+.mentions-legales{
+    text-decoration: none;
+    font-size: 16px;
+    color: white;
+    margin: 20px;
+    font-weight: bold;
+    letter-spacing: 6px;
+}
+
+
+.gapReseaux{
+    font-size: 25px;
+    color: white;
+    margin-left: 10px;
+}
+
+.space{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  width: 100%;
+}
+
+.ContainerTitleNav {
+  border: 1px solid black;
+  background-color: white;
+  border-radius: 10px;
+  width: 200px;
+  padding: 7px;
+  position: relative; /* Ajout pour positionner le dropdown correctement */
+  cursor: pointer;
+}
+
+.ContainerTitleNavConnect {
+  display: flex;
+  justify-content: end;
+  bottom: 4px;
+  margin-bottom: 5px;
+  position: relative; /* Ajout pour positionner le dropdown correctement */
+  cursor: pointer;
+}
+
+.titleNav, .linkNav {
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.titleNav{
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding-right: 10px;
+}
+
+.InsideNav {
+  visibility: hidden;
+  opacity: 0;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 200px;
+  padding: 7px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.linkNav {
+  color: black;
+  text-decoration: none;
+  display: block;
+  padding: 5px;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+  margin-top: 200px;
+}
+
+.openbtn{
+  display: none;
+  background-color: #2A7E12;
+  width: 70px;
+  height: 80px;
+  border: none;
+}
+
+.openbtn:hover{
+  background-color: #2C9A0D;
+}
+
+.ajout-preference-perso{
+  width: 23px;
+  height: 23px;
+  background-color: #2A7E12;
+  color: white;
+  border: none;
+  border-radius: 2px;
+}
+
+.sidebar {
+  display: none;
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #2A7E12;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: white;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.gapReseauxPop{
+  width: 50px;
+  color: white;
+}
+
+.ReseauxRow{
+display: flex;
+flex-direction: row;
+}
+
+.color{
+  color: white;
+  margin: 10%;
+}
+
+.removeTrajet{
+  background-color: red; 
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
+  margin: 0 0 10px 0;
+  cursor: pointer;
+}
+
+.mainPrincipal{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    max-width: 760px;
+    width: 100%;
+    min-height: 80vh;
+    margin: 0 auto;
+}
+
+.divTitle{
+    height: 153px;
+    display: flex;
+    align-items: center;
+}
+
+.textTitle{
+    font-weight: 500;
+    font-size: 45px;
+    margin-left: 70px;
+}
+
+.back{
+    background-color: #f0f0f0;
+    padding: 5px;
+    min-height: 100vh;
+    padding-top: 100px;
+}
+
+.back2{
+    background-color: #f0f0f0;
+    padding: 5px;
+    min-height: 100vh;
+    padding-top: 20px;
+}
+
+.containerDivlabel3, .divLablel5, .divLablel4, .divLablel6, .containerDivlabel6, .containerDivlabel5{
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.containerDivlabel5{
+  justify-content: space-between;
+}
+
+.label3-1, .label3-2, .label4-1, .label4-2, .label5-1, .label5-2, .label6, .Cars{
+    border-radius: 10px;
+    margin-left: 10px;
+    font-size: 1rem;
+    padding-left: 10px;
+    height: 43px;
+}
+
+.textLabel{
+    font-size: 1.1rem;
+}
+
+.label1, .label2{
+    width: 553px;
+}
+
+.label3-1, .label3-2{
+    width: 122px;
+}
+
+.label4-1, .label4-2
+{
+    width: 140px;
+}
+
+.form-container {
+  max-width: 750px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+}
+
+.form-input {
+  max-width: 550px;
+  padding: 10px;
+  width: 100%;
+  font-size: 1rem;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.form-container {
+  position: relative;
+  width: 100%; /* ou une largeur max si besoin */
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.5rem;
+}
+
+.suggestions {
+  position: absolute;
+  top: 100%; /* juste en dessous de l'input */
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-top: none;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.suggestion {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.suggestion:hover {
+  background-color: #f0f0f0;
+}
+
+
+.suggestions:empty {
+  display: none;
+}
+
+
+.label5{
+    width: 81.5px;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    margin-left: 10px;
+    font-size: 1rem;
+    padding-left: 10px;
+    height: 43px;
+}
+
+.Cars{
+    width: 283px;
+    border: 2px solid black;
+}
+
+.containerDivlabel3, .containerDivlabel6, .containerDivlabel4{
+    display: flex;
+    justify-content: space-between;
+}
+
+.linkAjout{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #374957;
+    font-size: 20px;
+    font-weight: 500;
+    gap: 5px;
+    border: none;
+}
+
+
+.credit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 81.5px;
+    height: 43px;
+    border: 2px solid black;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: white;
+}
+
+.userNav{   
+  width: 58px;
+  height: auto;
+  border-radius: 50%;
+  overflow: hidden; /* S'assure que l'image débordant en dehors du cercle est masquée */
+  object-fit: cover; /* Permet à l'image de s'ajuster correctement dans le cercle */
+}
+
+.widthPlus1{
+  width: 20px;
+}
+
+
+
+/* pop up */
+ .popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 4;
+}
+
+.popup-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 10px;
+  height: 200px;
+  width: 80%;
+  max-width: 500px;
+}
+
+.ajout{
+  bottom: 40px;
+}
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .buttonOpen {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+       border-radius: 10px;
+    }
+    .buttonCancel {
+      background-color: #f44336;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+
+    .buttonCancel, .buttonOpen{
+      margin-top: 50px;
+    }
+
+    .containerSpaceButton {
+  max-width: 760px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.spaceButton {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px; /* espace entre les boutons */
+  flex-wrap: wrap; /* permet à la ligne de se casser si écran trop petit */
+}
+
+
+.buttonSubmit{
+    display: flex;
+    width: auto;
+    padding: 10px;
+    height: 43px;
+    color: white;
+    background-color: #2A7E12;
+    border-radius: 10px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-left: auto;
+    margin-bottom: 20px;
+    cursor: pointer;
+    align-items: center;
+}
+
+.input-preference{
+  height: 30px;
+  width: 160px;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 5px;
+}
+.containerDiv3 {
+  max-width: 760px;     /* largeur max */
+  margin: 30px auto;       /* centre horizontal */
+}
+
+
+.remove-preference{
+  height: 30px;
+  background-color: #2A7E12;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.container-align{
+    max-width: 750px;
+    width: 100%;
+}
+
+.container-center{
+    display: flex;
+    justify-content: center;
+}
+  /* notification */ 
+
+.notif-container {
+  position: relative;
+  display: inline-block;
+}
+
+.bellNotif {
+  cursor: pointer;
+  font-size: 24px;
+  position: relative;
+  color: white;
+  margin-left: 10px;
+}
+
+.notif-badge {
+  background: red;
+  color: white;
+  font-size: 12px;
+  padding: 1px 7px;
+  border-radius: 50%;
+  position: absolute;
+  top: -8px;
+  right: -8px;
+}
+
+.notification {
+  display: none;
+  position: absolute;
+  top: 35px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  width: 250px;
+  z-index: 1;
+  padding: 10px;
+  flex-direction: column;
+}
+
+.notification.visible {
+  display: flex;
+}
+
+.buttonNotif{
+    background-color: #2A7E12;
+    color: white;
+    font-size: 1rem;
+    width: 100px;
+    height: 40px;
+    padding: 2px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.notif-header {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.notif-container{
+    display: flex;
+    justify-content: center;
+}
+
+.notif-separator{
+    margin: 10px 0 10px 0;
+    width: 100px;
+}
+
+.button-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 3px;
+}
+
+.linkCovoit{
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.linkCovoit:hover{
+    text-decoration: underline;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+
+/* Style de la barre de défilement */
+::-webkit-scrollbar {
+    width: 12px; /* Largeur de la scrollbar */
+    height: 12px; /* Hauteur pour la barre horizontale */
+}
+
+/* Couleur et style de la piste de défilement */
+::-webkit-scrollbar-track {
+    background: #f0f0f0; /* Couleur de fond */
+    border-radius: 10px; /* Bords arrondis */
+}
+
+/* Style du curseur de défilement */
+::-webkit-scrollbar-thumb {
+    border: 1px solid black;
+    background: #2A7E12; /* Couleur du curseur */
+    border-radius: 10px; /* Bords arrondis */
+    border: 2px solid #f0f0f0; /* Bordure autour du curseur */
+}
+
+/* Lorsque la scrollbar est survolée */
+::-webkit-scrollbar-thumb:hover {
+    background: #2A7E12; /* Couleur du curseur au survol */
+}
+
+@media screen and (max-width: 645px)
+{
+  .logo{
+    font-size: 1.8rem;
+    letter-spacing: 4px;
+  }
+
+  .openbtn, .sidebar{
+    display: block;
+    overflow: hidden;
+  }
+
+  .menu-principal, .gapReseaux, .mentions-legales, .ContainerTitleNav, .nav{
+    display: none;
+  }
+
+  footer{
+    background-color: white;
+    z-index: 0;
+    height: 0;
+  }
+
+  .titleNav, .InsideNav{
+    display: none;
+  }
+
+  .textTitle{
+    font-size: 1.5rem;
+    margin-left: 10px;
+  }
+
+  .Cars{
+    width: 180px;
+  }
+
+  .linkAjout, .buttonSubmit, .credit, .textLabel{
+    font-size: 1rem
+  }
+
+  .label1, .label2, .label3-1, .label3-2, .label4-1, .label4-2 .label5-1, .label5-2, .Cars{
+    font-size: 1rem;
+  }
+
+  .containerDivlabel6{
+    display: grid;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .suggestions{
+    top: 55px;
+  }
+}
+
+
+@media screen and (max-width: 450px){
+  .containerDivlabel5{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 50px;
+  }
+}
+
+@media screen and (max-width: 420px){
+  .buttonCancel, .buttonOpen {
+    margin-top: 25px;
+}
+
+}
+
+@media screen and (max-width: 390px) {
+    .notification {
+        width: 200px;
+        right: 0;
+    }
+}
+
+@media screen and (max-width: 326px)
+{
+   .buttonCancel, .buttonOpen{
+      margin-top: 3px;
+    }
+  
+}

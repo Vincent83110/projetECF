@@ -1,0 +1,359 @@
+*{
+  margin: 0px;
+  padding: 0px;
+  font-family: "Poppins", Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex; /* Utilisation de flexbox pour gérer la mise en page */
+  flex-direction: column; /* Disposition en colonne */
+  min-height: 100vh; /* Hauteur minimale de 100% de la fenêtre */
+  height: auto;
+}
+
+.logo{
+  white-space: nowrap;
+  font-size: 3rem;
+  color: white;
+  margin: 20px;
+  font-weight: bold;
+  letter-spacing: 6px;
+}
+
+.accueil{
+  display: flex;
+  align-items: center;
+  height: 80px;
+}
+
+header{
+  display: flex;
+  background-color: #2A7E12;
+  height: 80px;
+  justify-content: space-between;
+  align-items: center; 
+  position: sticky;
+  width: 100%;
+  z-index: 2;
+  
+}
+
+.menu-principal{
+  text-decoration: none; 
+  color: white; 
+  font-size: 16px; 
+  font-weight: bold; 
+  letter-spacing: 6px;
+  cursor: pointer;
+}
+
+footer {
+  display: flex;
+  background-color: #515050;
+  height: 100px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  width: 100%;
+  margin-top: auto; /* Pousse le footer en bas */
+  z-index: 2;
+}
+
+.mentions-legales{
+  text-decoration: none;
+  font-size: 16px;
+  color: white;
+  margin: 20px;
+  font-weight: bold;
+  letter-spacing: 6px;
+}
+
+
+.gapReseaux{
+  font-size: 25px;
+  color: white;
+  margin-left: 10px;
+}
+
+.space{
+display: flex;
+align-items: center;
+justify-content: space-between;
+height: 80px;
+width: 100%;
+}
+
+.ContainerTitleNav {
+border: 1px solid black;
+background-color: white;
+border-radius: 10px;
+width: 200px;
+padding: 7px;
+position: relative; /* Ajout pour positionner le dropdown correctement */
+cursor: pointer;
+margin-right: 10px;
+}
+
+.titleNav, .linkNav {
+font-size: 1.3rem;
+font-weight: 500;
+}
+
+.titleNav{
+display: flex;
+align-items: center;
+gap: 7px;
+}
+
+.InsideNav {
+visibility: hidden;
+opacity: 0;
+background-color: white;
+border: 1px solid black;
+border-radius: 10px;
+width: 200px;
+padding: 7px;
+transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.linkNav {
+color: black;
+text-decoration: none;
+display: block;
+padding: 5px;
+}
+
+.nav {
+display: flex;
+flex-direction: column;
+height: 250px;
+margin-top: 200px;
+}
+
+.openbtn{
+display: none;
+background-color: #2A7E12;
+width: 70px;
+height: 80px;
+border: none;
+}
+
+.openbtn:hover{
+background-color: #2C9A0D;
+}
+
+.sidebar {
+display: none;
+height: 100%;
+width: 0;
+position: fixed;
+z-index: 1;
+top: 0;
+left: 0;
+background-color: #2A7E12;
+overflow-x: hidden;
+transition: 0.5s;
+padding-top: 60px;
+}
+
+.sidebar a {
+padding: 8px 8px 8px 32px;
+text-decoration: none;
+font-size: 25px;
+color: white;
+display: block;
+transition: 0.3s;
+}
+
+.sidebar a:hover {
+color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+position: absolute;
+top: 0;
+right: 25px;
+font-size: 36px;
+margin-left: 50px;
+}
+
+.gapReseauxPop{
+  width: 50px;
+  color: white;
+}
+
+.ReseauxRow{
+display: flex;
+flex-direction: row;
+}
+
+.color{
+color: white;
+margin: 10%;
+}
+
+.text-block{
+    display: flex;
+    margin: auto;
+    width: 553px;
+    position: relative;
+    border-radius: 10px;
+    margin-top: 21px;
+    padding: 5px;
+    font-size: 1.1rem;
+}
+
+.menu-principal{
+    text-decoration: none; 
+    color: white;
+    font-size: 16px; 
+    font-weight: bold; 
+    letter-spacing: 6px;
+    cursor: pointer;
+}
+main{
+    padding-top: 80px;
+    padding-bottom: 124px;
+}
+
+.title, .title2{
+    display: flex;
+    justify-content: center;
+    font-size: 48px;
+    color: #2A7E12;
+    margin-top: 40px;
+    font-weight: bold;
+}
+
+.title{
+    margin-bottom: 49px;
+}
+
+.title2{
+    margin-bottom: 30px;
+}
+
+.hrForm, .MotDePasse{
+    margin: 15px;
+    width: 553px;
+}
+
+.buttonSubmit{
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    background-color: #2A7E12;
+    color: white;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: none;
+    font-weight: 500;
+    margin: 0 auto;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    gap: 5px; 
+    margin-right: 360px;
+}
+
+p{
+    font-size: 14px;
+}
+
+/* Style de la barre de défilement */
+::-webkit-scrollbar {
+    width: 12px; /* Largeur de la scrollbar */
+    height: 12px; /* Hauteur pour la barre horizontale */
+}
+
+/* Couleur et style de la piste de défilement */
+::-webkit-scrollbar-track {
+    background: #f0f0f0; /* Couleur de fond */
+    border-radius: 10px; /* Bords arrondis */
+}
+
+/* Style du curseur de défilement */
+::-webkit-scrollbar-thumb {
+    background: #2A7E12; /* Couleur du curseur */
+    border-radius: 10px; /* Bords arrondis */
+    border: 2px solid #f0f0f0; /* Bordure autour du curseur */
+}
+
+/* Lorsque la scrollbar est survolée */
+::-webkit-scrollbar-thumb:hover {
+    background: #2A7E12; /* Couleur du curseur au survol */
+}
+
+@media screen and (max-width: 645px)
+{
+  .logo{
+    font-size: 1.8rem;
+    letter-spacing: 4px;
+  }
+
+  .title{
+    margin-top: 60px;
+    font-size: 2.3rem;
+  }
+
+  .openbtn, .sidebar{
+    display: block;
+    overflow: hidden;
+  }
+
+  .menu-principal, .gapReseaux, .mentions-legales, .ContainerTitleNav, .nav{
+    display: none;
+  }
+
+  .titleNav, .InsideNav{
+    display: none;
+  }
+
+  .text-block, .hrForm, .MotDePasse
+  {
+    width: 450px;
+    margin-top: 15px;
+  }
+
+  .text-block{
+    font-size: 1rem;
+  }
+
+  .checkbox-container{
+    margin-right: 255px;
+  }
+
+  .buttonSubmit{
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 470px)
+{
+    .text-block, .hrForm, .MotDePasse
+    {
+        width: 315px;
+        margin-top: 15px;
+    }
+
+    .checkbox-container
+    {
+        margin-right: 125px;
+        font-size: 1rem;
+    }
+
+    .title{
+        margin-top: 40px;
+        font-size: 2.1rem;
+    }
+}

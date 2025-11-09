@@ -1,0 +1,399 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: "Poppins", serif;
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    flex-direction: row; /* Disposer les divs en ligne */
+    padding: 10px;
+    width: 872px;
+    height: 219px;
+}
+
+.col1,
+.col2,
+.col3 {
+    height: 219px; /* Hauteur fixe pour chaque div */
+    border: 1px solid black; /* Contour noir de 2px */
+    font-size: 1.2rem; /* Taille du texte */
+     background-color: white;
+}
+
+.col1{
+    padding-left: 25px;
+    gap: 25px;
+    display: flex;
+    justify-content: center;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-right-color: rgba(0, 0, 0, 0.25);
+    width: 124px;
+    flex-direction: column;
+}
+
+.col2{
+    border-right: none;
+    border-left: none;
+    width: 550px;
+}
+
+.col3{
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-left: none;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 30px;
+}
+
+.user{
+    margin-bottom: 20%;
+    width: 72px;
+    height: auto;
+    border-radius: 50%;
+    overflow: hidden; /* S'assure que l'image débordant en dehors du cercle est masquée */
+    object-fit: cover; /* Permet à l'image de s'ajuster correctement dans le cercle */
+}
+
+.credits{
+    margin-top: 35px;
+}
+
+.datePop{
+    margin: 5px;
+    margin-bottom: 50px;
+}
+
+.numberPop{
+    display: flex;
+    justify-content: end;
+    margin: 5px;
+}
+
+.line-with-text {
+    margin-left: 20px;
+    display: flex; /* Active Flexbox */
+    align-items: center; /* Centre verticalement les lignes */
+    width: 100%; /* Prend toute la largeur disponible */
+    position: relative;
+    justify-content: space-between;
+}
+
+.line-with-text div {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    top: -20px; /* Positionne les villes au-dessus des lignes */
+}
+
+.line-with-text .left {
+    left: 0; /* Ville gauche alignée à gauche */
+}
+
+.line-with-text .right {
+    right: 0; /* Ville droite alignée à droite */
+}
+
+.hrPop {
+    width: 105px;
+    border: 0;
+    border-top: 2px solid #000;
+    margin: 15px;
+}
+
+.line-with-text hr {
+    flex: 1; /* La ligne s'étendra pour remplir l'espace */
+}
+
+.width-container {
+    width: 450px;
+    position: relative; /* Nécessaire pour les positions des éléments */
+}
+
+.icon-ecologique {
+    width: 28px;
+    height: auto;
+    vertical-align: middle; /* Alignement au milieu du texte */
+}
+
+.trajet{
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 45px;
+}
+
+.departureDestination{
+    margin-left: 70px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 150px;
+}
+
+a{
+    margin-left: 80px;
+    text-decoration: none;
+    color: black;
+}
+
+a:hover{
+    text-decoration: underline;
+}
+
+.credit{
+    font-size: 36px;
+    margin-top: 50px;
+    margin-left: 10px;
+}
+
+.place{
+    white-space: nowrap;
+    font-size: 20px;
+    margin-top: 20px;
+    margin-right: 20px;
+    color: #787878;
+}
+
+.button-submit, .button-submit2{
+    font-size: 20px;
+    padding: 5px 10px; 
+    background-color: #2A7E12; 
+    color: white; 
+    text-decoration: none;
+    border-radius: 10px; 
+    border: none;
+    cursor: pointer;
+    
+}
+
+.button-submit3, .button-submit4{
+    font-size: 20px;
+    padding: 5px 10px; 
+    background-color: #2A7E12; 
+    color: white; 
+    text-decoration: none;
+    border-radius: 10px; 
+    border: none;
+    cursor: pointer;
+    display: none;
+}
+
+.button-container{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.col3-place-div, .col3-credit-div{
+    display: flex;
+    justify-content: center;
+}
+
+.col3-credit-div{
+    font-size: 36px;
+}
+
+.col3-place-div{
+    color: #787878;
+}
+
+.col3Media, .col3-place, .col3-credit{
+    display: none;
+}
+
+.trajetMedia{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+@media screen and (max-width: 872px)
+{
+    .col3-credit-div, .button-submit, .button-submit2,
+    .place, .credit, .departureDestination, .trajet
+    ,.line-with-text div , .col1, .col2, .col3, .left, .right{
+        font-size: 0.8rem;
+    }
+
+    .button-submit{
+        font-size: 0.9rem;
+    }
+
+    .container{
+        width: 750px;
+    }
+
+    .col3-credit-div{
+        font-size: 1.2rem;
+    }
+
+    .col1, .col2, .col3{
+        height: 160px;
+    }
+
+    .trajet{
+        margin-top: 3px;
+    }
+
+    .date{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .user{
+        width: 45px;
+        height: auto;
+    }
+
+    .col3-credit{
+        font-weight: bold;
+    }
+
+    .col3-place{
+        color: #787878;
+    }
+}
+
+@media screen and (max-width: 752px)
+{
+
+    .button-submit3{
+        font-size: 0.9rem;
+    }
+
+    .button-submit4{
+        display: block;
+        font-size: 0.9rem;
+    }
+
+    .col3Media, .col3-place, .col3-credit{
+        display: inline-block;
+    }
+
+    .col3-credit, .col3-place{
+        margin-right: 5px;
+    }
+
+    .col3{
+        display: none;
+        width: 0;
+    }
+
+    .col1{
+        width: 100px;
+    }
+
+    .col2{
+        border-right: 1px solid black;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        width: 480px;
+    }
+
+    .user{
+        width: 50px;
+        height: auto;
+    }
+
+    .button-submit3{
+        display: block;
+    }
+
+    .container{
+        width: 600px;
+    }
+
+    .date{
+        margin-bottom: 30px;
+    }
+}
+
+@media screen and (max-width: 600px){
+
+    .col2, .width-container{
+        width: 300px;
+        margin-left: 0;
+    }
+
+    .col1, .col2{
+        height: 190px; 
+    }
+
+    .container{
+        width: 400px;
+    }
+
+    .col3Media{
+        display: inline-block;
+        margin-right: 0;
+        width: 120px;
+    }
+
+    .icon-ecologique{
+        width: 20px;
+        height: auto;
+    }
+
+    .departureDestination{
+        margin: 0;
+        margin-left: 14px;
+    }
+
+    .col1{
+        padding: 0;
+        padding-left: 15px;
+        width: 80px;
+    }
+
+    .line-with-text .left {
+        left: 13px; /* Ville gauche alignée à gauche */
+    }
+    
+    .line-with-text .right {
+        right: 13px; /* Ville droite alignée à droite */
+    }
+
+}
+
+@media screen and (max-width: 400px){
+
+    .col2, .width-container{
+        width: 250px;
+        margin-left: 0;
+    }
+
+    .col1, .col2{
+        height: 190px; 
+    }
+
+    .button-submit4{
+        font-size: 0.8rem;
+    }
+
+    .container{
+        width: 350px;
+    }
+
+    .col3-place{
+        display: flex;
+        flex-direction: row;
+        width: 120px;
+    }
+
+    .departureDestination{
+        margin: 0;
+        margin-left: 15px;
+        gap: 100px;
+    }
+
+    .trajet{
+        margin-left: 5px;
+    }
+}

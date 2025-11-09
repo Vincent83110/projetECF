@@ -1,0 +1,1112 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: "Poppins", Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex; /* Utilisation de flexbox pour gérer la mise en page */
+    flex-direction: column; /* Disposition en colonne */
+    min-height: 100vh; /* Hauteur minimale de 100% de la fenêtre */
+    height: auto;
+}
+
+.logo{
+    white-space: nowrap;
+    font-size: 3rem;
+    color: white;
+    margin: 20px;
+    font-weight: bold;
+    letter-spacing: 6px;
+}
+
+.accueil{
+    display: flex;
+    align-items: center;
+    height: 80px;
+}
+
+header{
+    display: flex;
+    background-color: #2A7E12;
+    height: 80px;
+    justify-content: space-between;
+    align-items: center; 
+    position: sticky;
+    width: 100%;
+    z-index: 2;
+    
+}
+
+.menu-principal{
+    text-decoration: none; 
+    color: white; 
+    font-size: 16px; 
+    font-weight: bold; 
+    letter-spacing: 6px;
+    cursor: pointer;
+    margin: 0;
+}
+
+footer {
+    display: flex;
+    background-color: #515050;
+    height: 100px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    width: 100%;
+    margin-top: auto; /* Pousse le footer en bas */
+    z-index: 2;
+}
+
+.mentions-legales{
+    text-decoration: none;
+    font-size: 16px;
+    color: white;
+    margin: 20px;
+    font-weight: bold;
+    letter-spacing: 6px;
+}
+
+.gapReseaux{
+    font-size: 25px;
+    color: white;
+    margin-left: 10px;
+}
+
+
+.space{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  width: 100%;
+}
+
+
+.ContainerTitleNav {
+  border: 1px solid black;
+  background-color: white;
+  border-radius: 10px;
+  width: 200px;
+  padding: 7px;
+  position: relative; /* Ajout pour positionner le dropdown correctement */
+  cursor: pointer;
+}
+
+.ContainerTitleNavConnect {
+  display: flex;
+  justify-content: end;
+  bottom: 4px;
+  margin-bottom: 5px;
+  position: relative; /* Ajout pour positionner le dropdown correctement */
+  cursor: pointer;
+}
+
+.titleNav, .linkNav {
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.titleNav{
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding-right: 10px;
+}
+
+.InsideNav {
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 200px;
+  padding: 7px;
+}
+
+.linkNav {
+  color: black;
+  text-decoration: none;
+  display: block;
+  padding: 5px;
+  margin: 0;
+}
+
+.nav, .nav2 {
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+  margin-top: 200px;
+}
+
+.nav2 {
+  margin-right: 10px;
+}
+
+.openbtn{
+  display: none;
+  background-color: #2A7E12;
+  width: 70px;
+  height: 80px;
+  border: none;
+}
+
+.openbtn:hover{
+  background-color: #2C9A0D;
+}
+
+.sidebar {
+  display: none;
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  background-color: #2A7E12;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: white;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.gapReseauxPop{
+    width: 50px;
+    color: white;
+}
+
+.ReseauxRow{
+  display: flex;
+  flex-direction: row;
+}
+
+.color{
+  color: white;
+  margin: 10%;
+}
+
+.containerPrincipal{
+    display: grid;
+    grid-template-areas: 
+        "col1 col2"
+        "col1 col3";
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 153px 1fr;
+    min-height: 100vh;
+}
+
+.col1Covoit {
+    grid-area: col1;
+    padding: 20px;
+    border-right: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.col2Covoit {
+    grid-area: col2;
+    padding: 20px;
+    z-index: 2;
+}
+
+.col3Covoit {
+    grid-area: col3;
+    background-color: #f4f4f4;
+    padding: 70px 5px 0 5px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.buttonSearch{
+    padding: 10px 20px; 
+    background-color: #2A7E12; 
+    color: white; 
+    text-decoration: none; 
+    cursor: pointer;
+    height: 55px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+
+.search-bar{
+    display: flex;
+    margin: auto;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 1000px;
+    box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    margin-top: 50px;
+}
+
+input, button{
+    padding: 15px;
+    flex-grow: 1;
+    border: 1px solid black;
+    height: 55px;
+    font-size: 14px;
+}
+
+.date{
+    border: 1px solid black;
+}
+
+.departure{
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.number {
+    width: 225px; 
+    font-size: 16px; 
+}
+
+.fas.fa-search {
+    font-size: 28px;
+    color: white; 
+}
+
+h1{
+    font-size: 40px;
+    margin-bottom: 50px;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+input[type="checkbox"] {
+    width: auto;
+    height: 20px;
+}
+
+.filtres{
+    font-size: 20px;
+}
+
+.containerFiltre{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.space2{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.etoiles{
+    margin-top: 20px;
+    display: flex;
+padding-left: 30px;
+}
+
+.etoile{
+    width: 25px;
+    height: auto;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.InputPrice, .InputTime{
+    width: 100%;
+    height: 45px;
+    border-radius: 10px;
+}
+
+.containerInputPrice, .containerInputTime{
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+}
+
+.filters {
+    display: none;
+    visibility: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: white;
+    transition: 0.3s ease-in-out;
+    z-index: 1;
+    overflow: scroll;
+  }
+  
+  .filters.open {
+    height: 100%; /* Ajuste selon ton besoin */
+    visibility: visible;
+    display: block;
+  }
+  
+  .button{
+    display: none;
+  }
+
+  .spaceLabelInput{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 170px;
+
+  }
+
+  .userNav{   
+    width: 58px;
+    height: auto;
+    border-radius: 50%;
+    overflow: hidden; /* S'assure que l'image débordant en dehors du cercle est masquée */
+    object-fit: cover; /* Permet à l'image de s'ajuster correctement dans le cercle */
+}
+
+.titleNavHtml {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 1.3rem;
+    font-weight: 500;
+}
+
+/* pagination */
+.containerPagination{
+  grid-area: col3;
+  min-width: 310px;
+  max-height: 50px;
+  width: 100%;
+  margin: 0px auto;
+}
+
+.trajets-container {
+    width: 100%;
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.pagination-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0 10px 0;
+}
+
+.no-results {
+    text-align: center;
+    padding: 30px;
+    color: #666;
+}
+
+.buttonBefore, .buttonAfter{
+  max-width: 110px;
+  max-height: 45px;
+  width: 100%;
+  padding: 5px;
+  border: none;
+  background-color: #2A7E12;
+  color: white;
+  border-radius: 10px;
+}
+
+
+/* pop up */
+
+
+.container{
+    display: grid;
+    grid-template-areas: 
+        "col1 col2 col3";
+    grid-template-columns: 1fr 4fr 2fr;
+    height: 219px;
+    max-width: 1000px;
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: white;
+    margin-bottom: 40px;
+}
+
+.hrCovoit{
+    width: 100%;
+}
+
+.ContainerlineWithText{
+    width: 100%;
+    padding: 10px;
+}
+
+.lineWithText{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.townPop, .HourPop, .spacePop{
+    display: flex;
+    justify-content: space-between;
+}
+
+.townPop{
+  word-break: break-all;
+}
+
+.col1Pop, .col2Pop, .col3Pop, .textNote{
+    font-size: 1.1rem;
+}
+
+.trajetEcologique{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    justify-content: end;
+}
+
+.userPop{
+    max-width: 70px;
+    width: 100%;
+}
+
+.linkCovoit{
+    text-decoration: none;
+    color: black;
+    display: flex;
+    justify-content: end;
+    padding: 5px;
+}
+
+.linkCovoit:hover{
+    text-decoration: underline;
+}
+
+.creditPop, .placePop{
+    display: flex;
+    justify-content: center;
+}
+
+.creditPop{
+    font-size: 30px;
+}
+
+.infoPop{
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.col1Pop{
+    grid-area: col1;
+    display: flex;
+    border-right: 1px solid black;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.col2Pop{
+    grid-area: col2;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 5px;
+}
+
+.col3Pop{
+    grid-area: col3;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+
+.infoPopMobile, .backRowPop, .topRowPop, .rowInfoPop{
+  display: flex;
+}
+
+.infoPopMobile{
+  flex-direction: column;
+}
+
+.backRowPop, .rowInfoPop{
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  word-break: break-all;
+}
+
+.ecoRowPop{
+  display: flex;
+  justify-content: start;
+  width: 100%;
+}
+
+.topRowPop{
+  justify-content: space-between;
+  padding: 10px 10px 0 10px;
+  align-items: center;
+}
+
+
+.namePop{
+  word-break: break-all;
+  font-size: 1rem;
+}
+
+.trajet{
+  max-width: 1000px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Masquer la barre de défilement dans la div */
+.filters::-webkit-scrollbar {
+    width: 0;                   /* Masque la barre de défilement verticale */
+    height: 0;                  /* Masque la barre de défilement horizontale */
+  }
+  
+  .filters::-webkit-scrollbar-track {
+    background-color: transparent;   /* Masque la piste de défilement */
+  }
+  
+  .filters::-webkit-scrollbar-thumb {
+    background: transparent;   /* Masque le curseur (pouce) */
+  }
+
+  /* notification */ 
+
+.notif-container {
+  position: relative;
+  display: inline-block;
+}
+
+.bellNotif {
+  cursor: pointer;
+  font-size: 24px;
+  position: relative;
+  color: #333;
+  margin-left: 10px;
+}
+
+.notif-badge {
+  background: red;
+  color: white;
+  font-size: 12px;
+  padding: 1px 7px;
+  border-radius: 50%;
+  position: absolute;
+  top: -8px;
+  right: -8px;
+}
+
+.notification {
+  display: none;
+  position: absolute;
+  top: 35px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  width: 250px;
+  z-index: 1;
+  padding: 10px;
+  flex-direction: column;
+}
+
+.notification.visible {
+  display: flex;
+}
+
+.buttonNotif{
+    background-color: #2A7E12;
+    color: white;
+    font-size: 1rem;
+    width: 100px;
+    height: 40px;
+    padding: 2px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.notif-header {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.notif-container{
+    display: flex;
+    justify-content: center;
+}
+
+.notif-separator{
+    margin: 10px 0 10px 0;
+    width: 100px;
+}
+
+.button-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 3px;
+}
+
+.linkCovoit{
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.linkCovoit:hover{
+    text-decoration: underline;
+}
+
+   /* notification */ 
+
+.notif-container {
+  position: relative;
+  display: inline-block;
+}
+
+.bellNotif {
+  cursor: pointer;
+  font-size: 24px;
+  position: relative;
+  color: white;
+  margin-left: 10px;
+}
+
+.notif-badge {
+  background: red;
+  color: white;
+  font-size: 12px;
+  padding: 1px 7px;
+  border-radius: 50%;
+  position: absolute;
+  top: -8px;
+  right: -8px;
+}
+
+.notification {
+  display: none;
+  position: absolute;
+  top: 35px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  width: 250px;
+  z-index: 1;
+  padding: 10px;
+  flex-direction: column;
+}
+
+.notification.visible {
+  display: flex;
+}
+
+.buttonNotif{
+    background-color: #2A7E12;
+    color: white;
+    font-size: 1rem;
+    width: 100px;
+    height: 40px;
+    padding: 2px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.notif-header {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.notif-container{
+    display: flex;
+    justify-content: center;
+}
+
+.notif-separator{
+    margin: 10px 0 10px 0;
+    width: 100px;
+}
+
+.button-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 3px;
+}
+
+.buttonApply{
+    background-color: #2A7E12;
+    color: white;
+    font-size: 1rem;
+    width: 100px;
+    height: 40px;
+    padding: 2px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    cursor: pointer;  
+}
+
+.linkCovoit{
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.linkCovoit:hover{
+    text-decoration: underline;
+} 
+
+.voirTrajet{
+    background-color: #2A7E12;
+    color: white;
+    font-size: 1rem;
+    max-width: 130px;
+    width: 100%;
+    height: 40px;
+    padding: 2px;
+    border-radius: 10px;
+    cursor: pointer; 
+    border: none; 
+}
+
+
+/* suggestions */ 
+.suggestions-sur-container {
+    display: flex;
+    max-width: 1000px;
+    width: 100%;
+    margin: auto;
+}
+
+.autocomplete-suggestions1, .autocomplete-suggestions2 {
+    position: absolute;
+    list-style: none;
+    padding: 5px;
+    margin: 0;
+    max-height: 200px; /* Hauteur maximale pour la liste */
+    overflow-y: auto; /* Ajoute un défilement vertical si nécessaire */
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.autocomplete-suggestions2 {
+    margin-left: 230px;
+}
+
+
+/* Style de la barre de défilement */
+::-webkit-scrollbar {
+    width: 12px; /* Largeur de la scrollbar */
+    height: 12px; /* Hauteur pour la barre horizontale */
+}
+
+/* Couleur et style de la piste de défilement */
+::-webkit-scrollbar-track {
+    background: #f0f0f0; /* Couleur de fond */
+    border-radius: 10px; /* Bords arrondis */
+}
+
+/* Style du curseur de défilement */
+::-webkit-scrollbar-thumb {
+    background: #2A7E12; /* Couleur du curseur */
+    border-radius: 10px; /* Bords arrondis */
+    border: 2px solid #f0f0f0; /* Bordure autour du curseur */
+}
+
+/* Lorsque la scrollbar est survolée */
+::-webkit-scrollbar-thumb:hover {
+    background: #2A7E12; /* Couleur du curseur au survol */
+}
+
+@media screen and (max-width: 645px)
+{
+  .logo{
+    font-size: 1.8rem;
+    letter-spacing: 4px;
+  }
+
+  .openbtn, .sidebar, .button, .filters{
+    display: block;
+    overflow: hidden;
+  }
+
+
+  .menu-principal, .gapReseaux, .mentions-legales, .ContainerTitleNav, .nav{
+    display: none;
+  }
+
+  footer{
+    background-color: white;
+    z-index: 0;
+    height: 0;
+  }
+
+  .titleNav, .InsideNav{
+    display: none;
+  }
+
+  .col1Covoit{
+    display: none;
+}
+
+.containerPrincipal{
+    display: grid;
+    grid-template-areas: 
+        "col1 col2"
+        "col1 col3";
+    grid-template-columns: 0 1fr;
+    grid-template-rows: 153px 1fr;
+}
+
+.container{
+    display: grid;
+    grid-template-areas: 
+        "col1 col1"
+        "col2 col2"
+        "col3 col3";
+    grid-template-columns: 1fr 4fr;
+    min-height: 315px;
+    max-width: 1000px;
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: white;
+    margin-bottom: 40px;
+}
+
+.containerInputPrice, .containerInputTime{
+  flex-direction: row !important;
+}
+
+.creditPop, .placePop{
+    display: flex;
+    justify-content: start;
+    margin-left: 10px;
+}
+
+.col1Pop, .col2Pop, .col3Pop, .textNote{
+  font-size: 1rem;
+}
+
+.col1Pop{
+  display: block; 
+  padding: 0;
+  flex-direction: row;
+  border-right: 0;
+}
+
+.col2Pop{
+  border: 1px solid black;
+  border-radius: 10px;
+  margin: 0 5px 0 5px;
+}
+
+.creditPop{
+    font-size: 1rem !important;
+  }
+
+  .TitleFiltres{
+    font-size: 40px;
+    margin-bottom: 10px;
+  }
+  
+  .containerFiltre{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .space2{
+    gap: 20px;
+    padding: 30px;
+  }
+
+  .alignCheck{
+    display: flex;
+    align-items: center;
+  }
+  
+  .etoilesSide{
+    display: flex;
+    padding: 0 0 50px 30px;
+    gap: 10px;
+    overflow-y: auto;
+  }
+  
+  .etoile{
+    margin-left: 5px;
+  }
+
+  .userPop{
+    max-width: 60px;
+    width: 100%;
+  }
+  
+  .InputPrice, .InputTime{
+    max-width: 120px;
+    width: 100%;
+    height: 45px;
+    border-radius: 10px;
+  }
+
+  .lienButton{
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;               /* Centre le conteneur horizontalement */
+    display: flex;                /* Active flexbox pour gérer l'alignement des enfants */
+    justify-content: flex-start; 
+  }
+
+  .cross{
+    display: flex;
+    justify-self: end;
+    background-color: white;
+    font-size: 2rem;
+    border: none;
+  }
+
+  .button{
+    font-size: 1.2rem;
+    color: black;
+  }
+
+  .creditPop{
+    margin-left: 0;
+  }
+
+  .infoPop{
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 10px 0 10px;
+  }
+
+}
+
+@media screen and (max-width: 900px)
+{
+
+    .containerInputPrice, .containerInputTime{
+        flex-direction: column;
+    }
+
+    .etoile{
+      width: 25px;
+      margin-left: 0;
+    }
+
+    .col1Pop, .col2Pop, .col3Pop, .textNote{
+        font-size: 1rem;
+  }
+
+.creditPop{
+    font-size: 1.4rem;
+  }
+
+}
+
+@media screen and (max-width: 1323px)
+{
+    .search-bar{
+        display: flex;
+        flex-direction: column;
+        margin-top: 0;
+        max-width: 500px;
+        width: 100%;
+    }
+
+    .containerPrincipal{
+        grid-template-rows: 320px 1fr;
+    }
+
+    .suggestions-sur-container{
+        max-width: 500px;
+        width: 100%;
+    }
+
+    .departure, .arrived, .date, .number, .buttonSearch{
+        max-width: 500px;
+        width: 100%;
+    }
+
+    .departure{
+        border-radius: 0;
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+    }
+
+    .buttonSearch{
+        border-radius: 0;
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+
+    .autocomplete-suggestions2 {
+    margin-left: 0;
+    top: 210px;
+}
+
+    .autocomplete-suggestions1 {
+    top: 155px;
+}
+
+}
+
+@media screen and (max-width: 450px){
+  .containerInputPrice, .containerInputTime{
+    flex-direction: column !important;
+  }
+
+  .buttonBefore, .buttonAfter{
+  max-width: 90px;
+  max-height: 40px;
+}
+}
+
+@media screen and (max-width: 390px) {
+    .notification {
+        width: 200px;
+        right: 0;
+    }
+
+    .creditPop{
+        font-size: 1rem !important;
+    }
+}
