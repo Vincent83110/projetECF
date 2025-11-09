@@ -50,18 +50,26 @@ try {
         throw new Exception("Profil chauffeur introuvable");
     }
 
-    // Insertion de l'avis dans la base de données avec statut "invalide" par défaut
-    $stmt = $pdo->prepare("
-        INSERT INTO avis (id_utilisateur, id_trajet, id_chauffeur, note, commentaire, statut)
-        VALUES (:utilisateur_id, :trajet_id, :chauffeur_id, :note, :comment, 'invalide')
-    ");
-    $stmt->execute([
-        ':utilisateur_id' => $utilisateur['id'],
-        ':trajet_id'      => $trajetId,
-        ':chauffeur_id'   => $chauffeurUtilisateur['id'],
-        ':note'           => $note,
-        ':comment'        => $commentaire
-    ]);
+  // Insertion de l'avis
+$stmt = $pdo->prepare("
+    INSERT INTO avis (id_utilisateur, id_trajet, id_chauffeur, note, commentaire, statut)
+    VALUES (:utilisateur_id, :trajet_id, :chauffeur_id, :note, :comment, 'invalide')
+");
+$stmt->execute([
+    ':utilisateur_id' => $utilisateur['id'],
+    ':trajet_id'      => $trajetId,
+    ':chauffeur_id'   => $chauffeurUtilisateur['id'],
+    ':note'           => $note,
+    ':comment'        => $commentaire
+]);
+
+// mettre à jour la date de validation par le passager ---
+$stmtUpdateDate = $pdo->prepare("
+    UPDATE infos_trajet
+    SET date_validation_passager = NOW()
+    WHERE id = :trajet_id
+");
+$stmtUpdateDate->execute([':trajet_id' => $trajetId]);
 
     // Mise à jour de la note moyenne du chauffeur
     $stmt = $pdo->prepare("

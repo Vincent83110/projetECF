@@ -343,48 +343,67 @@ $totalPages = ceil($totalAvis / $avisParPage);
     <hr class="hrMessage" />
 
     <?php if (!empty($_GET['trajet_id'])): ?>
-        <?php $trajetId = $_GET['trajet_id']; ?>
-  <form action="<?= BASE_URL ?>/actions/avis.php" method="post">
-    <?= csrf_input() ?>
-    <input type="hidden" name="id_chauffeur" value="<?= htmlspecialchars($chauffeur['user_id'] ?? '') ?>">
-    <input type="hidden" name="id_trajet" value="<?= htmlspecialchars($_GET['trajet_id'] ?? '') ?>">
-    <input type="hidden" name="redirect_user" value="<?= htmlspecialchars($chauffeur['username'] ?? '') ?>">
+    <?php
+        $trajetId = (int)$_GET['trajet_id'];
+        $userId = $currentUser['id'] ?? 0;
+        $hasAvis = false;
 
-            <div class="containerArea">
-                <textarea
-                  name="commentaire"
-                  id="messageInput"
-                  class="message"
-                  placeholder="Envoyer un avis ..."
-                  required
-                ></textarea>
-                <div class="containerNote">
-                    <div>
-                        <label for="etoiles" class="textNote">Donnez une note :</label>
-                    </div>
-                    <div class="etoiles">
-                        <input type="radio" name="note" id="star1" value="1" />
-                        <label for="star1"><img src="<?= BASE_URL ?>/assets/images/starOff.svg" class="etoile" alt="none" /></label>
+        if ($trajetId > 0) {
+            try {
+                $stmt = $pdo->prepare("
+                    SELECT 1 
+                    FROM avis 
+                    WHERE id_trajet = :trajet_id 
+                      AND id_utilisateur = :utilisateur_id
+                    LIMIT 1
+                ");
+                $stmt->execute([
+                    ':trajet_id' => $trajetId,
+                    ':utilisateur_id' => $userId
+                ]);
+                $hasAvis = $stmt->fetchColumn() ? true : false;
+            } catch (PDOException $e) {
+                error_log("Erreur DB: " . $e->getMessage());
+            }
+        }
+    ?>
+    <form action="<?= BASE_URL ?>/actions/avis.php" method="post">
+        <?= csrf_input() ?>
+        <input type="hidden" name="id_chauffeur" value="<?= htmlspecialchars($chauffeur['user_id'] ?? '') ?>">
+        <input type="hidden" name="id_trajet" value="<?= htmlspecialchars($trajetId) ?>">
+        <input type="hidden" name="redirect_user" value="<?= htmlspecialchars($chauffeur['username'] ?? '') ?>">
 
-                        <input type="radio" name="note" id="star2" value="2" />
-                        <label for="star2"><img src="<?= BASE_URL ?>/assets/images/starOff.svg" class="etoile" alt="none" /></label>
+        <div class="containerArea">
+            <textarea
+                name="commentaire"
+                id="messageInput"
+                class="message"
+                placeholder="Envoyer un avis ..."
+                required
+            ></textarea>
 
-                        <input type="radio" name="note" id="star3" value="3" />
-                        <label for="star3"><img src="<?= BASE_URL ?>/assets/images/starOff.svg" class="etoile" alt="none" /></label>
-
-                        <input type="radio" name="note" id="star4" value="4" />
-                        <label for="star4"><img src="<?= BASE_URL ?>/assets/images/starOff.svg" class="etoile" alt="none" /></label>
-
-                        <input type="radio" name="note" id="star5" value="5" />
-                        <label for="star5"><img src="<?= BASE_URL ?>/assets/images/starOff.svg" class="etoile" alt="none" /></label>
-                    </div>
-                </div>
-                <div class="buttonContainerAvis">
-                    <button type="submit" class="buttonSubmitAvis">Envoyer</button>
+            <div class="containerNote">
+                <label for="etoiles" class="textNote">Donnez une note :</label>
+                <div class="etoiles">
+                    <?php for ($i = 1; $i <= 5; $i++): ?>
+                        <input type="radio" name="note" id="star<?= $i ?>" value="<?= $i ?>" />
+                        <label for="star<?= $i ?>"><img src="<?= BASE_URL ?>/assets/images/starOff.svg" class="etoile" alt="none" /></label>
+                    <?php endfor; ?>
                 </div>
             </div>
-        </form>
-    <?php endif; ?>
+<div class="buttonContainerAvis">
+    <button type="submit" 
+            class="buttonSubmitAvis" 
+            <?= $hasAvis ? 'disabled style="background-color: grey; cursor: not-allowed;"' : '' ?>>
+        Envoyer
+    </button>
+</div>
+
+
+        </div>
+    </form>
+<?php endif; ?>
+
 
   <div class="avisAffiche">
     <div class="middle">

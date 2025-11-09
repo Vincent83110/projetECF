@@ -102,9 +102,34 @@ WHERE r.id = :reservation_id
         }
         
     } elseif ($action === 'refuser') {
-        // Mise à jour du statut de la réservation en 'refusée'
-        $stmtUpdate = $pdo->prepare("UPDATE reservation SET statut = 'refusée' WHERE id = ?");
-        $stmtUpdate->execute([$reservation_id]);
+    $stmtPrix = $pdo->prepare("
+        SELECT r.nombre_places, r.user_id, t.prix, t.id AS trajet_id
+        FROM reservation r
+        JOIN infos_trajet t ON r.trajet_id = t.id
+        WHERE r.id = ?
+    ");
+    $stmtPrix->execute([$reservation_id]);
+    $res = $stmtPrix->fetch(PDO::FETCH_ASSOC);
+
+    if ($res) {
+        $prix_total = $res['nombre_places'] * $res['prix'];
+
+        // Rendre les crédits au passager
+        $stmtMajCredits = $pdo->prepare("UPDATE utilisateurs SET credits = credits + ? WHERE id = ?");
+        $stmtMajCredits->execute([$prix_total, $res['user_id']]);
+
+        // Mettre à jour le nombre de places disponibles
+        $stmtUpdatePlace = $pdo->prepare("
+            UPDATE infos_trajet
+            SET nombre_place = nombre_place + ?
+            WHERE id = ?
+        ");
+        $stmtUpdatePlace->execute([$res['nombre_places'], $res['trajet_id']]);
+    }
+
+    // Supprimer la réservation
+    $stmtDelete = $pdo->prepare("DELETE FROM reservation WHERE id = ?");
+    $stmtDelete->execute([$reservation_id]);
 
         // Configuration et envoi d'un email au passager pour informer du refus
         $mail = new PHPMailer(true);

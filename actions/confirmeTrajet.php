@@ -53,27 +53,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // 3. Calcul du montant total à créditer au conducteur
             $montantTotal = $trajet['prix'] * $totalPlaces;
 
-            // 4. Mise à jour des crédits du conducteur
-            $stmtUpdateCredits = $pdo->prepare("
-                UPDATE utilisateurs 
-                SET credits = credits + :montant 
-                WHERE id = :id_utilisateur
+            // 4. Marquer le trajet comme confirmé par le chauffeur
+            $stmtUpdateTrajet = $pdo->prepare("
+            UPDATE infos_trajet 
+            SET statut = 'termine',
+            date_confirmation_trajet = NOW(),
+            statut_paiement_chauffeur = 'en_attente'
+            WHERE id = :id
             ");
-            $stmtUpdateCredits->execute([
-                ':montant' => $montantTotal,
-                ':id_utilisateur' => $trajet['id_utilisateur']
-            ]);
-
-            // 5. Marquage du trajet comme terminé
-            $stmtUpdateTrajet = $pdo->prepare("UPDATE infos_trajet SET statut = 'termine' WHERE id = :id");
             $stmtUpdateTrajet->execute([':id' => $trajetId]);
 
-            // 6. SUPPRESSION DES PRÉFÉRENCES LIÉES AU TRAJET TERMINÉ
+            // 5. SUPPRESSION DES PRÉFÉRENCES LIÉES AU TRAJET TERMINÉ
             $stmtDeletePreferences = $pdo->prepare("DELETE FROM preferences WHERE trajet_id = :trajet_id");
             $stmtDeletePreferences->execute([':trajet_id' => $trajetId]);
             $deletedRows = $stmtDeletePreferences->rowCount();
 
-            // 7. Mise à jour du statut des réservations
+            // 6. Mise à jour du statut des réservations
             $stmtUpdateReservations = $pdo->prepare("
                 UPDATE reservation SET statut = 'termine' 
                 WHERE trajet_id = :trajet_id AND statut = 'en_cours'
@@ -81,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmtUpdateReservations->execute([':trajet_id' => $trajetId]);
 
 
-            // 9. Récupération des passagers pour envoi d'emails
+            // 7. Récupération des passagers pour envoi d'emails
             $stmtRes = $pdo->prepare("
                 SELECT u.email, u.username
                 FROM reservation r
@@ -91,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmtRes->execute([':trajetId' => $trajetId]);
             $reservations = $stmtRes->fetchAll(PDO::FETCH_ASSOC);
 
-            // 10. Récupération du nom du chauffeur
+            // 8. Récupération du nom du chauffeur
             $stmtChauffeur = $pdo->prepare("
                 SELECT u.username
                 FROM utilisateurs u
@@ -105,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Validation de la transaction - toutes les opérations ont réussi
             $pdo->commit();
 
-            // 11. Envoi des emails de notification aux passagers
+            // 9. Envoi des emails de notification aux passagers
             $commentLinkBase = "http://localhost/" . BASE_URL . "/pages/ConnexionUtilisateur.php?redirect=PageAvis.php&trajet_id=" . 
                              urlencode($trajetId) . "&user=" . urlencode($chauffeurUsername);
 

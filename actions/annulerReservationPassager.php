@@ -28,7 +28,7 @@ try {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Récupération des données
         $reservationId = $_POST['reservation_id'] ?? null;
-        $userId = $_SESSION['user']['user_id']; // Note : utilisation de user_id et non id
+        $userId = $_SESSION['user']['id'];
 
         // Debug : affichage des données reçues
         echo "reservation_id reçu : " . htmlspecialchars($reservationId) . "<br>";
