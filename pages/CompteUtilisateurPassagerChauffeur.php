@@ -89,7 +89,7 @@ try {
     $userCredits = $stmtCredits->fetch(PDO::FETCH_ASSOC);
 
     // Récupération des véhicules
-    $stmtVehicules = $pdo->prepare("SELECT * FROM vehicules WHERE user_id = :id");
+    $stmtVehicules = $pdo->prepare("SELECT * FROM vehicules WHERE user_id = :id AND deleted = FALSE");
     $stmtVehicules->execute([':id' => $profil_id]);
     $vehicules = $stmtVehicules->fetchAll(PDO::FETCH_ASSOC);
 

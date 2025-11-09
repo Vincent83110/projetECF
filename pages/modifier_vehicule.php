@@ -12,27 +12,29 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Récupération du véhicule
-    if (isset($_GET['id'])) {
-        $stmt = $pdo->prepare("SELECT * FROM vehicules WHERE id = :id AND user_id = :user_id");
-        $stmt->execute([
-            ':id' => $_GET['id'],
-            ':user_id' => $_SESSION['user']['id']
-        ]);
-        $vehicule = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if (!$vehicule) {
-            $_SESSION['message'] = "Véhicule non trouvé";
-            header("Location: " . BASE_URL . "/actions/compte.php");
-            exit();
-        }
-    } else {
+    if (!isset($_GET['id'])) {
         $_SESSION['message'] = "Aucun véhicule spécifié";
+        header("Location: " . BASE_URL . "/actions/compte.php");
+        exit();
+    }
+
+    $stmt = $pdo->prepare("SELECT * FROM vehicules WHERE id = :id AND user_id = :user_id");
+    $stmt->execute([
+        ':id' => $_GET['id'],
+        ':user_id' => $_SESSION['user']['id']
+    ]);
+    $vehicule = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$vehicule) {
+        $_SESSION['message'] = "Véhicule non trouvé";
         header("Location: " . BASE_URL . "/actions/compte.php");
         exit();
     }
 
     // Traitement du formulaire
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+        // === MODIFIER ===
         if (isset($_POST['action']) && $_POST['action'] === 'modifier') {
             $data = [
                 ':marque' => $_POST['marque'],
@@ -51,7 +53,7 @@ try {
                     plaque_immatriculation = :plaque
                 WHERE id = :id AND user_id = :user_id
             ");
-            
+
             if ($stmt->execute($data)) {
                 $_SESSION['message'] = "Véhicule modifié avec succès";
                 header("Location: " . BASE_URL . "/actions/compte.php");
@@ -59,60 +61,90 @@ try {
             }
         }
 
+        // === SUPPRIMER ===
         if (isset($_POST['action']) && $_POST['action'] === 'supprimer') {
             try {
-                $stmt_check = $pdo->prepare("SELECT COUNT(*) FROM infos_trajet WHERE id_vehicule = :id_vehicule AND statut != 'termine'");
-                $stmt_check->execute([':id_vehicule' => $_POST['vehicule_id']]);
-                $trajets_non_termines = $stmt_check->fetchColumn();
+                $pdo->beginTransaction();
 
-                if ($trajets_non_termines == 0) {
-                    $pdo->beginTransaction();
+                // 1️⃣ Vérifier s'il reste des trajets avec des réservations
+                $stmt_trajets = $pdo->prepare("
+                    SELECT t.id 
+                    FROM infos_trajet t
+                    LEFT JOIN reservation r ON t.id = r.trajet_id
+                    WHERE t.id_vehicule = :id_vehicule
+                    GROUP BY t.id
+                    HAVING COUNT(r.id) > 0
+                ");
+                $stmt_trajets->execute([':id_vehicule' => $_POST['vehicule_id']]);
+                $trajets_avec_resa = $stmt_trajets->fetchAll(PDO::FETCH_COLUMN);
 
-                    // Supprimer les trajets liés (avis supprimés automatiquement)
-                    $stmt_delete_trajets = $pdo->prepare("
-                        DELETE FROM infos_trajet WHERE id_vehicule = :id_vehicule
-                    ");
-                    $stmt_delete_trajets->execute([':id_vehicule' => $_POST['vehicule_id']]);
-
-                    // Supprimer le véhicule
+                if (!empty($trajets_avec_resa)) {
+                    // Soft delete si au moins une réservation existe
                     $stmt_delete_vehicule = $pdo->prepare("
-                        DELETE FROM vehicules WHERE id = :id AND user_id = :user_id
+                        UPDATE vehicules 
+                        SET deleted = TRUE, plaque_immatriculation = NULL
+                        WHERE id = :id AND user_id = :user_id
                     ");
                     $stmt_delete_vehicule->execute([
                         ':id' => $_POST['vehicule_id'],
                         ':user_id' => $_SESSION['user']['id']
                     ]);
-
-                    $pdo->commit();
-
-                    $_SESSION['message'] = "Véhicule supprimé avec succès. Les trajets et avis associés ont été supprimés automatiquement.";
-                    header("Location: " . BASE_URL . "/actions/compte.php");
-                    exit();
+                    $success_message = "Le véhicule est lié à des trajets avec réservation, il a été marqué comme supprimé (soft delete).";
                 } else {
-                    $error_message = "Impossible de supprimer ce véhicule car il est associé à des trajets non terminés.";
+                    // Supprimer les trajets terminés / null / en cours
+                    $stmt_delete_trajets = $pdo->prepare("
+                        DELETE FROM infos_trajet
+                        WHERE id_vehicule = :id_vehicule
+                          AND (statut IS NULL OR statut IN ('termine','en cours'))
+                    ");
+                    $stmt_delete_trajets->execute([':id_vehicule' => $_POST['vehicule_id']]);
+
+                    // Supprimer le véhicule complètement
+                    $stmt_delete_vehicule = $pdo->prepare("
+                        DELETE FROM vehicules 
+                        WHERE id = :id AND user_id = :user_id
+                    ");
+                    $stmt_delete_vehicule->execute([
+                        ':id' => $_POST['vehicule_id'],
+                        ':user_id' => $_SESSION['user']['id']
+                    ]);
+                    $success_message = "Véhicule et trajets associés supprimés avec succès.";
                 }
+
+                $pdo->commit();
+                $_SESSION['message'] = $success_message;
+                header("Location: " . BASE_URL . "/actions/compte.php");
+                exit();
+
             } catch (PDOException $e) {
-                if ($pdo->inTransaction()) {
-                    $pdo->rollBack();
-                }
-                $error_message = "Erreur lors de la suppression: " . $e->getMessage();
+                if ($pdo->inTransaction()) $pdo->rollBack();
+                $error_message = "Erreur lors de la suppression : " . $e->getMessage();
             }
         }
     }
+
 } catch (PDOException $e) {
     $error_message = "Erreur de base de données : " . $e->getMessage();
 }
 
+// === Vérification pour bouton supprimer ===
 $can_delete = true;
 try {
-    $stmt_check = $pdo->prepare("SELECT COUNT(*) FROM infos_trajet WHERE id_vehicule = :id_vehicule AND statut != 'termine'");
+    $stmt_check = $pdo->prepare("
+        SELECT COUNT(*) 
+        FROM infos_trajet t
+        LEFT JOIN reservation r ON t.id = r.trajet_id
+        WHERE t.id_vehicule = :id_vehicule
+          AND r.id IS NOT NULL
+    ");
     $stmt_check->execute([':id_vehicule' => $vehicule['id']]);
-    $trajets_non_termines = $stmt_check->fetchColumn();
-    $can_delete = ($trajets_non_termines == 0);
+    $trajets_non_supprimables = $stmt_check->fetchColumn();
+    $can_delete = ($trajets_non_supprimables == 0);
 } catch (PDOException $e) {
     $can_delete = false;
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -180,4 +212,4 @@ try {
         </div>
     </div>
 </body>
-</html>
+</html>vrfrb

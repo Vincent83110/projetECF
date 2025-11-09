@@ -22,7 +22,7 @@ try {
     // Récupération des véhicules et préférences de l'utilisateur connecté
     if ($userId) {
         // Récupération des véhicules
-        $stmt = $pdo->prepare("SELECT * FROM vehicules WHERE user_id = :user_id");
+        $stmt = $pdo->prepare("SELECT * FROM vehicules WHERE user_id = :user_id AND deleted = FALSE");
         $stmt->bindValue(':user_id', $userId, PDO::PARAM_INT);
         $stmt->execute();
         $vehicules = $stmt->fetchAll(PDO::FETCH_ASSOC);
