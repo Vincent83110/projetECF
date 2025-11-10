@@ -207,7 +207,7 @@ document.addEventListener("DOMContentLoaded", function () {
               <span class="creditPop">${trajet.prix} crédit${trajet.prix > 1 ? 's' : ''}</span>
               <span class="placePop">${trajet.nombre_place} place${trajet.nombre_place > 1 ? 's' : ''} disponible${trajet.nombre_place > 1 ? 's' : ''}</span>
             </div>
-            <a class="linkCovoit" href="${BASE_URL}/pages/pageCovoiturageIndividuelle.php?id=${trajet.id}&passengers=${currentPassengers}">Détails...</a>
+            <a class="linkCovoit" href="${BASE_URL}/pages/PageCovoiturageIndividuelle.php?id=${trajet.id}&passengers=${currentPassengers}">Détails...</a>
           </div>
         </div>
       `;
@@ -259,7 +259,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <span class="creditPop">${trajet.prix} crédit${trajet.prix > 1 ? 's' : ''}</span>
                 <span class="placePop">${trajet.nombre_place} place${trajet.nombre_place > 1 ? 's' : ''} disponible${trajet.nombre_place > 1 ? 's' : ''}</span>
               </div>
-              <a class="linkCovoit" href="${BASE_URL}/pages/pageCovoiturageIndividuelle.php?id=${trajet.id}&passengers=${currentPassengers}">Détails...</a>
+              <a class="linkCovoit" href="${BASE_URL}/pages/PageCovoiturageIndividuelle.php?id=${trajet.id}&passengers=${currentPassengers}">Détails...</a>
             </div>
           </div>
         </div>
@@ -314,7 +314,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const filters = useFilters ? getFilters() : {};
     const queryString = buildQuery(params, filters);
-    const endpoint = useFilters ? `${BASE_URL}/actions/filters.php` : `${BASE_URL}/actions/rechercheTrajet.php`;
+    const endpoint = useFilters ? `${BASE_URL}/actions/Filters.php` : `${BASE_URL}/actions/RechercheTrajet.php`;
     const url = `${endpoint}?${queryString}&_=${Date.now()}`;
 
     console.log("URL de la requête:", url);

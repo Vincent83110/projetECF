@@ -1,11 +1,11 @@
 <?php
 // Inclusion des fichiers nécessaires pour l'authentification, les notifications, les fonctions utilitaires, la configuration, la sécurité et la protection CSRF
-require_once __DIR__ . '/../includes/config.php';
-include __DIR__ . '/../includes/auth.php';   // Gestion de l'authentification utilisateur
-include __DIR__ . '/../actions/notif.php'; 
-include __DIR__ . '/../includes/function.php';          
-include __DIR__ . '/../includes/headerProtection.php';  // Fonctions utilitaires
-include __DIR__ . '/../includes/csrf.php';
+require_once __DIR__ . '/../includes/Config.php';
+include __DIR__ . '/../includes/Auth.php';   // Gestion de l'authentification utilisateur
+include __DIR__ . '/../actions/Notif.php'; 
+include __DIR__ . '/../includes/Function.php';          
+include __DIR__ . '/../includes/HeaderProtection.php';  // Fonctions utilitaires
+include __DIR__ . '/../includes/Csrf.php';
 
 try {
     // Connexion à la base de données PostgreSQL
@@ -185,7 +185,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/pageCovoiturageIndividuel.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/PageCovoiturageIndividuelle.css?v=<?= time() ?>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -200,7 +200,7 @@ try {
             <div class="accueil">
               <span class="logo">ECO RIDE</span>
               <?php if ($estConnecte): ?>
-                <a href="<?= BASE_URL ?>/pages/accueil.php" class="menu-principal" id="menu-principal">Accueil</a>
+                <a href="<?= BASE_URL ?>/pages/Accueil.php" class="menu-principal" id="menu-principal">Accueil</a>
               <?php else: ?>
                 <a href="<?= BASE_URL ?>/accueilECF.php" class="menu-principal" id="menu-principal">Accueil</a>
               <?php endif; ?>
@@ -223,12 +223,12 @@ try {
             <span><strong>Trajet n° <?= htmlspecialchars($notif['numero_trajet']) ?></strong></span>
         </div>
         <div>
-            <a class="linkCovoit" href="<?= BASE_URL ?>/pages/pageCovoiturageIndividuelle.php?id=<?= $notif['trajet_id'] ?>">Détails...</a>
+            <a class="linkCovoit" href="<?= BASE_URL ?>/pages/PageCovoiturageIndividuelle.php?id=<?= $notif['trajet_id'] ?>">Détails...</a>
         </div>
        </div>  
         <span><?= htmlspecialchars($notif['username']) ?> à réservé votre trajet <?=  extraireVille(htmlspecialchars($notif['adresse_depart'])) ?> -> 
         <?= extraireVille(htmlspecialchars($notif['adresse_arrive'])) ?> du <?= formatDate(htmlspecialchars($notif['date_depart'])) ?></span>
-        <form method="POST" action="<?= BASE_URL ?>/actions/traiter_demande.php">
+        <form method="POST" action="<?= BASE_URL ?>/actions/TraiterDemande.php">
             <?= csrf_input() ?>
           <input type="hidden" name="reservation_id" value="<?= htmlspecialchars($notif['reservation_id']) ?>">
           <input type="hidden" name="notification_id" value="<?= htmlspecialchars($notif['id']) ?>">
@@ -271,19 +271,19 @@ try {
             <?php if ($estConnecte && $role === 'employe'): ?>
     <a href="#" class="linkNav"><?= htmlspecialchars($employe['prenom'] ?? 'Employé') ?></a>
     <a href="<?= htmlspecialchars($lienCompte) ?>" class="linkNav">Mon compte</a>
-    <a href="<?= BASE_URL ?>/actions/logout.php" class="linkNav">Déconnexion</a>
+    <a href="<?= BASE_URL ?>/actions/Logout.php" class="linkNav">Déconnexion</a>
 
 <?php elseif ($estConnecte && $role === 'admin'): ?>
     <a href="#" class="linkNav">Admin</a>
     <a href="<?= htmlspecialchars($lienCompte) ?>" class="linkNav">Compte Admin</a>
-    <a href="<?= BASE_URL ?>/pages/logoutAdmin.php" class="linkNav">Déconnexion</a>
+    <a href="<?= BASE_URL ?>/pages/LogoutAdmin.php" class="linkNav">Déconnexion</a>
 
 <?php elseif ($estConnecte): ?>
     <a href="#" class="linkNav"><?= htmlspecialchars($user['username'] ?? 'Utilisateur') ?></a>
     <a href="<?= htmlspecialchars($lienCompte) ?>" class="linkNav">Mon compte</a>
     <a href="<?= BASE_URL ?>/pages/TrajetIndividuel.php" class="linkNav">Mes trajets</a>
-    <a href="<?= BASE_URL ?>/pages/historique.php" class="linkNav">Historique</a>
-    <a href="<?= BASE_URL ?>/actions/logout.php" class="linkNav">Déconnexion</a>
+    <a href="<?= BASE_URL ?>/pages/Historique.php" class="linkNav">Historique</a>
+    <a href="<?= BASE_URL ?>/actions/Logout.php" class="linkNav">Déconnexion</a>
 <?php elseif (!$estConnecte): ?>
          <a href="ConnexionUtilisateur.php" class="linkNav">Connexion</a>
                   <a href="<?= BASE_URL ?>/pages/InscriptionECF.php" class="linkNav">Inscription</a>
@@ -304,39 +304,39 @@ try {
           <?php if ($estConnecte && $role === 'employe'): ?>
           <a href="#" class="closebtn" id="closebtn">×</a>
           <a href="#" class="linkNav"><?= htmlspecialchars($employe['prenom'] ?? 'Employé') ?></a>
-          <a href="<?= BASE_URL ?>/pages/accueil.php">Accueil</a>
-          <a href="<?= BASE_URL ?>/pages/contact.php">Contact</a>
+          <a href="<?= BASE_URL ?>/pages/Accueil.php">Accueil</a>
+          <a href="<?= BASE_URL ?>/pages/Contact.php">Contact</a>
           <a href="<?= BASE_URL ?>/pages/MentionsLegales.php">Mentions Legales</a>
           <hr class="color">
           <a href="<?= htmlspecialchars($lienCompte) ?>">Compte Pro</a>
-          <a href="<?= BASE_URL ?>/actions/logout.php">Déconnexion</a>
+          <a href="<?= BASE_URL ?>/actions/Logout.php">Déconnexion</a>
           
         <?php elseif ($estConnecte && $role === 'admin'): ?>
             <a href="#" class="closebtn" id="closebtn">×</a>
           <a href="#">Admin</a>
-          <a href="<?= BASE_URL ?>/pages/accueil.php">Accueil</a>
-          <a href="<?= BASE_URL ?>/pages/contact.php">Contact</a>
+          <a href="<?= BASE_URL ?>/pages/Accueil.php">Accueil</a>
+          <a href="<?= BASE_URL ?>/pages/Contact.php">Contact</a>
           <a href="<?= BASE_URL ?>/pages/MentionsLegales.php">Mentions Legales</a>
           <hr class="color">
           <a href="<?= htmlspecialchars($lienCompte) ?>">Compte Admin</a>
-          <a href="<?= BASE_URL ?>/actions/logoutAdmin.php">Déconnexion</a>
+          <a href="<?= BASE_URL ?>/actions/LogoutAdmin.php">Déconnexion</a>
        
         <?php elseif ($estConnecte): ?>
           <a href="#" class="closebtn" id="closebtn">×</a>
           <a href="#"><?= htmlspecialchars($user['username'] ?? 'Utilisateur') ?></a>
-          <a href="<?= BASE_URL ?>/pages/accueil.php">Accueil</a>
+          <a href="<?= BASE_URL ?>/pages/Accueil.php">Accueil</a>
           <a href="<?= BASE_URL ?>/pages/TrajetIndividuel.php">Mes trajets</a>
-          <a href="<?= BASE_URL ?>/pages/historique.php">Historique</a>
-          <a href="<?= BASE_URL ?>/pages/contact.php">Contact</a>
+          <a href="<?= BASE_URL ?>/pages/Historique.php">Historique</a>
+          <a href="<?= BASE_URL ?>/pages/Contact.php">Contact</a>
           <a href="<?= BASE_URL ?>/pages/MentionsLegales.php">Mentions Legales</a>
           <hr class="color">
           <a href="<?= htmlspecialchars($lienCompte) ?>">Mon compte</a>
-          <a href="<?= BASE_URL ?>/actions/logout.php">Déconnexion</a>
+          <a href="<?= BASE_URL ?>/actions/Logout.php">Déconnexion</a>
         <?php else: ?>
           <!-- Sidebar non connecté -->
           <a href="#" class="closebtn" id="closebtn">×</a>
-          <a href="<?= BASE_URL ?>/pages/accueil.php">Accueil</a>
-          <a href="<?= BASE_URL ?>/pages/contact.php">Contact</a>
+          <a href="<?= BASE_URL ?>/pages/Accueil.php">Accueil</a>
+          <a href="<?= BASE_URL ?>/pages/Contact.php">Contact</a>
           <a href="<?= BASE_URL ?>/pages/MentionsLegales.php">Mentions Legales</a>
           <hr class="color">
           <a href="<?= BASE_URL ?>/pages/ConnexionUtilisateur.php">Connexion</a>
@@ -352,7 +352,7 @@ try {
         </div>
     </header>
     <main id="pop">
-        <form action="<?= BASE_URL ?>/actions/reservation.php" method="post">
+        <form action="<?= BASE_URL ?>/actions/Reservation.php" method="post">
             <?= csrf_input() ?>
         <div class="entete">
             <h1><span><?= formatDate($trajet['date_depart']) ?> - <?= formatDate($trajet['date_arrive']) ?>  <span class="numeroTrajet">N°<?= $trajet['numero_trajet'] ?></span></span> </h1>
@@ -367,7 +367,7 @@ try {
                         <span class="note">★ <?= $noteMoyenne !== null ? htmlspecialchars(entierOuDecimal(number_format($noteMoyenne, 2))) : '--' ?>/5</span>
                     </span>
                         <div class="NameEmail">
-                            <a href="<?= BASE_URL ?>/actions/compte.php?id=<?= htmlspecialchars($trajet['id_utilisateur']) ?>" class="usernameCovoit"><?= htmlspecialchars($userConducteur['username'] ?? 'Conducteur inconnu') ?></a>
+                            <a href="<?= BASE_URL ?>/actions/Compte.php?id=<?= htmlspecialchars($trajet['id_utilisateur']) ?>" class="usernameCovoit"><?= htmlspecialchars($userConducteur['username'] ?? 'Conducteur inconnu') ?></a>
                             <span class="email"><?= htmlspecialchars($userConducteur['email'] ?? 'Non disponible') ?></span>
                         </div>
                     </div>
@@ -444,7 +444,7 @@ try {
     <?php if (!empty($participants)): ?>
         <ul>
             <?php foreach ($participants as $p): ?>
-                <li class="list"><a href="<?= BASE_URL ?>/actions/compte.php?id=<?= urlencode($p['id']); ?>" class="lienCovoit">
+                <li class="list"><a href="<?= BASE_URL ?>/actions/Compte.php?id=<?= urlencode($p['id']); ?>" class="lienCovoit">
                     <?= htmlspecialchars($p['username']); ?></a>
                 </li>
             <?php endforeach; ?>
@@ -532,7 +532,7 @@ try {
     <footer> 
         <div>
             <a href="<?= BASE_URL ?>/pages/MentionsLegales.php" class="mentions-legales">mentions légales</a>
-            <a href="<?= BASE_URL ?>/pages/contact.php" class="mentions-legales"> contact </a>
+            <a href="<?= BASE_URL ?>/pages/Contact.php" class="mentions-legales"> contact </a>
         </div>
         <div>
             <a href="https://www.youtube.com/" class="gapReseaux" target="_blank"><i class="fab fa-youtube"></i></a>
@@ -544,8 +544,8 @@ try {
         <script>
         const BASE_URL = "<?= BASE_URL ?>";
     </script>
-   <script src="<?= BASE_URL ?>/assets/javascript/pagecovoiturageindividuel.js"></script>
-    <script src="<?= BASE_URL ?>/assets/javascript/menu.js"></script>
-    <script src="<?= BASE_URL ?>/assets/javascript/notif.js"></script>
+   <script src="<?= BASE_URL ?>/assets/javascript/PageCovoiturageIndividuelle.js"></script>
+    <script src="<?= BASE_URL ?>/assets/javascript/Menu.js"></script>
+    <script src="<?= BASE_URL ?>/assets/javascript/Notif.js"></script>
 </body>
 </html>

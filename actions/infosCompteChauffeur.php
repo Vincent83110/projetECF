@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/Config.php';
 
 try {
     // Connexion à la base de données PostgreSQL

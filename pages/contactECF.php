@@ -1,6 +1,6 @@
 <?php 
-require_once __DIR__ . '/../includes/config.php';
-include __DIR__ . '/../includes/headerProtection.php'; // Protection des en-têtes HTTP
+require_once __DIR__ . '/../includes/Config.php';
+include __DIR__ . '/../includes/HeaderProtection.php'; // Protection des en-têtes HTTP
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +8,7 @@ include __DIR__ . '/../includes/headerProtection.php'; // Protection des en-têt
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/contact.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/Contact.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -53,7 +53,7 @@ include __DIR__ . '/../includes/headerProtection.php'; // Protection des en-têt
         <div class="sidebar" id="mySidebar">
           <a href="#" class="closebtn" id="closebtn">×</a>
           <a href="<?= BASE_URL ?>/accueilECF.php">Accueil</a>
-          <a href="<?= BASE_URL ?>/pages/contactECF.php">Contact</a>
+          <a href="<?= BASE_URL ?>/pages/ContactECF.php">Contact</a>
           <a href="<?= BASE_URL ?>/pages/MentionsLegalesECF.php">Mentions Legales</a>
           <hr class="color">
           <a href="<?= BASE_URL ?>/pages/ConnexionEmploye.php">Compte Pro</a>
@@ -127,6 +127,6 @@ include __DIR__ . '/../includes/headerProtection.php'; // Protection des en-têt
     <script>
         const BASE_URL = "<?= BASE_URL ?>";
     </script>
-    <script src="<?= BASE_URL ?>/assets/javascript/menu.js"></script>
+    <script src="<?= BASE_URL ?>/assets/javascript/Menu.js"></script>
 </body>
 </html>

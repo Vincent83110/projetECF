@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/../includes/config.php';
-include __DIR__ . '/../includes/csrf.php';
+require_once __DIR__ . '/../includes/Config.php';
+include __DIR__ . '/../includes/Csrf.php';
 
 // Vérification que la méthode de requête est POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -90,7 +90,7 @@ if (!$stmt2->execute()) {
     ];
 
     // Redirection vers la page de choix de statut
-    header("Location: " . BASE_URL . "/pages/choixStatut.php");
+    header("Location: " . BASE_URL . "/pages/ChoixStatut.php");
     exit;
 
 } catch (PDOException $e) {

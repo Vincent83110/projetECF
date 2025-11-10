@@ -1,7 +1,7 @@
 <?php 
 // Inclusion du fichier de protection d'en-tête
-require_once __DIR__ . '/../includes/config.php';    
-include __DIR__ . '/../includes/headerProtection.php';  // Fonctions utilitaires
+require_once __DIR__ . '/../includes/Config.php';    
+include __DIR__ . '/../includes/HeaderProtection.php';  // Fonctions utilitaires
 
 ?>
 <!DOCTYPE html>
@@ -46,7 +46,7 @@ include __DIR__ . '/../includes/headerProtection.php';  // Fonctions utilitaires
         <div class="sidebar" id="mySidebar">
           <a href="#" class="closebtn" id="closebtn">×</a>
           <a href="<?= BASE_URL ?>/accueilECF.html">Accueil</a>
-          <a href="<?= BASE_URL ?>/pages/contactECF.php">Contact</a>
+          <a href="<?= BASE_URL ?>/pages/ContactECF.php">Contact</a>
           <a href="<?= BASE_URL ?>/pages/MentionsLegalesECF.php">Mentions Legales</a>
           <hr class="color">
           <a href="<?= BASE_URL ?>/pages/ConnexionEmploye.php">Compte Pro</a>
@@ -123,7 +123,7 @@ include __DIR__ . '/../includes/headerProtection.php';  // Fonctions utilitaires
 <footer> 
     <div>
         <a href="<?= BASE_URL ?>/pages/MentionsLegalesECF.php" class="mentions-legales">mentions légales</a>
-        <a href="<?= BASE_URL ?>/pages/contactECF.php" class="mentions-legales"> contact </a>
+        <a href="<?= BASE_URL ?>/pages/ContactECF.php" class="mentions-legales"> contact </a>
     </div>
     <div>
         <a href="https://www.youtube.com/" class="gapReseaux" target="_blank"><i class="fab fa-youtube"></i></a>
@@ -135,6 +135,6 @@ include __DIR__ . '/../includes/headerProtection.php';  // Fonctions utilitaires
     <script>
         const BASE_URL = "<?= BASE_URL ?>";
     </script>
-<script src="<?= BASE_URL ?>/assets/javascript/menu.js"></script>
+<script src="<?= BASE_URL ?>/assets/javascript/Menu.js"></script>
 </body>
 </html>

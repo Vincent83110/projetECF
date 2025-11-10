@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . '/../includes/config.php';
-include __DIR__ . '/../includes/csrf.php';
-include __DIR__ . '/../includes/headerProtection.php';
+require_once __DIR__ . '/../includes/Config.php';
+include __DIR__ . '/../includes/Csrf.php';
+include __DIR__ . '/../includes/HeaderProtection.php';
 
 // Gestion des redirections depuis les emails
 $redirect = $_GET['redirect'] ?? null;
@@ -9,7 +9,7 @@ $trajet_id = $_GET['trajet_id'] ?? null;
 $user = $_GET['user'] ?? null;
 
 // Construction de l'URL d'action avec paramètres si présents
-$action_url = BASE_URL . "/actions/connexion.php";
+$action_url = BASE_URL . "/actions/Connexion.php";
 if ($redirect && $trajet_id && $user) {
     $action_url .= "?redirect=" . urlencode($redirect) . "&trajet_id=" . urlencode($trajet_id) . "&user=" . urlencode($user);
 }
@@ -66,7 +66,7 @@ if ($redirect && $trajet_id && $user) {
         <div class="sidebar" id="mySidebar">
           <a href="#" class="closebtn" id="closebtn">×</a>
           <a href="<?= BASE_URL ?>/accueilECF.php">Accueil</a>
-          <a href="<?= BASE_URL ?>/pages/contactECF.php">Contact</a>
+          <a href="<?= BASE_URL ?>/pages/ContactECF.php">Contact</a>
           <a href="<?= BASE_URL ?>/pages/MentionsLegalesECF.php">Mentions Legales</a>
           <hr class="color">
           <a href="<?= BASE_URL ?>/pages/ConnexionEmploye.php">Compte Pro</a>
@@ -111,7 +111,7 @@ if ($redirect && $trajet_id && $user) {
     </script>
         <!-- Script pour afficher/masquer le mot de passe -->
         <script src="<?= BASE_URL ?>/assets/javascript/ShowPassword.js"></script>
-        <script src="<?= BASE_URL ?>/assets/javascript/menu.js"></script>
+        <script src="<?= BASE_URL ?>/assets/javascript/Menu.js"></script>
     </main>
 </body>
 </html>

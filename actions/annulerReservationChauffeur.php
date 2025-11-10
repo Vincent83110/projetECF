@@ -1,7 +1,7 @@
 <?php
 // Inclusion des fichiers de configuration et de sécurité
-require_once __DIR__ . '/../includes/config.php';
-include __DIR__ . '/../includes/csrf.php';
+require_once __DIR__ . '/../includes/Config.php';
+include __DIR__ . '/../includes/Csrf.php';
 
 // Vérification que l'utilisateur est connecté
 if (!isset($_SESSION['user'])) {

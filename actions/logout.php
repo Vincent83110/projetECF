@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/Config.php';
 // Démarrage de la session
 session_start();
 // Suppression de toutes les variables de session

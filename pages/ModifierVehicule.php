@@ -1,8 +1,8 @@
 <?php
-require_once __DIR__ . '/../includes/config.php';
-include __DIR__ . '/../includes/auth.php';
-include __DIR__ . '/../includes/headerProtection.php';
-include __DIR__ . '/../includes/csrf.php';
+require_once __DIR__ . '/../includes/Config.php';
+include __DIR__ . '/../includes/Auth.php';
+include __DIR__ . '/../includes/HeaderProtection.php';
+include __DIR__ . '/../includes/Csrf.php';
 
 $error_message = '';
 $success_message = '';
@@ -14,7 +14,7 @@ try {
     // Récupération du véhicule
     if (!isset($_GET['id'])) {
         $_SESSION['message'] = "Aucun véhicule spécifié";
-        header("Location: " . BASE_URL . "/actions/compte.php");
+        header("Location: " . BASE_URL . "/actions/Compte.php");
         exit();
     }
 
@@ -27,7 +27,7 @@ try {
 
     if (!$vehicule) {
         $_SESSION['message'] = "Véhicule non trouvé";
-        header("Location: " . BASE_URL . "/actions/compte.php");
+        header("Location: " . BASE_URL . "/actions/Compte.php");
         exit();
     }
 
@@ -56,7 +56,7 @@ try {
 
             if ($stmt->execute($data)) {
                 $_SESSION['message'] = "Véhicule modifié avec succès";
-                header("Location: " . BASE_URL . "/actions/compte.php");
+                header("Location: " . BASE_URL . "/actions/Compte.php");
                 exit();
             }
         }
@@ -113,7 +113,7 @@ try {
 
                 $pdo->commit();
                 $_SESSION['message'] = $success_message;
-                header("Location: " . BASE_URL . "/actions/compte.php");
+                header("Location: " . BASE_URL . "/actions/Compte.php");
                 exit();
 
             } catch (PDOException $e) {
@@ -156,7 +156,7 @@ try {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/modif.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/Modif.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="website icon" type="png" href="<?= BASE_URL ?>/assets/images/icon.png">
     <title> Modification vehicule </title>

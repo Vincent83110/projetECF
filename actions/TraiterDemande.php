@@ -1,8 +1,8 @@
 <?php
 // Chargement des dépendances et fichiers de configuration
 require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../includes/config.php';
-include __DIR__ . '/../includes/csrf.php';
+require_once __DIR__ . '/../includes/Config.php';
+include __DIR__ . '/../includes/Csrf.php';
 
 // Importation des classes PHPMailer pour l'envoi d'emails
 use PHPMailer\PHPMailer\PHPMailer;

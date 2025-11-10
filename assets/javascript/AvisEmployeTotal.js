@@ -9,15 +9,15 @@ document.getElementById('searchForm').addEventListener('submit', function (e) {
 
   if (pseudo && numero) {
     // Redirection avec pseudo et numéro
-    window.location.href = `${BASE_URL}/pages/pageCovoiturageIndividuelle.php?numero_trajet=${encodeURIComponent(numero)}`;
+    window.location.href = `${BASE_URL}/pages/PageCovoiturageIndividuelle.php?numero_trajet=${encodeURIComponent(numero)}`;
   } else if (numero) {
     // Redirection avec numéro seulement
-    window.location.href = `${BASE_URL}/pages/pageCovoiturageIndividuelle.php?numero_trajet=${encodeURIComponent(numero)}`;
+    window.location.href = `${BASE_URL}/pages/PageCovoiturageIndividuelle.php?numero_trajet=${encodeURIComponent(numero)}`;
   } else if (pseudo) {
     console.log("Requête envoyée avec pseudo :", pseudo);
 
     // Vérification du statut utilisateur
-    fetch(`getStatut.php?username=${encodeURIComponent(pseudo)}`)
+    fetch(`GetStatut.php?username=${encodeURIComponent(pseudo)}`)
       .then(res => res.json())
       .then(data => {
         console.log("Réponse reçue :", data);

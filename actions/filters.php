@@ -2,7 +2,7 @@
 // Définition du header pour une réponse JSON
 header('Content-Type: application/json; charset=utf-8');
 
-require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/Config.php';
 
 try {
     // Connexion à la base de données PostgreSQL

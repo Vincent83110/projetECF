@@ -1,7 +1,7 @@
 <?php
 // Inclusion des fichiers de configuration et de protection CSRF
-require_once __DIR__ . '/../includes/config.php';
-include __DIR__ . '/../includes/csrf.php';
+require_once __DIR__ . '/../includes/Config.php';
+include __DIR__ . '/../includes/Csrf.php';
 
 // Vérification que la méthode de requête est POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {

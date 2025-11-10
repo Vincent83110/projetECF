@@ -1,14 +1,14 @@
 <?php
 // Inclusion des fichiers nécessaires pour l'authentification, les notifications, les fonctions utilitaires et la protection CSRF
-require_once __DIR__ . '/../includes/config.php';
-include __DIR__ . '/../includes/auth.php';   // Gestion de l'authentification utilisateur
-include __DIR__ . '/../actions/notif.php'; 
-include __DIR__ . '/../includes/function.php';          
-include __DIR__ . '/../includes/csrf.php';
+require_once __DIR__ . '/../includes/Config.php';
+include __DIR__ . '/../includes/Auth.php';   // Gestion de l'authentification utilisateur
+include __DIR__ . '/../actions/Notif.php'; 
+include __DIR__ . '/../includes/Function.php';          
+include __DIR__ . '/../includes/Csrf.php';
 
 // Vérification que l'utilisateur est connecté
 if (!isset($_SESSION['user']['id'])) {
-    header("Location: ". BASE_URL ."/actions/connexion.php");
+    header("Location: ". BASE_URL ."/actions/Connexion.php");
     exit;
 }
 
@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Validation de la transaction
             $pdo->commit();
             $_SESSION['succes'] = "Profil mis à jour avec succès";
-            header("Location: ". BASE_URL ."/actions/compte.php");
+            header("Location: ". BASE_URL ."/actions/Compte.php");
             exit;
 
         } catch (Exception $e) {
@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/modif.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/Modif.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="website icon" type="png" href="<?= BASE_URL ?>/assets/images/icon.png">
     <title> Modification profil employe </title>

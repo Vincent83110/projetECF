@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ===  MISE À JOUR COMPTEUR NON LUS ===
     async function updateUnreadCount() {
         try {
-            const res = await fetch(`${BASE_URL}/actions/get_unread_count.php`);
+            const res = await fetch(`${BASE_URL}/actions/GetUnreadCount.php`);
             const data = await res.json();
             const badge = document.getElementById('unread-count');
 
@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             // Marquer comme lus
-            await fetch(`${BASE_URL}/actions/mark_message_read.php`, {
+            await fetch(`${BASE_URL}/actions/MarkMessageRead.php`, {
                 method: "POST",
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: `from_user_id=${userId}`
@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
             updateUnreadCount();
 
             // Charger messages
-            const res = await fetch(`${BASE_URL}/actions/get_messages.php?with=${userId}`);
+            const res = await fetch(`${BASE_URL}/actions/GetMessages.php?with=${userId}`);
             const messages = await res.json();
             messages.forEach(msg =>
                 appendMessage(msg.message, msg.sender_id === currentUserId, msg.timestamp)
@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     element.classList.add('removing');
     try {
-        const res = await fetch(`${BASE_URL}/actions/delete_conversation.php`, {
+        const res = await fetch(`${BASE_URL}/actions/DeleteConversation.php`, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ user_id: userId })
@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Rafraîchir proprement la liste depuis la base
             setTimeout(async () => {
                 try {
-                    const refreshed = await fetch(`${BASE_URL}/actions/get_conversations.php`);
+                    const refreshed = await fetch(`${BASE_URL}/actions/GetConversations.php`);
                     const conversations = await refreshed.json();
                     renderConversations(conversations);
                     updateUnreadCount();
@@ -199,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ===  CHARGEMENT INITIAL ===
     function loadInitialConversations() {
-        fetch(`${BASE_URL}/actions/get_conversations.php`)
+        fetch(`${BASE_URL}/actions/GetConversations.php`)
             .then(res => res.json())
             .then(renderConversations)
             .catch(err => console.error("Erreur chargement conversations:", err));
@@ -217,7 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
         appendMessage(text, true, now);
 
         try {
-            const res = await fetch(`${BASE_URL}/actions/ajouter_message.php`, {
+            const res = await fetch(`${BASE_URL}/actions/AjouterMessage.php`, {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -250,7 +250,7 @@ function startMessagePolling() {
         if (!currentChatUserId) {
             const count = await updateUnreadCount();
             if (count > 0) {
-                fetch(`${BASE_URL}/actions/get_conversations.php`)
+                fetch(`${BASE_URL}/actions/GetConversations.php`)
                     .then(res => res.json())
                     .then(renderConversations);
             }

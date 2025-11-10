@@ -1,7 +1,7 @@
 <?php
 // Inclusion de la protection des en-têtes
-require_once __DIR__ . '/includes/config.php';
-include __DIR__ . '/includes/headerProtection.php';
+require_once __DIR__ . '/includes/Config.php';
+include __DIR__ . '/includes/HeaderProtection.php';
 
 ?>
 <!DOCTYPE html>
@@ -9,7 +9,7 @@ include __DIR__ . '/includes/headerProtection.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/accueil.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/Accueil.css?v=<?= time() ?>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -57,7 +57,7 @@ include __DIR__ . '/includes/headerProtection.php';
           <a href="#" class="closebtn" id="closebtn">×</a>
           <!-- Liens de navigation -->
           <a href="<?= BASE_URL ?>/pages/accueilECF.php">Accueil</a>
-          <a href="<?= BASE_URL ?>/pages/contactECF.php">Contact</a>
+          <a href="<?= BASE_URL ?>/pages/ContactECF.php">Contact</a>
           <a href="<?= BASE_URL ?>/pages/MentionsLegalesECF.php">Mentions Legales</a>
           <hr class="color">
           <!-- Liens de compte -->
@@ -77,7 +77,7 @@ include __DIR__ . '/includes/headerProtection.php';
     <div class="full-width-image">
         <img src="<?= BASE_URL ?>/assets/images/VoitureElectrique.jpg" alt="pas d'image" class="imgAccueil">
     </div>
-    <!-- Contenu principal identique à accueil.php -->
+    <!-- Contenu principal identique à Accueil.php -->
     <main id="pop">
    <!-- Formulaire de recherche de covoiturage -->
    <form method="get" action="<?= BASE_URL ?>/pages/Covoiturages.php">
@@ -162,7 +162,7 @@ include __DIR__ . '/includes/headerProtection.php';
     <div>
         <!-- Liens vers les pages légales ECF -->
         <a href="<?= BASE_URL ?>/pages/MentionsLegalesECF.php" class="mentions-legales">mentions légales</a>
-        <a href="<?= BASE_URL ?>/pages/contactECF.php" class="mentions-legales"> contact </a>
+        <a href="<?= BASE_URL ?>/pages/ContactECF.php" class="mentions-legales"> contact </a>
     </div>
     <div>
         <!-- Liens réseaux sociaux -->
@@ -174,8 +174,8 @@ include __DIR__ . '/includes/headerProtection.php';
 </footer>
 <!-- Scripts JavaScript -->
 
-<script src="<?= BASE_URL ?>/assets/javascript/menu.js"></script>
-<script src="<?= BASE_URL ?>/assets/javascript/accueil.js"></script>
-<script src="<?= BASE_URL ?>/assets/javascript/autocomplete.js"></script>
+<script src="<?= BASE_URL ?>/assets/javascript/Menu.js"></script>
+<script src="<?= BASE_URL ?>/assets/javascript/Accueil.js"></script>
+<script src="<?= BASE_URL ?>/assets/javascript/Autocomplete.js"></script>
 </body>
 </html>

@@ -1,8 +1,8 @@
 <?php
 // Inclusion des fichiers d'authentification, configuration et sécurité
-require_once __DIR__ . '/../includes/config.php';
-include __DIR__ . '/../includes/csrf.php';
-include __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/Config.php';
+include __DIR__ . '/../includes/Csrf.php';
+include __DIR__ . '/../includes/Auth.php';
 
 // Vérification que la méthode est POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {

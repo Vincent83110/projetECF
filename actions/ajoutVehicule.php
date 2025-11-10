@@ -1,7 +1,7 @@
 <?php
 // Inclusion des fichiers de configuration et de sécurité
-require_once __DIR__ . '/../includes/config.php';
-include __DIR__ . '/../includes/csrf.php';
+require_once __DIR__ . '/../includes/Config.php';
+include __DIR__ . '/../includes/Csrf.php';
 
 // Vérification que la méthode de requête est POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -33,7 +33,7 @@ try {
 
     // Vérification que l'utilisateur est connecté
     if (!$userId) {
-        header("Location:" .BASE_URL. "/pages/infosChauffeur.php?error=1");
+        header("Location:" .BASE_URL. "/pages/InfosChauffeur.php?error=1");
         exit;
     }
 
@@ -49,7 +49,7 @@ try {
         if (preg_match('/^([A-Z]{2})([0-9]{3})([A-Z]{2})$/', $plaque, $matches)) {
             $plaque = "{$matches[1]}-{$matches[2]}-{$matches[3]}";
         } else {
-            header("Location: " .BASE_URL. "/pages/infosChauffeur.php?error=2");
+            header("Location: " .BASE_URL. "/pages/InfosChauffeur.php?error=2");
             exit;
         }
 
@@ -62,7 +62,7 @@ try {
 
         // Vérification que tous les champs obligatoires sont remplis
         if (!$plaque || !$date || !$marque || !$modele || !$couleur || !$capacite ) {
-            header("Location: " .BASE_URL. "/pages/infosChauffeur.php?error=1");
+            header("Location: " .BASE_URL. "/pages/InfosChauffeur.php?error=1");
             exit;
         }
 
@@ -85,7 +85,7 @@ try {
     }
 
     // Redirection vers la page du compte après ajout réussi
-    header("Location: " .BASE_URL. "/actions/compte.php");
+    header("Location: " .BASE_URL. "/actions/Compte.php");
     exit;
 
 } catch (PDOException $e) {

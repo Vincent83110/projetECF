@@ -1,8 +1,8 @@
 <?php
 // Inclusion de l'autoloader Composer et de la protection CSRF
-require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/Config.php';
 require_once __DIR__ . '/../vendor/autoload.php';
-include __DIR__ . '/../includes/csrf.php';
+include __DIR__ . '/../includes/Csrf.php';
 header('Content-Type: application/json; charset=utf-8');
 
 // Vérification que l'utilisateur est connecté

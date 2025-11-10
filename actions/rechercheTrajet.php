@@ -2,7 +2,7 @@
 session_start();
 header('Content-Type: application/json');
 
-require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/Config.php';
 
 // 🚫 Interdire les chauffeurs
 if (isset($_SESSION['user']['statut']) && $_SESSION['user']['statut'] === 'chauffeur') {

@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . '/../includes/config.php';
-include __DIR__ . '/../includes/csrf.php';
-include __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/Config.php';
+include __DIR__ . '/../includes/Csrf.php';
+include __DIR__ . '/../includes/Auth.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     die("Méthode non autorisée.");
@@ -101,7 +101,7 @@ if ($trajetData) {
 
     // Retour sur la même page avec pagination
     $page = isset($_POST['page']) ? (int)$_POST['page'] : 1;
-    header("Location: " . BASE_URL . "/pages/AvisEmployésTotal.php?page=$page");
+    header("Location: " . BASE_URL . "/pages/AvisEmployesTotal.php?page=$page");
     exit;
 
 } catch (PDOException $e) {

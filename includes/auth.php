@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/Config.php';
 
 // Variables par défaut pour l'état non connecté
 $estConnecte = false;
@@ -40,7 +40,7 @@ if (isset($_SESSION['user'])) {
 
                 // Si l'employé n'existe pas, déconnexion
                 if (!$employe) {
-                    header("Location: " . BASE_URL . "/actions/logout.php");
+                    header("Location: " . BASE_URL . "/actions/Logout.php");
                     exit;
                 }
 
@@ -51,7 +51,7 @@ if (isset($_SESSION['user'])) {
             
         case 'utilisateur':
             // Page par défaut pour les utilisateurs sans statut défini
-            $lienCompte = BASE_URL . '/pages/choixstatut.php';
+            $lienCompte = BASE_URL . '/pages/ChoixStatut.php';
 
             // Détermination du lien du compte selon le statut de l'utilisateur
             if (isset($user['statut'])) {

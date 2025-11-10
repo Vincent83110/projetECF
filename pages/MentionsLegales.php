@@ -1,11 +1,11 @@
 <?php 
 // Inclusion des fichiers nécessaires pour l'authentification, les fonctions utilitaires, les notifications et la sécurité
-require_once __DIR__ . '/../includes/config.php';
-include __DIR__ . '/../actions/notif.php'; 
-include __DIR__ . '/../includes/auth.php'; 
-include __DIR__ . '/../includes/csrf.php';
-include __DIR__ . '/../includes/function.php';          
-include __DIR__ . '/../includes/headerProtection.php';  // Fonctions utilitaires
+require_once __DIR__ . '/../includes/Config.php';
+include __DIR__ . '/../actions/Notif.php'; 
+include __DIR__ . '/../includes/Auth.php'; 
+include __DIR__ . '/../includes/Csrf.php';
+include __DIR__ . '/../includes/Function.php';          
+include __DIR__ . '/../includes/HeaderProtection.php';  // Fonctions utilitaires
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +27,7 @@ include __DIR__ . '/../includes/headerProtection.php';  // Fonctions utilitaires
         <div class="space2">
             <div class="accueil">
               <span class="logo">ECO RIDE</span>
-              <a href="<?= BASE_URL ?>/pages/accueil.php" class="menu-principal">Accueil</a>
+              <a href="<?= BASE_URL ?>/pages/Accueil.php" class="menu-principal">Accueil</a>
                <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'utilisateur' && ($_SESSION['user']['statut'] === 'passager_chauffeur' || $_SESSION['user']['statut'] === 'chauffeur')): ?>
               <div>
                 <div class="notif-container">
@@ -49,13 +49,13 @@ include __DIR__ . '/../includes/headerProtection.php';  // Fonctions utilitaires
                                             <span><strong>Trajet n° <?= htmlspecialchars($notif['numero_trajet']) ?></strong></span>
                                         </div>
                                         <div>
-                                            <a class="linkCovoit" href="<?= BASE_URL ?>/pages/pageCovoiturageIndividuelle.php?id=<?= $notif['trajet_id'] ?>">Détails...</a>
+                                            <a class="linkCovoit" href="<?= BASE_URL ?>/pages/PageCovoiturageIndividuelle.php?id=<?= $notif['trajet_id'] ?>">Détails...</a>
                                         </div>
                                     </div>  
                                     <span><?= htmlspecialchars($notif['username']) ?> à réservé votre trajet <?=  extraireVille(htmlspecialchars($notif['adresse_depart'])) ?> -> 
                                     <?= extraireVille(htmlspecialchars($notif['adresse_arrive'])) ?> du <?= formatDate(htmlspecialchars($notif['date_depart'])) ?></span>
                                     <!-- Formulaire pour traiter les demandes -->
-                                    <form method="POST" action="<?= BASE_URL ?>/actions/traiter_demande.php">
+                                    <form method="POST" action="<?= BASE_URL ?>/actions/TraiterDemande.php">
                                         <?= csrf_input() ?>
                                         <input type="hidden" name="reservation_id" value="<?= htmlspecialchars($notif['reservation_id']) ?>">
                                         <input type="hidden" name="notification_id" value="<?= htmlspecialchars($notif['id']) ?>">
@@ -89,19 +89,19 @@ include __DIR__ . '/../includes/headerProtection.php';  // Fonctions utilitaires
             <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'employe'): ?>
     <a href="#" class="linkNav"><?= htmlspecialchars($employe['prenom']) ?></a>
     <a href="<?= htmlspecialchars($lienCompte) ?>" class="linkNav">Mon compte</a>
-    <a href="<?= BASE_URL ?>/actions/logout.php" class="linkNav">Déconnexion</a>
+    <a href="<?= BASE_URL ?>/actions/Logout.php" class="linkNav">Déconnexion</a>
 
 <?php elseif (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
     <a href="#" class="linkNav">Admin</a>
     <a href="<?= htmlspecialchars($lienCompte) ?>" class="linkNav">Compte Admin</a>
-    <a href="<?= BASE_URL ?>/actions/logoutAdmin.php" class="linkNav">Déconnexion</a>
+    <a href="<?= BASE_URL ?>/actions/LogoutAdmin.php" class="linkNav">Déconnexion</a>
 
 <?php else: ?>
     <a href="#" class="linkNav"><?= htmlspecialchars($user['username']) ?></a>
     <a href="<?= htmlspecialchars($lienCompte) ?>" class="linkNav">Mon compte</a>
     <a href="<?= BASE_URL ?>/pages/TrajetIndividuel.php" class="linkNav">Mes trajets</a>
-    <a href="<?= BASE_URL ?>/pages/historique.php" class="linkNav">Historique</a>
-    <a href="<?= BASE_URL ?>/actions/logout.php" class="linkNav">Déconnexion</a>
+    <a href="<?= BASE_URL ?>/pages/Historique.php" class="linkNav">Historique</a>
+    <a href="<?= BASE_URL ?>/actions/Logout.php" class="linkNav">Déconnexion</a>
 <?php endif; ?>
 
                 </div>
@@ -116,36 +116,36 @@ include __DIR__ . '/../includes/headerProtection.php';  // Fonctions utilitaires
           <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'employe'): ?>
           <a href="#" class="closebtn" id="closebtn">×</a>
           <a href="#" class="linkNav"><?= htmlspecialchars($employe['prenom']) ?></a>
-          <a href="<?= BASE_URL ?>/pages/accueil.php">Accueil</a>
-          <a href="<?= BASE_URL ?>/pages/contact.php">Contact</a>
+          <a href="<?= BASE_URL ?>/pages/Accueil.php">Accueil</a>
+          <a href="<?= BASE_URL ?>/pages/Contact.php">Contact</a>
           <a href="<?= BASE_URL ?>/pages/MentionsLegales.php">Mentions Legales</a>
           <hr class="color">
           <a href="<?= htmlspecialchars($lienCompte) ?>">Compte Pro</a>
-          <a href="<?= BASE_URL ?>/actions/logout.php">Déconnexion</a>
+          <a href="<?= BASE_URL ?>/actions/Logout.php">Déconnexion</a>
           
         <!-- Sidebar conditionnelle pour les administrateurs -->
         <?php elseif (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
             <a href="#" class="closebtn" id="closebtn">×</a>
           <a href="#">Admin</a>
-          <a href="<?= BASE_URL ?>/pages/accueil.php">Accueil</a>
-          <a href="<?= BASE_URL ?>/pages/contact.php">Contact</a>
+          <a href="<?= BASE_URL ?>/pages/Accueil.php">Accueil</a>
+          <a href="<?= BASE_URL ?>/pages/Contact.php">Contact</a>
           <a href="<?= BASE_URL ?>/pages/MentionsLegales.php">Mentions Legales</a>
           <hr class="color">
           <a href="<?= htmlspecialchars($lienCompte) ?>">Compte Admin</a>
-          <a href="<?= BASE_URL ?>/actions/logoutAdmin.php">Déconnexion</a>
+          <a href="<?= BASE_URL ?>/actions/LogoutAdmin.php">Déconnexion</a>
        
         <!-- Sidebar conditionnelle pour les utilisateurs normaux -->
         <?php else: ?>
           <a href="#" class="closebtn" id="closebtn">×</a>
           <a href="#"><?= htmlspecialchars($user['username']) ?></a>
-          <a href="<?= BASE_URL ?>/pages/accueil.php">Accueil</a>
+          <a href="<?= BASE_URL ?>/pages/Accueil.php">Accueil</a>
           <a href="<?= BASE_URL ?>/pages/TrajetIndividuel.php">Mes trajets</a>
-          <a href="<?= BASE_URL ?>/pages/historique.php">Historique</a>
-          <a href="<?= BASE_URL ?>/pages/contact.php">Contact</a>
+          <a href="<?= BASE_URL ?>/pages/Historique.php">Historique</a>
+          <a href="<?= BASE_URL ?>/pages/Contact.php">Contact</a>
           <a href="<?= BASE_URL ?>/pages/MentionsLegales.php">Mentions Legales</a>
           <hr class="color">
           <a href="<?= htmlspecialchars($lienCompte) ?>">Mon compte</a>
-          <a href="<?= BASE_URL ?>/actions/logout.php">Déconnexion</a>
+          <a href="<?= BASE_URL ?>/actions/Logout.php">Déconnexion</a>
          <?php endif; ?>
           <div class="ReseauxRow">
             <a href="https://www.youtube.com/" class="gapReseauxPop" target="_blank"><i class="fab fa-youtube"></i></a>
@@ -218,7 +218,7 @@ include __DIR__ . '/../includes/headerProtection.php';  // Fonctions utilitaires
 <footer> 
     <div>
         <a href="<?= BASE_URL ?>/pages/MentionsLegales.php" class="mentions-legales">mentions légales</a>
-        <a href="<?= BASE_URL ?>/pages/contact.php" class="mentions-legales"> contact </a>
+        <a href="<?= BASE_URL ?>/pages/Contact.php" class="mentions-legales"> contact </a>
     </div>
     <div>
         <a href="https://www.youtube.com/" class="gapReseaux" target="_blank"><i class="fab fa-youtube"></i></a>
@@ -230,7 +230,7 @@ include __DIR__ . '/../includes/headerProtection.php';  // Fonctions utilitaires
     <script>
         const BASE_URL = "<?= BASE_URL ?>";
     </script>
-<script src="<?= BASE_URL ?>/assets/javascript/menu.js"></script>
-<script src="<?= BASE_URL ?>/assets/javascript/notif.js"></script>
+<script src="<?= BASE_URL ?>/assets/javascript/Menu.js"></script>
+<script src="<?= BASE_URL ?>/assets/javascript/Notif.js"></script>
 </body>
 </html>

@@ -2,7 +2,7 @@
 // Démarrage de la session pour gérer l'état de connexion
 session_start();
 // Inclusion du fichier de configuration de la base de données
-require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/Config.php';
 
 try {
     // Connexion à la base de données PostgreSQL

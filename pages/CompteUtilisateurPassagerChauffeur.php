@@ -1,11 +1,11 @@
 <?php
 // Inclusion des fichiers nécessaires
-require_once __DIR__ . '/../includes/config.php';
-include __DIR__ . '/../includes/auth.php';          // Gestion de l'authentification utilisateur
-include __DIR__ . '/../actions/notif.php';         // Système de notifications
-include __DIR__ . '/../includes/function.php';      // Fonctions utilitaires
-include __DIR__ . '/../actions/infosCompteChauffeur.php'; // Protection des en-têtes HTTP
-include __DIR__ . '/../includes/csrf.php';
+require_once __DIR__ . '/../includes/Config.php';
+include __DIR__ . '/../includes/Auth.php';          // Gestion de l'authentification utilisateur
+include __DIR__ . '/../actions/Notif.php';         // Système de notifications
+include __DIR__ . '/../includes/Function.php';      // Fonctions utilitaires
+include __DIR__ . '/../actions/InfosCompteChauffeur.php'; // Protection des en-têtes HTTP
+include __DIR__ . '/../includes/Csrf.php';
 
 try {
     // Connexion à la base de données PostgreSQL
@@ -132,7 +132,7 @@ try {
         <div class="space">
             <div class="accueil">
               <span class="logo">ECO RIDE</span>
-              <a href="<?= BASE_URL ?>/pages/accueil.php" class="menu-principal" id="menu-principal">Accueil</a>
+              <a href="<?= BASE_URL ?>/pages/Accueil.php" class="menu-principal" id="menu-principal">Accueil</a>
               
               <!-- Section notifications pour utilisateurs -->
                <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'utilisateur' && ($_SESSION['user']['statut'] === 'passager_chauffeur' || $_SESSION['user']['statut'] === 'chauffeur')): ?>
@@ -156,13 +156,13 @@ try {
                                             <span><strong>Trajet n° <?= htmlspecialchars($notif['numero_trajet']) ?></strong></span>
                                         </div>
                                         <div>
-                                            <a class="linkCovoit" href="<?= BASE_URL ?>/pages/pageCovoiturageIndividuelle.php?id=<?= $notif['trajet_id'] ?>">Détails...</a>
+                                            <a class="linkCovoit" href="<?= BASE_URL ?>/pages/PageCovoiturageIndividuelle.php?id=<?= $notif['trajet_id'] ?>">Détails...</a>
                                         </div>
                                     </div>  
                                     <span><?= htmlspecialchars($notif['username']) ?> à réservé votre trajet <?=  extraireVille(htmlspecialchars($notif['adresse_depart'])) ?> -> 
                                     <?= extraireVille(htmlspecialchars($notif['adresse_arrive'])) ?> du <?= formatDate(htmlspecialchars($notif['date_depart'])) ?></span>
                                     <!-- Formulaire pour accepter/refuser les demandes -->
-                                    <form method="POST" action="<?= BASE_URL ?>/actions/traiter_demande.php">
+                                    <form method="POST" action="<?= BASE_URL ?>/actions/TraiterDemande.php">
                                         <?= csrf_input() ?>
                                         <input type="hidden" name="reservation_id" value="<?= htmlspecialchars($notif['reservation_id']) ?>">
                                         <input type="hidden" name="notification_id" value="<?= htmlspecialchars($notif['id']) ?>">
@@ -201,17 +201,17 @@ try {
                         <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'employe'): ?>
                             <a href="#" class="linkNav"><?= htmlspecialchars($employe['prenom']) ?></a>
                             <a href="<?= htmlspecialchars($lienCompte) ?>" class="linkNav">Mon compte</a>
-                            <a href="<?= BASE_URL ?>/actions/logout.php" class="linkNav">Déconnexion</a>
+                            <a href="<?= BASE_URL ?>/actions/Logout.php" class="linkNav">Déconnexion</a>
                         <?php elseif (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
                             <a href="#" class="linkNav">Admin</a>
                             <a href="<?= htmlspecialchars($lienCompte) ?>" class="linkNav">Compte Admin</a>
-                            <a href="<?= BASE_URL ?>/actions/logoutAdmin.php" class="linkNav">Déconnexion</a>
+                            <a href="<?= BASE_URL ?>/actions/LogoutAdmin.php" class="linkNav">Déconnexion</a>
                         <?php else: ?>
                             <a href="#" class="linkNav"><?= htmlspecialchars($userConnecte['username']) ?></a>
                             <a href="<?= htmlspecialchars($lienCompte) ?>" class="linkNav">Mon compte</a>
                             <a href="<?= BASE_URL ?>/pages/TrajetIndividuel.php" class="linkNav">Mes trajets</a>
-                            <a href="<?= BASE_URL ?>/pages/historique.php" class="linkNav">Historique</a>
-                            <a href="<?= BASE_URL ?>/actions/logout.php" class="linkNav">Déconnexion</a>
+                            <a href="<?= BASE_URL ?>/pages/Historique.php" class="linkNav">Historique</a>
+                            <a href="<?= BASE_URL ?>/actions/Logout.php" class="linkNav">Déconnexion</a>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -228,34 +228,34 @@ try {
                 <!-- Sidebar pour les employés -->
                 <a href="#" class="closebtn" id="closebtn">×</a>
                 <a href="#" class="linkNav"><?= htmlspecialchars($employe['prenom']) ?></a>
-                <a href="<?= BASE_URL ?>/pages/accueil.php">Accueil</a>
-                <a href="<?= BASE_URL ?>/pages/contact.php">Contact</a>
+                <a href="<?= BASE_URL ?>/pages/Accueil.php">Accueil</a>
+                <a href="<?= BASE_URL ?>/pages/Contact.php">Contact</a>
                 <a href="<?= BASE_URL ?>/pages/MentionsLegales.php">Mentions Legales</a>
                 <hr class="color">
                 <a href="<?= htmlspecialchars($lienCompte) ?>">Compte Pro</a>
-                <a href="<?= BASE_URL ?>/actions/logout.php">Déconnexion</a>
+                <a href="<?= BASE_URL ?>/actions/Logout.php">Déconnexion</a>
             <?php elseif (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
                 <!-- Sidebar pour les administrateurs -->
                 <a href="#" class="closebtn" id="closebtn">×</a>
                 <a href="#">Admin</a>
-                <a href="<?= BASE_URL ?>/pages/accueil.php">Accueil</a>
-                <a href="<?= BASE_URL ?>/pages/contact.php">Contact</a>
+                <a href="<?= BASE_URL ?>/pages/Accueil.php">Accueil</a>
+                <a href="<?= BASE_URL ?>/pages/Contact.php">Contact</a>
                 <a href="<?= BASE_URL ?>/pages/MentionsLegales.php">Mentions Legales</a>
                 <hr class="color">
                 <a href="<?= htmlspecialchars($lienCompte) ?>">Compte Admin</a>
-                <a href="<?= BASE_URL ?>/actions/logoutAdmin.php">Déconnexion</a>
+                <a href="<?= BASE_URL ?>/actions/LogoutAdmin.php">Déconnexion</a>
             <?php else: ?>
                 <!-- Sidebar utilisateur standard -->
                 <a href="#" class="closebtn" id="closebtn">×</a>
                 <a href="#"><?= htmlspecialchars($userConnecte['username']) ?></a>
-                <a href="<?= BASE_URL ?>/pages/accueil.php">Accueil</a>
+                <a href="<?= BASE_URL ?>/pages/Accueil.php">Accueil</a>
                 <a href="<?= BASE_URL ?>/pages/TrajetIndividuel.php">Mes trajets</a>
-                <a href="<?= BASE_URL ?>/pages/historique.php">Historique</a>
-                <a href="<?= BASE_URL ?>/pages/contact.php">Contact</a>
+                <a href="<?= BASE_URL ?>/pages/Historique.php">Historique</a>
+                <a href="<?= BASE_URL ?>/pages/Contact.php">Contact</a>
                 <a href="<?= BASE_URL ?>/pages/MentionsLegales.php">Mentions Legales</a>
                 <hr class="color">
                 <a href="<?= htmlspecialchars($lienCompte) ?>">Mon compte</a>
-                <a href="<?= BASE_URL ?>/actions/logout.php">Déconnexion</a>
+                <a href="<?= BASE_URL ?>/actions/Logout.php">Déconnexion</a>
             <?php endif; ?>
             
             <!-- Liens réseaux sociaux -->
@@ -287,7 +287,7 @@ try {
                             <div>
                                 <span class="statut">Passager-Chauffeur</span>
                                 <!-- Lien pour changer de statut -->
-                                <a href="<?= BASE_URL ?>/pages/choixStatut.php" class="linkText">Changer</a>
+                                <a href="<?= BASE_URL ?>/pages/ChoixStatut.php" class="linkText">Changer</a>
                             </div>
                         </div>
                     </div> 
@@ -297,13 +297,13 @@ try {
                     </div>
                     <!-- Liens pour modifier le profil et ajouter du contenu -->
                     <div>
-                        <a href="<?= BASE_URL ?>/pages/modifierProfilUtilisateur.php" class="linkText">Modifier mon profil</a>
+                        <a href="<?= BASE_URL ?>/pages/ModifierProfilUtilisateur.php" class="linkText">Modifier mon profil</a>
                     </div>
                     <div>
                         <a href="<?= BASE_URL ?>/pages/InfosTrajetChauffeur.php" class="travel">Ajouter un voyage <img src="<?= BASE_URL ?>/assets/images/plus.svg" class="imgPlus" alt=""></a>
                     </div>
                     <div>
-                        <a href="<?= BASE_URL ?>/pages/infosChauffeur.php" class="travel">Ajouter un vehicule <img src="<?= BASE_URL ?>/assets/images/plus.svg" class="imgPlus" alt=""></a>
+                        <a href="<?= BASE_URL ?>/pages/InfosChauffeur.php" class="travel">Ajouter un vehicule <img src="<?= BASE_URL ?>/assets/images/plus.svg" class="imgPlus" alt=""></a>
                     </div>
                     
                     <!-- Section avec toutes les informations du profil -->
@@ -340,7 +340,7 @@ try {
                                         <span class="textVehicule">Plaque : <?= htmlspecialchars($v['plaque_immatriculation']) ?></span>
                                         <!-- Lien pour modifier le véhicule -->
                                         <div>
-                                            <a href="<?= BASE_URL ?>/pages/modifier_vehicule.php?id=<?= htmlspecialchars($v['id']) ?>" class="btn-modifier">
+                                            <a href="<?= BASE_URL ?>/pages/ModifierVehicule.php?id=<?= htmlspecialchars($v['id']) ?>" class="btn-modifier">
                                                 <i class="fas fa-edit"></i> Modifier
                                             </a>
                                         </div>
@@ -377,7 +377,7 @@ try {
                         
                         <!-- Lien de suppression du compte -->
                         <div class="delete">
-                            <a href="<?= BASE_URL ?>/actions/deleteAccount.php" class="del">Supprimer le compte</a>
+                            <a href="<?= BASE_URL ?>/actions/DeleteAccount.php" class="del">Supprimer le compte</a>
                         </div>
                     </div>
                 </div>
@@ -474,7 +474,7 @@ try {
                         <!-- Lien de suppression pour les administrateurs -->
                         <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
                             <div class="delete">
-                                <a href="<?= BASE_URL ?>/actions/deleteAccount.php?username=<?= urlencode($user['username']) ?>" class="del">Supprimer le compte</a>
+                                <a href="<?= BASE_URL ?>/actions/DeleteAccount.php?username=<?= urlencode($user['username']) ?>" class="del">Supprimer le compte</a>
                             </div>
                         <?php endif; ?>
                     </div>
@@ -521,7 +521,7 @@ try {
         <!-- Pied de page standard -->
         <div>
             <a href="<?= BASE_URL ?>/pages/MentionsLegales.php" class="mentions-legales">mentions légales</a>
-            <a href="<?= BASE_URL ?>/pages/contact.php" class="mentions-legales">contact</a>
+            <a href="<?= BASE_URL ?>/pages/Contact.php" class="mentions-legales">contact</a>
         </div>
         <div>
             <!-- Liens vers les réseaux sociaux -->
@@ -535,9 +535,9 @@ try {
         const BASE_URL = "<?= BASE_URL ?>";
         const currentUserId = <?= json_encode($_SESSION['user']['id']) ?>;
     </script>
-    <script src="<?= BASE_URL ?>/assets/javascript/menu.js"></script>
-    <script src="<?= BASE_URL ?>/assets/javascript/notif.js"></script>
-    <script src="<?= BASE_URL ?>/assets/javascript/messagerie.js"></script>
+    <script src="<?= BASE_URL ?>/assets/javascript/Menu.js"></script>
+    <script src="<?= BASE_URL ?>/assets/javascript/Notif.js"></script>
+    <script src="<?= BASE_URL ?>/assets/javascript/Messagerie.js"></script>
 
 </body>
 </html>

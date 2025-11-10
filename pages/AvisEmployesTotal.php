@@ -1,10 +1,10 @@
 <?php
 // Inclusion des fichiers nécessaires
-require_once __DIR__ . '/../includes/config.php';
-include __DIR__ . '/../includes/auth.php';          // Gestion de l'authentification utilisateur
-include __DIR__ . '/../includes/function.php';      // Fonctions utilitaires
-include __DIR__ . '/../includes/headerProtection.php'; // Protection des en-têtes HTTP
-include __DIR__ . '/../includes/csrf.php';
+require_once __DIR__ . '/../includes/Config.php';
+include __DIR__ . '/../includes/Auth.php';          // Gestion de l'authentification utilisateur
+include __DIR__ . '/../includes/Function.php';      // Fonctions utilitaires
+include __DIR__ . '/../includes/HeaderProtection.php'; // Protection des en-têtes HTTP
+include __DIR__ . '/../includes/Csrf.php';
 try {
     // Connexion à la base de données
     $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $usernamePgadmin, $passwordPgadmin);
@@ -79,7 +79,7 @@ try {
         <div class="space">
             <div class="accueil">
               <span class="logo">ECO RIDE</span>
-              <a href="<?= BASE_URL ?>/pages/accueil.php" class="menu-principal">Accueil</a>
+              <a href="<?= BASE_URL ?>/pages/Accueil.php" class="menu-principal">Accueil</a>
             </div>
             <div>
                 <div class="nav">
@@ -93,7 +93,7 @@ try {
     <!-- Menu spécifique pour les employés -->
     <a href="#" class="linkNav"><?= htmlspecialchars($employe['prenom']) ?></a>
     <a href="<?= htmlspecialchars($lienCompte) ?>" class="linkNav">Mon compte</a>
-    <a href="<?= BASE_URL ?>/actions/logout.php" class="linkNav">Déconnexion</a>
+    <a href="<?= BASE_URL ?>/actions/Logout.php" class="linkNav">Déconnexion</a>
 <?php endif; ?>
 
                 </div>
@@ -109,12 +109,12 @@ try {
         <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'employe'): ?>
           <a href="#" class="closebtn" id="closebtn">×</a>
           <a href="#"><?= htmlspecialchars($employe['prenom']) ?></a>
-          <a href="<?= BASE_URL ?>/pages/accueil.php">Accueil</a>
-          <a href="<?= BASE_URL ?>/pages/contact.php">Contact</a>
+          <a href="<?= BASE_URL ?>/pages/Accueil.php">Accueil</a>
+          <a href="<?= BASE_URL ?>/pages/Contact.php">Contact</a>
           <a href="<?= BASE_URL ?>/pages/MentionsLegales.php">Mentions Legales</a>
           <hr class="color">
           <a href="<?= htmlspecialchars($lienCompte) ?>">Compte Pro</a>
-          <a href="<?= BASE_URL ?>/actions/logout.php">Déconnexion</a>
+          <a href="<?= BASE_URL ?>/actions/Logout.php">Déconnexion</a>
         <?php endif; ?>
           <!-- Liens réseaux sociaux -->
           <div class="ReseauxRow">
@@ -158,7 +158,7 @@ try {
             <img src="<?= BASE_URL ?>/assets/images/profil.svg" class="user" alt="profil">
             <!-- Lien vers le profil de l'utilisateur -->
             <?php if (!empty($avis['id_utilisateur']) && !empty($avis['username'])): ?>
-    <a href="<?= BASE_URL ?>/actions/compte.php?id=<?= htmlspecialchars($avis['id_utilisateur']) ?>&username=<?= htmlspecialchars($avis['username']) ?>">
+    <a href="<?= BASE_URL ?>/actions/Compte.php?id=<?= htmlspecialchars($avis['id_utilisateur']) ?>&username=<?= htmlspecialchars($avis['username']) ?>">
         <?= htmlspecialchars($avis['username']) ?>
     </a>
 <?php else: ?>
@@ -177,7 +177,7 @@ try {
                 <a href="#" class="voir-plus">Voir plus</a>
                 <!-- Lien vers les détails du trajet -->
                 <?php if (!empty($avis['id_trajet'])): ?>
-    <a href="<?= BASE_URL ?>/pages/pageCovoiturageIndividuelle.php?id=<?= htmlspecialchars($avis['id_trajet']) ?>" class="trajet-info">Détails ...</a>
+    <a href="<?= BASE_URL ?>/pages/PageCovoiturageIndividuelle.php?id=<?= htmlspecialchars($avis['id_trajet']) ?>" class="trajet-info">Détails ...</a>
 <?php else: ?>
     <span class="trajet-info">Pas de trajet associé</span>
 <?php endif; ?>
@@ -213,7 +213,7 @@ try {
         <div>
             <!-- Liens légaux -->
             <a href="<?= BASE_URL ?>/pages/MentionsLegales.php" class="mentions-legales">mentions légales</a>
-            <a href="<?= BASE_URL ?>/pages/contact.php" class="mentions-legales"> contact </a>
+            <a href="<?= BASE_URL ?>/pages/Contact.php" class="mentions-legales"> contact </a>
         </div>
         <div>
             <!-- Liens réseaux sociaux -->
@@ -228,7 +228,7 @@ try {
         const BASE_URL = "<?= BASE_URL ?>";
     </script>
 <script src="<?= BASE_URL ?>/assets/javascript/AvisEmployeTotal.js"></script>
-<script src="<?= BASE_URL ?>/assets/javascript/menu.js"></script>
+<script src="<?= BASE_URL ?>/assets/javascript/Menu.js"></script>
 
 </body>
 </html>

@@ -1,10 +1,10 @@
 <?php
-require_once __DIR__ . '/../includes/config.php';
-include __DIR__ . '/../includes/csrf.php';
+require_once __DIR__ . '/../includes/Config.php';
+include __DIR__ . '/../includes/Csrf.php';
 
 // Vérification que l'utilisateur est connecté
 if (!isset($_SESSION['user'])) {
-    header("Location:" . BASE_URL . "connexion.php");
+    header("Location:" . BASE_URL . "Connexion.php");
     exit;
 }
 
@@ -85,12 +85,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['statut'])) {
             header("Location: " . BASE_URL . "/pages/CompteUtilisateurPassagerChauffeur.php");
             break;
         default:
-            header("Location: " . BASE_URL . "/pages/choixStatut.php");
+            header("Location: " . BASE_URL . "/pages/ChoixStatut.php");
             break;
     }
     exit;
 } else {
     // Redirection vers la page de choix de statut si aucune donnée valide
-    header("Location: " . BASE_URL . "/pages/choixStatut.php");
+    header("Location: " . BASE_URL . "/pages/ChoixStatut.php");
     exit;
 }

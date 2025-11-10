@@ -4,14 +4,14 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/Config.php';
 // Inclusion des fichiers de protection et sécurité
-include __DIR__ . '/../includes/headerProtection.php';
-include __DIR__ . '/../includes/csrf.php';
+include __DIR__ . '/../includes/HeaderProtection.php';
+include __DIR__ . '/../includes/Csrf.php';
 
 // Traitement du formulaire si soumis en POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    require_once __DIR__ . '/../actions/connexion.php'; // Inclure le script de traitement
+    require_once __DIR__ . '/../actions/Connexion.php'; // Inclure le script de traitement
     exit; // Empêche l'exécution du reste de la page après traitement
 }
 ?>
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="sidebar" id="mySidebar">
           <a href="#" class="closebtn" id="closebtn">×</a>
           <a href="<?= BASE_URL ?>/accueilECF.php">Accueil</a>
-          <a href="<?= BASE_URL ?>/pages/contactECF.php">Contact</a>
+          <a href="<?= BASE_URL ?>/pages/ContactECF.php">Contact</a>
           <a href="<?= BASE_URL ?>/pages/MentionsLegalesECF.php">Mentions Legales</a>
           <hr class="color">
           <a href="<?= BASE_URL ?>/pages/ConnexionEmploye.php">Compte Pro</a>
@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <main id="pop">
         <!-- Formulaire de connexion employé -->
-        <form method="post" action="<?= BASE_URL ?>/actions/connexion.php">
+        <form method="post" action="<?= BASE_URL ?>/actions/Connexion.php">
             <?= csrf_input() ?> <!-- Token CSRF pour la sécurité -->
             <h1 class="title">Connexion Pro</h1>
             
@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script>
         const BASE_URL = "<?= BASE_URL ?>";
     </script>
-        <script src="<?= BASE_URL ?>/assets/javascript/menu.js"></script>
+        <script src="<?= BASE_URL ?>/assets/javascript/Menu.js"></script>
     </main>
 </body>
 </html>

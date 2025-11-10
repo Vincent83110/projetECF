@@ -7,7 +7,7 @@ $notifications = [];
 if (isset($_SESSION['user']) && isset($_SESSION['user']['id']) && !empty($_SESSION['user']['id'])) {
     
     // Inclusion du fichier de configuration de la base de données
-    require_once __DIR__ . '/../includes/config.php';
+    require_once __DIR__ . '/../includes/Config.php';
 
     try {
         // Connexion à la base de données PostgreSQL

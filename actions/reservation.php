@@ -1,8 +1,8 @@
 <?php
 // Inclusion des fichiers nécessaires pour l'authentification, la configuration et la protection CSRF
-require_once __DIR__ . '/../includes/config.php';
-include __DIR__ . '/../includes/csrf.php';
-include __DIR__ . '/../includes/auth.php';
+require_once __DIR__ . '/../includes/Config.php';
+include __DIR__ . '/../includes/Csrf.php';
+include __DIR__ . '/../includes/Auth.php';
 
 // Inclusion des bibliothèques nécessaires pour l'envoi d'emails
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -29,7 +29,7 @@ try {
     if ($estConnecte) {
 
         if (!isset($_SESSION['user'])) {
-            header("Location: " . BASE_URL . "/pages/connexion.php");
+            header("Location: " . BASE_URL . "/pages/Connexion.php");
             exit;
         }
 

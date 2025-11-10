@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../includes/config.php';
-include __DIR__ . '/../includes/csrf.php';
+require_once __DIR__ . '/../includes/Config.php';
+include __DIR__ . '/../includes/Csrf.php';
 
 // Importation des bibliothèques pour l'envoi d'emails
 use PHPMailer\PHPMailer\PHPMailer;
@@ -147,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             // Redirection vers la page historique après traitement
-            header("Location: " .BASE_URL. "/pages/historique.php");
+            header("Location: " .BASE_URL. "/pages/Historique.php");
             exit;
 
         } catch (PDOException $e) {

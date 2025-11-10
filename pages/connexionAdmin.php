@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/../includes/config.php';
-include __DIR__ . '/../includes/csrf.php';
+require_once __DIR__ . '/../includes/Config.php';
+include __DIR__ . '/../includes/Csrf.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -13,8 +13,8 @@ include __DIR__ . '/../includes/csrf.php';
 <body>
     <!-- Conteneur principal centré verticalement et horizontalement -->
     <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
-        <!-- Formulaire de connexion qui envoie les données vers connexion.php -->
-        <form method="post" action="<?= BASE_URL ?>/actions/connexion.php">
+        <!-- Formulaire de connexion qui envoie les données vers Connexion.php -->
+        <form method="post" action="<?= BASE_URL ?>/actions/Connexion.php">
             <?= csrf_input() ?>
             <fieldset>
                 <!-- Légende du formulaire -->
