@@ -14,7 +14,7 @@ try {
 
     // 1. Vérification de la session utilisateur
     if (!isset($_SESSION['user']['id'])) {
-        (header("Location: " . BASE_URL . "/pages/connexionUtilisateur.php"));
+        (header("Location: " . BASE_URL . "/pages/ConnexionUtilisateur.php"));
     }
 
     // 2. Récupération INFALLIBLE de l'utilisateur connecté

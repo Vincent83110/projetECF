@@ -88,7 +88,7 @@ try {
 
             if (!$employe_info) {
                 $_SESSION['error'] = "Identifiants professionnels incorrects ou compte non autorisé.";
-                header("Location: " . BASE_URL . "/pages/connexionEmploye.php");
+                header("Location: " . BASE_URL . "/pages/ConnexionEmploye.php");
                 exit;
             }
 

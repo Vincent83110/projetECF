@@ -114,7 +114,7 @@ include __DIR__ . '/../includes/HeaderProtection.php'; // Protection des en-têt
         <!-- Pied de page -->
         <div>
             <a href="<?= BASE_URL ?>/pages/MentionsLegalesECF.php" class="mentions-legales">mentions légales</a>
-            <a href="<?= BASE_URL ?>/pages/contact.html" class="mentions-legales"> contact </a>
+            <a href="<?= BASE_URL ?>/pages/ContactECF.php" class="mentions-legales"> contact </a>
         </div>
         <div>
             <!-- Liens réseaux sociaux -->

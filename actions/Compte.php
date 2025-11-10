@@ -3,7 +3,7 @@ session_start();
 require_once __DIR__ . '/../includes/Config.php';
 // Vérification si l'utilisateur est connecté
 if (!isset($_SESSION['user'])) {
-    header("Location: " .BASE_URL. "/pages/connexionUtilisateur.php");
+    header("Location: " .BASE_URL. "/pages/ConnexionUtilisateur.php");
     exit;
 }
 
