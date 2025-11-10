@@ -202,7 +202,7 @@ try {
               <?php if ($estConnecte): ?>
                 <a href="<?= BASE_URL ?>/pages/Accueil.php" class="menu-principal" id="menu-principal">Accueil</a>
               <?php else: ?>
-                <a href="<?= BASE_URL ?>/accueilECF.php" class="menu-principal" id="menu-principal">Accueil</a>
+                <a href="<?= BASE_URL ?>/AccueilECF.php" class="menu-principal" id="menu-principal">Accueil</a>
               <?php endif; ?>
                <div>
             <?php if ($estConnecte && $_SESSION['user']['role'] === 'utilisateur'): ?>

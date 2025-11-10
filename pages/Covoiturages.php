@@ -51,7 +51,7 @@ $trajets = $stmt->fetchAll(PDO::FETCH_ASSOC);
               <?php if ($estConnecte): ?>
                 <a href="<?= BASE_URL ?>/pages/Accueil.php" class="menu-principal" id="menu-principal">Accueil</a>
               <?php else: ?>
-                <a href="<?= BASE_URL ?>/accueilECF.php" class="menu-principal" id="menu-principal">Accueil</a>
+                <a href="<?= BASE_URL ?>/AccueilECF.php" class="menu-principal" id="menu-principal">Accueil</a>
               <?php endif; ?>
               
               <!-- Section notifications pour utilisateurs connectés -->

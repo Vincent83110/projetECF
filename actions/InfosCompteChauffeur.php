@@ -12,7 +12,7 @@ try {
 
     // Redirection si l'utilisateur n'est pas connecté
     if (!$userIdUsers) {
-        header("Location: " . BASE_URL . "/accueilECF.php");
+        header("Location: " . BASE_URL . "/AccueilECF.php");
         exit;
     }
 

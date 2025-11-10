@@ -15,7 +15,7 @@ try {
 
      // 1. Vérification de la session utilisateur
     if (!isset($_SESSION['user']['id'])) {
-        (header("Location: " . BASE_URL . "/accueilECF.php"));
+        (header("Location: " . BASE_URL . "/AccueilECF.php"));
     }
 
     // Récupération de l'ID du profil à afficher (soit depuis GET, soit depuis la session)

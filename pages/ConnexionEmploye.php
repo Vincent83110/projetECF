@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="space">
             <div class="accueil">
               <span class="logo">ECO RIDE</span>
-              <a href="<?= BASE_URL ?>/accueilECF.php" class="menu-principal">Accueil</a>
+              <a href="<?= BASE_URL ?>/AccueilECF.php" class="menu-principal">Accueil</a>
             </div>
             <div>
               <div class="nav">
@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- Sidebar / Menu latéral -->
         <div class="sidebar" id="mySidebar">
           <a href="#" class="closebtn" id="closebtn">×</a>
-          <a href="<?= BASE_URL ?>/accueilECF.php">Accueil</a>
+          <a href="<?= BASE_URL ?>/AccueilECF.php">Accueil</a>
           <a href="<?= BASE_URL ?>/pages/ContactECF.php">Contact</a>
           <a href="<?= BASE_URL ?>/pages/MentionsLegalesECF.php">Mentions Legales</a>
           <hr class="color">

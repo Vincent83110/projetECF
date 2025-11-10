@@ -7,5 +7,5 @@ session_unset();
 // Destruction de la session
 session_destroy();
 // Redirection vers la page d'accueil publique
-header("Location: " . BASE_URL . "/accueilECF.php");
+header("Location: " . BASE_URL . "/AccueilECF.php");
 exit;

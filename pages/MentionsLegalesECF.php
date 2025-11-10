@@ -23,7 +23,7 @@ include __DIR__ . '/../includes/HeaderProtection.php';  // Fonctions utilitaires
         <div class="space">
             <div class="accueil">
               <span class="logo">ECO RIDE</span>
-              <a href="<?= BASE_URL ?>/accueilECF.php" class="menu-principal">Accueil</a>
+              <a href="<?= BASE_URL ?>/AccueilECF.php" class="menu-principal">Accueil</a>
             </div>
             <div>
               <div class="nav">

@@ -40,4 +40,4 @@ Ouvrir un terminal, puis exécuter :
 git clone https://github.com/Vincent83110/projetECF.git
 ```
 Déplacer ensuite le dossier cloné dans le répertoire de XAMPP :
-C:\xampp\htdocs\projetECF et taper dans l'url d'un onglet localhost/htdocs/projetECF/accueilECF.php
+C:\xampp\htdocs\projetECF et taper dans l'url d'un onglet localhost/htdocs/projetECF/AccueilECF.php

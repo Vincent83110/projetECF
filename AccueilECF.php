@@ -25,7 +25,7 @@ include __DIR__ . '/includes/HeaderProtection.php';
             <div class="accueil">
               <span class="logo">ECO RIDE</span>
               <!-- Lien vers la page d'accueil ECF -->
-              <a href="<?= BASE_URL ?>/accueilECF.php" class="navigation" id="menu-principal">Accueil</a>
+              <a href="<?= BASE_URL ?>/AccueilECF.php" class="navigation" id="menu-principal">Accueil</a>
             </div>
             <div>
                 <!-- Navigation utilisateur non connecté -->
@@ -56,7 +56,7 @@ include __DIR__ . '/includes/HeaderProtection.php';
           <!-- Bouton de fermeture -->
           <a href="#" class="closebtn" id="closebtn">×</a>
           <!-- Liens de navigation -->
-          <a href="<?= BASE_URL ?>/pages/accueilECF.php">Accueil</a>
+          <a href="<?= BASE_URL ?>/pages/AccueilECF.php">Accueil</a>
           <a href="<?= BASE_URL ?>/pages/ContactECF.php">Contact</a>
           <a href="<?= BASE_URL ?>/pages/MentionsLegalesECF.php">Mentions Legales</a>
           <hr class="color">
