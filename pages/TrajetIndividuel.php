@@ -156,7 +156,10 @@ try {
             <div>
                 <div class="nav">
                     <div class="ContainerTitleNavConnect" id="Nav">
-                      <span class="titleNav"><img src="<?= BASE_URL ?>/assets/images/flecheMenu.svg" id="ImageIcon" alt="" class="ImgFlecheMenu"><img src="<?= BASE_URL ?>/assets/images/profil.svg" alt="pas d'image" class="userNav"></span>
+                    <span class="titleNav">
+                        <img src="<?= BASE_URL ?>/assets/images/flecheMenu.svg" id="ImageIcon" alt="" class="ImgFlecheMenu">
+                        <img src="<?= BASE_URL ?>/assets/images/profil.svg" alt="pas d'image" class="userNav">
+                    </span>
                     </div>
                     <div class="InsideNav" id="InsideNav">
             <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'utilisateur'): ?>

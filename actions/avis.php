@@ -63,14 +63,6 @@ $stmt->execute([
     ':comment'        => $commentaire
 ]);
 
-// mettre à jour la date de validation par le passager ---
-$stmtUpdateDate = $pdo->prepare("
-    UPDATE infos_trajet
-    SET date_validation_passager = NOW()
-    WHERE id = :trajet_id
-");
-$stmtUpdateDate->execute([':trajet_id' => $trajetId]);
-
     // Mise à jour de la note moyenne du chauffeur
     $stmt = $pdo->prepare("
         UPDATE utilisateurs 

@@ -56,7 +56,7 @@ $trajets = $stmt->fetchAll(PDO::FETCH_ASSOC);
               
               <!-- Section notifications pour utilisateurs connectés -->
               <div>
-                 <?php if ($estConnecte): ?>
+                 <?php if ($estConnecte && $_SESSION['user']['role'] === 'utilisateur'): ?>
                     <div class="notif-container">
                         <!-- Icône de notification avec badge -->
                         <div class="bellNotif" id="toggleNotifications">
@@ -113,9 +113,9 @@ $trajets = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class="nav">
                     <div class="ContainerTitleNavConnect" id="Nav">
                       <span class="titleNav">
-                          <img src="<?= BASE_URL ?>/assets/images/flecheMenu.svg" id="ImageIcon" alt="" class="ImgFlecheMenu">
-                          <img src="<?= BASE_URL ?>/assets/images/profil.svg" alt="pas d'image" class="userNav">
-                      </span>
+                        <img src="<?= BASE_URL ?>/assets/images/flecheMenu.svg" id="ImageIcon" alt="" class="ImgFlecheMenu">
+                        <img src="<?= BASE_URL ?>/assets/images/profil.svg" alt="pas d'image" class="userNav">
+                    </span>
                     </div>
                     <div class="InsideNav" id="InsideNav">
             <?php elseif (!$estConnecte): ?>
@@ -243,9 +243,27 @@ $trajets = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="sidebar" id="mySidebar">
           <!-- Sidebar selon le type d'utilisateur -->
           <?php if ($estConnecte && $role === 'employe'): ?>
-            <!-- Sidebar employé -->
+            <!-- Sidebar employé(e) -->
+          <a href="#" class="closebtn" id="closebtn">×</a>
+          <a href="#" class="linkNav"><?= htmlspecialchars($employe['prenom'] ?? 'Employé') ?></a>
+          <a href="<?= BASE_URL ?>/pages/accueil.php">Accueil</a>
+          <a href="<?= BASE_URL ?>/pages/contact.php">Contact</a>
+          <a href="<?= BASE_URL ?>/pages/MentionsLegales.php">Mentions Legales</a>
+          <hr class="color">
+          <a href="<?= htmlspecialchars($lienCompte) ?>">Compte Pro</a>
+          <a href="<?= BASE_URL ?>/actions/logout.php">Déconnexion</a>
+
           <?php elseif ($estConnecte && $role === 'admin'): ?>
             <!-- Sidebar admin -->
+             <a href="#" class="closebtn" id="closebtn">×</a>
+          <a href="#">Admin</a>
+          <a href="<?= BASE_URL ?>/pages/accueil.php">Accueil</a>
+          <a href="<?= BASE_URL ?>/pages/contact.php">Contact</a>
+          <a href="<?= BASE_URL ?>/pages/MentionsLegales.php">Mentions Legales</a>
+          <hr class="color">
+          <a href="<?= htmlspecialchars($lienCompte) ?>">Compte Admin</a>
+          <a href="<?= BASE_URL ?>/actions/logoutAdmin.php">Déconnexion</a>
+
           <?php elseif ($estConnecte): ?>
             <!-- Sidebar utilisateur connecté -->
             <a href="#" class="closebtn" id="closebtn">×</a>

@@ -66,7 +66,7 @@ try {
             try {
                 $pdo->beginTransaction();
 
-                // 1️⃣ Vérifier s'il reste des trajets avec des réservations
+                // 1️ Vérifier s'il reste des trajets avec des réservations
                 $stmt_trajets = $pdo->prepare("
                     SELECT t.id 
                     FROM infos_trajet t

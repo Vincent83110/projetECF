@@ -225,9 +225,25 @@ try {
         <div class="sidebar" id="mySidebar">
             <!-- Contenu de la sidebar selon le type d'utilisateur -->
             <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'employe'): ?>
-                <!-- Sidebar employé -->
+                <!-- Sidebar pour les employés -->
+                <a href="#" class="closebtn" id="closebtn">×</a>
+                <a href="#" class="linkNav"><?= htmlspecialchars($employe['prenom']) ?></a>
+                <a href="<?= BASE_URL ?>/pages/accueil.php">Accueil</a>
+                <a href="<?= BASE_URL ?>/pages/contact.php">Contact</a>
+                <a href="<?= BASE_URL ?>/pages/MentionsLegales.php">Mentions Legales</a>
+                <hr class="color">
+                <a href="<?= htmlspecialchars($lienCompte) ?>">Compte Pro</a>
+                <a href="<?= BASE_URL ?>/actions/logout.php">Déconnexion</a>
             <?php elseif (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
-                <!-- Sidebar admin -->
+                <!-- Sidebar pour les administrateurs -->
+                <a href="#" class="closebtn" id="closebtn">×</a>
+                <a href="#">Admin</a>
+                <a href="<?= BASE_URL ?>/pages/accueil.php">Accueil</a>
+                <a href="<?= BASE_URL ?>/pages/contact.php">Contact</a>
+                <a href="<?= BASE_URL ?>/pages/MentionsLegales.php">Mentions Legales</a>
+                <hr class="color">
+                <a href="<?= htmlspecialchars($lienCompte) ?>">Compte Admin</a>
+                <a href="<?= BASE_URL ?>/actions/logoutAdmin.php">Déconnexion</a>
             <?php else: ?>
                 <!-- Sidebar utilisateur standard -->
                 <a href="#" class="closebtn" id="closebtn">×</a>

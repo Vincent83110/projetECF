@@ -119,9 +119,26 @@ include __DIR__ . '/../includes/csrf.php';
         <div class="sidebar" id="mySidebar">
             <!-- Sidebar selon le type d'utilisateur -->
             <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'employe'): ?>
-                <!-- Sidebar employé -->
-            <?php elseif (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
-                <!-- Sidebar admin -->
+          <!-- Menu pour employés -->
+          <a href="#" class="closebtn" id="closebtn">×</a>
+          <a href="#" class="linkNav"><?= htmlspecialchars($employe['prenom']) ?></a>
+          <a href="<?= BASE_URL ?>/pages/accueil.php">Accueil</a>
+          <a href="<?= BASE_URL ?>/pages/contact.php">Contact</a>
+          <a href="<?= BASE_URL ?>/pages/MentionsLegales.php">Mentions Legales</a>
+          <hr class="color">
+          <a href="<?= htmlspecialchars($lienCompte) ?>">Compte Pro</a>
+          <a href="<?= BASE_URL ?>/actions/logout.php">Déconnexion</a>
+          
+        <?php elseif (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
+            <!-- Menu pour administrateurs -->
+            <a href="#" class="closebtn" id="closebtn">×</a>
+          <a href="#">Admin</a>
+          <a href="<?= BASE_URL ?>/pages/accueil.php">Accueil</a>
+          <a href="<?= BASE_URL ?>/pages/contact.php">Contact</a>
+          <a href="<?= BASE_URL ?>/pages/MentionsLegales.php">Mentions Legales</a>
+          <hr class="color">
+          <a href="<?= htmlspecialchars($lienCompte) ?>">Compte Admin</a>
+          <a href="<?= BASE_URL ?>/actions/logoutAdmin.php">Déconnexion</a>
             <?php else: ?>
                 <!-- Sidebar utilisateur standard -->
                 <a href="#" class="closebtn" id="closebtn">×</a>

@@ -30,9 +30,32 @@ try {
             $trajetId = $stmtTrajet->fetchColumn();
 
             if ($trajetId) {
-                // Crédite le chauffeur
-                $stmt = $pdo->prepare("UPDATE infos_trajet SET statut_paiement_chauffeur = 'paye' WHERE id = :trajetId");
-                $stmt->execute([':trajetId' => $trajetId]);
+                // Récupérer le prix et le nombre de passagers
+$stmtTrajet = $pdo->prepare("
+    SELECT t.prix, t.id_utilisateur, COALESCE(SUM(r.nombre_places),0) AS nb_places
+    FROM infos_trajet t
+    LEFT JOIN reservation r ON r.trajet_id = t.id
+    WHERE t.id = :trajetId
+    GROUP BY t.id, t.prix
+");
+$stmtTrajet->execute([':trajetId' => $trajetId]);
+$trajetData = $stmtTrajet->fetch(PDO::FETCH_ASSOC);
+
+if ($trajetData) {
+    $totalCredits = $trajetData['prix'] * $trajetData['nb_places'];
+
+    // Créditer le chauffeur
+    $stmtUpdate = $pdo->prepare("UPDATE utilisateurs SET credits = credits + :credits WHERE id = :chauffeurId");
+    $stmtUpdate->execute([
+        ':credits' => $totalCredits,
+        ':chauffeurId' => $trajetData['id_utilisateur']
+    ]);
+
+    // Mettre à jour le statut
+    $stmtUpdateStatut = $pdo->prepare("UPDATE infos_trajet SET statut_paiement_chauffeur = 'paye' WHERE id = :trajetId");
+    $stmtUpdateStatut->execute([':trajetId' => $trajetId]);
+}
+
             }
 
         } elseif ($action === 'supprimer') {
@@ -46,9 +69,32 @@ try {
             $stmt->execute([':id' => $id]);
 
             if ($trajetId) {
-                // Créditer quand même le chauffeur (le trajet a eu lieu)
-                $stmt = $pdo->prepare("UPDATE infos_trajet SET statut_paiement_chauffeur = 'paye' WHERE id = :trajetId");
-                $stmt->execute([':trajetId' => $trajetId]);
+                // Récupérer le prix et le nombre de passagers
+$stmtTrajet = $pdo->prepare("
+    SELECT t.prix, t.id_utilisateur, COALESCE(SUM(r.nombre_places),0) AS nb_places
+    FROM infos_trajet t
+    LEFT JOIN reservation r ON r.trajet_id = t.id
+    WHERE t.id = :trajetId
+    GROUP BY t.id, t.prix
+");
+$stmtTrajet->execute([':trajetId' => $trajetId]);
+$trajetData = $stmtTrajet->fetch(PDO::FETCH_ASSOC);
+
+if ($trajetData) {
+    $totalCredits = $trajetData['prix'] * $trajetData['nb_places'];
+
+    // Créditer le chauffeur
+    $stmtUpdate = $pdo->prepare("UPDATE utilisateurs SET credits = credits + :credits WHERE id = :chauffeurId");
+    $stmtUpdate->execute([
+        ':credits' => $totalCredits,
+        ':chauffeurId' => $trajetData['id_utilisateur']
+    ]);
+
+    // Mettre à jour le statut
+    $stmtUpdateStatut = $pdo->prepare("UPDATE infos_trajet SET statut_paiement_chauffeur = 'paye' WHERE id = :trajetId");
+    $stmtUpdateStatut->execute([':trajetId' => $trajetId]);
+}
+
             }
         }
     }

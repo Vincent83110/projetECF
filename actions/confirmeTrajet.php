@@ -57,7 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmtUpdateTrajet = $pdo->prepare("
             UPDATE infos_trajet 
             SET statut = 'termine',
-            date_confirmation_trajet = NOW(),
             statut_paiement_chauffeur = 'en_attente'
             WHERE id = :id
             ");

@@ -38,7 +38,7 @@ try {
         die("Données manquantes ou action non valide.");
     }
 
-    // 🔹 Récupération des informations du trajet pour le mail
+    // Récupération des informations du trajet pour le mail
     $stmtTrajet = $pdo->prepare("
         SELECT t.*, u.username AS chauffeur_nom, u.email AS chauffeur_email
         FROM infos_trajet t
@@ -52,7 +52,7 @@ try {
         die("Trajet introuvable.");
     }
 
-    // 🔹 Récupération des passagers ayant réservé ce trajet
+    // Récupération des passagers ayant réservé ce trajet
     $stmtPassagers = $pdo->prepare("
         SELECT u.email, u.username
         FROM reservation r
@@ -62,9 +62,15 @@ try {
     $stmtPassagers->execute([':trajet_id' => $trajet_id]);
     $passagers = $stmtPassagers->fetchAll(PDO::FETCH_ASSOC);
 
-    // 🔹 Envoi du mail à chaque passager
+    // Envoi du mail à chaque passager
     if (!empty($passagers)) {
         foreach ($passagers as $passager) {
+           
+        $credits = (int)$trajet['prix'];
+
+    // Mise à jour du solde de l'utilisateur
+    $stmtUpdate = $pdo->prepare("UPDATE utilisateurs SET credits = credits + ? WHERE email = ?");
+    $stmtUpdate->execute([$credits, $passager['email']]);
             try {
                 $mail = new PHPMailer(true);
                 $mail->isSMTP();
@@ -101,7 +107,7 @@ Le trajet " . $trajet['adresse_depart'] . " → " . $trajet['adresse_arrive'] . 
         }
     }
 
-    // 🔹 Suppression des données liées
+    // Suppression des données liées
     $stmtPref = $pdo->prepare("DELETE FROM preferences WHERE trajet_id = ?");
     $stmtPref->execute([$trajet_id]);
 
@@ -111,7 +117,7 @@ Le trajet " . $trajet['adresse_depart'] . " → " . $trajet['adresse_arrive'] . 
     $stmtTrajet = $pdo->prepare("DELETE FROM infos_trajet WHERE id = ?");
     $stmtTrajet->execute([$trajet_id]);
 
-    // ✅ Redirection
+    // Redirection
     header("Location: " . BASE_URL . "/pages/TrajetIndividuel.php?annule=1");
     exit;
 

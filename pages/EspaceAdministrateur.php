@@ -367,10 +367,10 @@ try {
 
             if (pseudo && numero) {
                 // Recherche par numéro de trajet
-                window.location.href = `${BASE_URL}/pages/PageCovoiturageIndividuel.php?numero_trajet=${encodeURIComponent(numero)}`;
+                window.location.href = `${BASE_URL}/pages/PageCovoiturageIndividuelle.php?numero_trajet=${encodeURIComponent(numero)}`;
             } else if (numero) {
                 // Recherche par numéro de trajet seulement
-                window.location.href = `${BASE_URL}/pages/PageCovoiturageIndividuel.php?numero_trajet=${encodeURIComponent(numero)}`;
+                window.location.href = `${BASE_URL}/pages/PageCovoiturageIndividuelle.php?numero_trajet=${encodeURIComponent(numero)}`;
             } else if (pseudo) {
                 // Recherche par pseudo - vérification du statut
                 console.log("Requête envoyée avec pseudo :", pseudo);

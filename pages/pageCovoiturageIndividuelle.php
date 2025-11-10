@@ -205,7 +205,7 @@ try {
                 <a href="<?= BASE_URL ?>/accueilECF.php" class="menu-principal" id="menu-principal">Accueil</a>
               <?php endif; ?>
                <div>
-            <?php if ($estConnecte): ?>
+            <?php if ($estConnecte && $_SESSION['user']['role'] === 'utilisateur'): ?>
                 <div class="notif-container">
   <div class="bellNotif" id="toggleNotifications">
     <i class="fas fa-bell"></i>

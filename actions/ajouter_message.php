@@ -74,7 +74,7 @@ try {
         'sender_id' => $senderId,        // ID expéditeur
         'receiver_id' => $receiverId,    // ID destinataire
         'message' => $message,           // Contenu du message
-        'timestamp' => new MongoDB\BSON\UTCDateTime(), // Horodatage actuel
+        'timestamp' => new UTCDateTime(), // Horodatage actuel
         'is_read' => false               // Message non lu par défaut
     ]);
 
@@ -86,7 +86,7 @@ try {
     // Réponse de succès
     echo json_encode(['success' => true]);
     
-} catch (MongoDB\Driver\Exception\Exception $e) {
+} catch (\Exception $e) {
     // Gestion des erreurs MongoDB
     http_response_code(500); // Erreur interne du serveur
     echo json_encode(['error' => 'Erreur MongoDB: ' . $e->getMessage()]);
