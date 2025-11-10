@@ -129,20 +129,19 @@ try {
 
 // === Vérification pour bouton supprimer ===
 $can_delete = true;
-try {
-    $stmt_check = $pdo->prepare("
-        SELECT COUNT(*) 
-        FROM infos_trajet t
-        LEFT JOIN reservation r ON t.id = r.trajet_id
-        WHERE t.id_vehicule = :id_vehicule
-          AND r.id IS NOT NULL
-    ");
-    $stmt_check->execute([':id_vehicule' => $vehicule['id']]);
-    $trajets_non_supprimables = $stmt_check->fetchColumn();
-    $can_delete = ($trajets_non_supprimables == 0);
-} catch (PDOException $e) {
-    $can_delete = false;
-}
+$stmt_check = $pdo->prepare("
+    SELECT COUNT(*) 
+    FROM infos_trajet t
+    WHERE t.id_vehicule = :id_vehicule
+      AND t.statut != 'termine'
+      AND EXISTS (
+          SELECT 1 FROM reservation r WHERE r.trajet_id = t.id
+      )
+");
+$stmt_check->execute([':id_vehicule' => $vehicule['id']]);
+$trajets_non_supprimables = $stmt_check->fetchColumn();
+$can_delete = ($trajets_non_supprimables == 0);
+
 ?>
 
 

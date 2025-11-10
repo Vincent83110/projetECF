@@ -345,7 +345,7 @@ if (isset($_COOKIE['trajets_confirmes'])) {
                         <span class="wait"></span>
                     </div>
                 <div class="containerForm">
-                <?php if ($trajet['statut'] !== 'en_cours'): ?>
+                <?php if (trim($trajet['statut']) !== 'en_cours'): ?>
                     <form method="POST" action="<?= BASE_URL ?>/actions/AnnulerReservationChauffeur.php" class="formAnnulation">
                         <?= csrf_input() ?>
     <input type="hidden" name="trajet_id" value="<?= htmlspecialchars($trajet['id']) ?>">
@@ -367,9 +367,9 @@ if (isset($_COOKIE['trajets_confirmes'])) {
 </form>
 <?php endif; ?>
 <div class="bloc-action-trajet">
-    <?php $statut = $trajet['statut'] ?? null; ?>
+    <?php $statut = $trajet['statut']; ?>
 
-    <?php if (empty($statut)): ?>
+    <?php if ($statut === 'en_attente'): ?>
         <!-- Formulaire pour lancer ce trajet -->
         <form method="POST" action="<?= BASE_URL ?>/actions/LancerTrajetChauffeur.php" class="formAnnulation">
             <?= csrf_input() ?>
@@ -403,6 +403,7 @@ if (isset($_COOKIE['trajets_confirmes'])) {
         </form>
     <?php endif; ?>
 </div>
+
 </div>
                 </div>
                 <div class="col2div1">
@@ -610,9 +611,9 @@ if (isset($_COOKIE['trajets_confirmes'])) {
 </form>
 <?php endif; ?>
 <div class="bloc-action-trajet">
-    <?php $statut = $trajet['statut'] ?? null; ?>
+    <?php $statut = $trajet['statut']; ?>
 
-    <?php if (empty($statut)): ?>
+    <?php if ($statut === 'en_attente'): ?>
         <!-- Formulaire pour lancer ce trajet -->
         <form method="POST" action="<?= BASE_URL ?>/actions/LancerTrajetChauffeur.php" class="formAnnulation">
             <?= csrf_input() ?>

@@ -17,7 +17,7 @@ document.getElementById('searchForm').addEventListener('submit', function (e) {
     console.log("Requête envoyée avec pseudo :", pseudo);
 
     // Vérification du statut utilisateur
-    fetch(`GetStatut.php?username=${encodeURIComponent(pseudo)}`)
+    fetch(`${BASE_URL}/actions/GetStatut.php?username=${encodeURIComponent(pseudo)}`)
       .then(res => res.json())
       .then(data => {
         console.log("Réponse reçue :", data);

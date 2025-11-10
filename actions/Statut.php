@@ -4,7 +4,7 @@ include __DIR__ . '/../includes/Csrf.php';
 
 // Vérification que l'utilisateur est connecté
 if (!isset($_SESSION['user'])) {
-    header("Location:" . BASE_URL . "Connexion.php");
+    header("Location:" . BASE_URL . "/actions/Connexion.php");
     exit;
 }
 

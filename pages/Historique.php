@@ -50,38 +50,55 @@ $stmt2->execute([':id_utilisateur' => $userId]);
 $reservationsPassees = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
 // Nettoyage de la base de données : suppression des trajets terminés en trop (garder seulement les 10 derniers)
-$pdo->prepare("
-    DELETE FROM infos_trajet 
+// Récupérer les IDs des 10 derniers trajets terminés
+$stmtKeep = $pdo->prepare("
+    SELECT id 
+    FROM infos_trajet 
     WHERE id_utilisateur = :id 
-    AND statut = 'termine'
-    AND id NOT IN (
-        SELECT id FROM (
-            SELECT id 
-            FROM infos_trajet 
-            WHERE id_utilisateur = :id 
-            AND statut = 'termine' 
-            ORDER BY date_depart DESC 
-            LIMIT 10
-        ) as t
-    )
-")->execute([':id' => $userId]);
+    AND statut = 'termine' 
+    ORDER BY date_depart DESC 
+    LIMIT 10
+");
+$stmtKeep->execute([':id' => $userId]);
+$keepIds = $stmtKeep->fetchAll(PDO::FETCH_COLUMN);
 
-// Nettoyage des réservations terminées en trop (garder seulement les 10 dernières)
-$pdo->prepare("
-    DELETE FROM reservation 
+if (!empty($keepIds)) {
+    // Supprimer tout sauf ces 10
+    $placeholders = implode(',', array_fill(0, count($keepIds), '?'));
+    $sqlDelete = "
+        DELETE FROM infos_trajet 
+        WHERE id_utilisateur = ? 
+        AND statut = 'termine' 
+        AND id NOT IN ($placeholders)
+    ";
+    $stmtDelete = $pdo->prepare($sqlDelete);
+    $stmtDelete->execute(array_merge([$userId], $keepIds));
+}
+
+
+$stmtKeep2 = $pdo->prepare("
+    SELECT id 
+    FROM reservation 
     WHERE user_id = :id_utilisateur 
-    AND statut = 'termine'
-    AND id NOT IN (
-        SELECT id FROM (
-            SELECT id 
-            FROM reservation 
-            WHERE user_id = :id_utilisateur 
-            AND statut = 'termine' 
-            ORDER BY id DESC 
-            LIMIT 10
-        ) as r
-    )
-")->execute([':id_utilisateur' => $userId]);
+    AND statut = 'termine' 
+    ORDER BY id DESC 
+    LIMIT 10
+");
+$stmtKeep2->execute([':id_utilisateur' => $userId]);
+$keepIds2 = $stmtKeep2->fetchAll(PDO::FETCH_COLUMN);
+
+if (!empty($keepIds2)) {
+    $placeholders2 = implode(',', array_fill(0, count($keepIds2), '?'));
+    $sqlDelete2 = "
+        DELETE FROM reservation 
+        WHERE user_id = ? 
+        AND statut = 'termine' 
+        AND id NOT IN ($placeholders2)
+    ";
+    $stmtDelete2 = $pdo->prepare($sqlDelete2);
+    $stmtDelete2->execute(array_merge([$userId], $keepIds2));
+}
+
 
 ?>
 

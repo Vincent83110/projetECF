@@ -52,7 +52,7 @@ try {
     $_SESSION['user'] = array_merge($user, $admin_info);
 
     // Redirection vers l'espace administrateur
-    header("Location: " . BASE_URL ."EspaceAdministrateur.php");
+    header("Location: " . BASE_URL ."/pages/EspaceAdministrateur.php");
     exit;
 
 } catch (PDOException $e) {

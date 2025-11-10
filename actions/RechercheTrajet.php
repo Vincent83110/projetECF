@@ -1,25 +1,22 @@
 <?php 
 session_start();
 header('Content-Type: application/json');
-
 require_once __DIR__ . '/../includes/Config.php';
 
-// 🚫 Interdire les chauffeurs
-if (isset($_SESSION['user']['statut']) && $_SESSION['user']['statut'] === 'chauffeur') {
+// Si connecté ET chauffeur → bloqué
+if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'chauffeur') {
     http_response_code(403);
-    echo json_encode(['error' => 'Accès interdit : les chauffeurs ne peuvent pas rechercher de trajets.']);
+    echo json_encode(['error' => 'Les chauffeurs ne peuvent pas effectuer de recherche de trajets.']);
     exit;
 }
 
-// ✅ Vérifier que l'utilisateur a un rôle autorisé
-if (
-    !isset($_SESSION['user']) ||
-    !in_array($_SESSION['user']['role'], ['employe', 'admin', 'utilisateur'], true)
-) {
+// Si connecté et rôle invalide → bloqué
+if (isset($_SESSION['user']) && !in_array($_SESSION['user']['role'], ['employe', 'admin', 'utilisateur'], true)) {
     http_response_code(403);
     echo json_encode(['error' => 'Accès refusé']);
     exit;
 }
+
 
 try {
     // Connexion PostgreSQL
@@ -59,7 +56,7 @@ try {
           AND t.adresse_arrive ILIKE :destination 
           AND t.date_depart = :date 
           AND t.nombre_place >= :passengers
-          AND (t.statut IS NULL)
+          AND t.statut = 'en_attente'
         ORDER BY t.date_depart, t.heure_depart
     ";
 
@@ -82,7 +79,7 @@ try {
               AND t.adresse_arrive ILIKE :destination
               AND t.nombre_place >= :passengers
               AND t.date_depart > :current_date
-              AND (t.statut IS NULL)
+              AND t.statut = 'en_attente'
             ORDER BY ABS(DATE_PART('day', t.date_depart::timestamp - :current_date::timestamp)) ASC
             LIMIT 1
         ";

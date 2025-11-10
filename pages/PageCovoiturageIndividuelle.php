@@ -276,7 +276,7 @@ try {
 <?php elseif ($estConnecte && $role === 'admin'): ?>
     <a href="#" class="linkNav">Admin</a>
     <a href="<?= htmlspecialchars($lienCompte) ?>" class="linkNav">Compte Admin</a>
-    <a href="<?= BASE_URL ?>/pages/LogoutAdmin.php" class="linkNav">Déconnexion</a>
+    <a href="<?= BASE_URL ?>/actions/LogoutAdmin.php" class="linkNav">Déconnexion</a>
 
 <?php elseif ($estConnecte): ?>
     <a href="#" class="linkNav"><?= htmlspecialchars($user['username'] ?? 'Utilisateur') ?></a>
@@ -285,7 +285,7 @@ try {
     <a href="<?= BASE_URL ?>/pages/Historique.php" class="linkNav">Historique</a>
     <a href="<?= BASE_URL ?>/actions/Logout.php" class="linkNav">Déconnexion</a>
 <?php elseif (!$estConnecte): ?>
-         <a href="ConnexionUtilisateur.php" class="linkNav">Connexion</a>
+                <a href="<?= BASE_URL ?>/pages/ConnexionUtilisateur.php" class="linkNav">Connexion</a>
                   <a href="<?= BASE_URL ?>/pages/InscriptionECF.php" class="linkNav">Inscription</a>
                   <hr>
                   <a href="<?= BASE_URL ?>/pages/ConnexionEmploye.php" class="linkNav">Compte Pro</a>
