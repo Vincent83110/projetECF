@@ -14,8 +14,11 @@ RUN pecl install mongodb \
 
 # Copier les fichiers du projet dans le container
 COPY . /var/www/html/
-
 # Installer Composer
+RUN apt-get update && apt-get install -y unzip curl \
+    && curl -sS https://getcomposer.org/installer | php \
+    && mv composer.phar /usr/local/bin/composer
+
 RUN composer install --no-dev --optimize-autoloader
 
 # Définir le répertoire de travail
