@@ -62,8 +62,5 @@ htdocs/test/
 *.sketch
 *.xd
 *.fig
-*.png
-*.jpg
-*.jpeg
 *.pdf
 *.docx
