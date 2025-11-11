@@ -1,3 +1,6 @@
+# Définir le fichier par défaut
+DirectoryIndex AccueilECF.php
+
 # Activer la réécriture d'URL
 RewriteEngine On
 
