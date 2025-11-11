@@ -1,0 +1,12 @@
+# Activer la réécriture d'URL
+RewriteEngine On
+
+# Rediriger toutes les requêtes vers AccueilECF.php si le fichier ou dossier n'existe pas
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ AccueilECF.php [L]
+
+# Autoriser l'accès à tous les fichiers
+<FilesMatch ".*">
+    Require all granted
+</FilesMatch>
