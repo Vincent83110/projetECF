@@ -15,6 +15,9 @@ RUN pecl install mongodb \
 # Copier les fichiers du projet dans le container
 COPY . /var/www/html/
 
+# Installer Composer
+RUN composer install --no-dev --optimize-autoloader
+
 # Définir le répertoire de travail
 WORKDIR /var/www/html
 
