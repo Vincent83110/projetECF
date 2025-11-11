@@ -1,7 +1,7 @@
 <?php
 // Inclusion de la protection des en-têtes
-require_once __DIR__ . '/includes/Config.php';
-include __DIR__ . '/includes/HeaderProtection.php';
+require_once __DIR__ . '/../includes/Config.php';
+include __DIR__ . '/../includes/HeaderProtection.php';
 
 ?>
 <!DOCTYPE html>
