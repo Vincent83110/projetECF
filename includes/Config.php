@@ -1,6 +1,6 @@
 <?php
 // URL racine du projet
-define('BASE_URL','/projetECF');
+define('BASE_URL', getenv('BASE_URL') ?: '');
 
 // --- PostgreSQL ---
 $host = getenv('POSTGRES_HOST');
