@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../includes/Config.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 session_start();
 
@@ -14,7 +15,7 @@ $senderId = (int)$_POST['from_user_id'];
 
 try {
     // Connexion à MongoDB
-    $mongo = new MongoDB\Client("mongodb+srv://pierrevincent720_db_user:Fromage300%40@eco-ride-cluster.7yd4ukm.mongodb.net/eco_ride");
+    $mongo = new MongoDB\Client($mongoUri);
     $collection = $mongo->eco_ride->messages;
 
     // Compter d'abord les messages non lus

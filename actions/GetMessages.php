@@ -14,7 +14,7 @@ $userId = $_SESSION['user']['id'];
 $with = (int)$_GET['with'];
 
 // Connexion à MongoDB et PostgreSQL
-$mongo = new MongoDB\Client("mongodb+srv://pierrevincent720_db_user:Fromage300%40@eco-ride-cluster.7yd4ukm.mongodb.net/eco_ride");
+$mongo = new MongoDB\Client($mongoUri);
 $collection = $mongo->eco_ride->messages;
 
 $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $usernamePgadmin, $passwordPgadmin);

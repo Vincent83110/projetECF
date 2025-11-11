@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../includes/Config.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 include __DIR__ . '/../includes/Csrf.php';
+
 header('Content-Type: application/json; charset=utf-8');
 
 // Vérification que l'utilisateur est connecté
@@ -65,7 +66,7 @@ if (!$stmt->fetch()) {
 // Connexion et insertion dans MongoDB
 try {
     // Connexion à MongoDB
-    $mongo = new MongoDB\Client("mongodb+srv://pierrevincent720_db_user:Fromage300%40@eco-ride-cluster.7yd4ukm.mongodb.net/eco_ride");
+    $mongo = new MongoDB\Client($mongoUri);
     // Sélection de la collection messages
     $collection = $mongo->eco_ride->messages;
 

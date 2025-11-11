@@ -3,6 +3,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../includes/Config.php';
 include __DIR__ . '/../includes/Csrf.php';
 
+
 // Importation des bibliothèques pour l'envoi d'emails
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;

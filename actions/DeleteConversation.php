@@ -1,5 +1,6 @@
 <?php
 // Importation de MongoDB
+require_once __DIR__ . '/../includes/Config.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 session_start();
 
@@ -16,7 +17,7 @@ if (!$otherUserId) {
 
 try {
     // Connexion à MongoDB
-    $mongo = new MongoDB\Client("mongodb+srv://pierrevincent720_db_user:Fromage300%40@eco-ride-cluster.7yd4ukm.mongodb.net/eco_ride");
+    $mongo = new MongoDB\Client($mongoUri);
     $db = $mongo->eco_ride;
     
     // 1. Suppression des messages entre les deux utilisateurs
