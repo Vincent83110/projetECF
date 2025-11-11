@@ -3,5 +3,6 @@ services:
     name: projetECF
     env: php
     plan: free
-    buildCommand: ""
+    buildCommand: |
+      composer install --no-dev --optimize-autoloader
     startCommand: php -S 0.0.0.0:$PORT -t . AccueilECF.php
