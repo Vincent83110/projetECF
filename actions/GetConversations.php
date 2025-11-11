@@ -5,7 +5,7 @@ session_start();
 $currentUserId = $_SESSION['user']['id'];
 
 // Connexion à MongoDB et PostgreSQL
-$mongo = new MongoDB\Driver\Manager("mongodb://localhost:27017");
+$mongo = new MongoDB\Driver\Manager("mongodb+srv://pierrevincent720_db_user:Fromage300%40@eco-ride-cluster.7yd4ukm.mongodb.net/eco_ride");
 $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $usernamePgadmin, $passwordPgadmin);
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 

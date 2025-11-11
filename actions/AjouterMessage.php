@@ -65,7 +65,7 @@ if (!$stmt->fetch()) {
 // Connexion et insertion dans MongoDB
 try {
     // Connexion à MongoDB
-    $mongo = new MongoDB\Client("mongodb://localhost:27017");
+    $mongo = new MongoDB\Client("mongodb+srv://pierrevincent720_db_user:Fromage300%40@eco-ride-cluster.7yd4ukm.mongodb.net/eco_ride");
     // Sélection de la collection messages
     $collection = $mongo->eco_ride->messages;
 

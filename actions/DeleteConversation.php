@@ -16,7 +16,7 @@ if (!$otherUserId) {
 
 try {
     // Connexion à MongoDB
-    $mongo = new MongoDB\Client("mongodb://localhost:27017");
+    $mongo = new MongoDB\Client("mongodb+srv://pierrevincent720_db_user:Fromage300%40@eco-ride-cluster.7yd4ukm.mongodb.net/eco_ride");
     $db = $mongo->eco_ride;
     
     // 1. Suppression des messages entre les deux utilisateurs
