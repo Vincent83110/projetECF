@@ -132,7 +132,7 @@ try {
         $numero_trajet = $info['numero_trajet'] ?? 'inconnu';
 
         // Envoi d'un email au chauffeur si ses informations sont disponibles
-        /*if ($chauffeur && !empty($chauffeur['email'])) {
+        if ($chauffeur && !empty($chauffeur['email'])) {
             
             $mail = new PHPMailer(true);
             try {
@@ -141,15 +141,15 @@ try {
 
                  // Configuration du serveur SMTP
                  $mail->isSMTP();
-                 $mail->Host       = 'smtp.gmail.com';
+                 $mail->Host       = 'smtp-relay.brevo.com';
                  $mail->SMTPAuth   = true;
-                 $mail->Username   = 'pierrevincent720@gmail.com'; 
-                 $mail->Password   = 'tnhv khps ljpg inua';
+                 $mail->Username   = '9b6d21001@smtp-brevo.com'; 
+                 $mail->Password   = '6yIHW1pCNrvSFsjD';
                  $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                  $mail->Port       = 587;
 
                 // Configuration de l'expéditeur et du destinataire
-                $mail->setFrom('pierrevincent720@gmail.com', 'ECO RIDE');
+                $mail->setFrom('9b6d21001@smtp-brevo.com', 'ECO RIDE');
                 $mail->addAddress($chauffeur['email'], $chauffeur['username']);
                 $mail->isHTML(true);
                 $mail->Subject = 'Nouvelle réservation sur votre trajet';
@@ -172,7 +172,7 @@ try {
                 // Journalisation en cas d'erreur d'envoi d'email
                 error_log("Erreur envoi mail chauffeur : " . $mail->ErrorInfo);
             }
-        }*/
+        }
 
         // Validation de la transaction
         $pdo->commit();
