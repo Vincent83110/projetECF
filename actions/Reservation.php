@@ -132,7 +132,7 @@ try {
         $numero_trajet = $info['numero_trajet'] ?? 'inconnu';
 
         // Envoi d'un email au chauffeur si ses informations sont disponibles
-        if ($chauffeur && !empty($chauffeur['email'])) {
+        /*if ($chauffeur && !empty($chauffeur['email'])) {
             
             $mail = new PHPMailer(true);
             try {
@@ -172,7 +172,7 @@ try {
                 // Journalisation en cas d'erreur d'envoi d'email
                 error_log("Erreur envoi mail chauffeur : " . $mail->ErrorInfo);
             }
-        }
+        }*/
 
         // Validation de la transaction
         $pdo->commit();
