@@ -35,10 +35,6 @@ try {
         $reservationId = $_POST['reservation_id'] ?? null;
         $userId = $_SESSION['user']['id'];
 
-        // Debug : affichage des données reçues
-        echo "reservation_id reçu : " . htmlspecialchars($reservationId) . "<br>";
-        echo "user_id en session : " . htmlspecialchars($userId) . "<br>";
-
         // Vérification des données obligatoires
         if (!$reservationId) {
             die("Données manquantes.");

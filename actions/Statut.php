@@ -32,11 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['statut'])) {
     $password = $_SESSION['user']['password'];
     $username = $_SESSION['user']['username'];
 
-    // Vérification que le mot de passe et le nom d'utilisateur sont définis
-    if (empty($password) || empty($username)) {
-        echo "Erreur : Le mot de passe ou le nom d'utilisateur n'est pas défini.";
-        exit;
-    }
+ // Vérification que le mot de passe et le nom d'utilisateur sont définis
+if (empty($password) || empty($username)) {
+    $_SESSION['error'] = "Le mot de passe ou le nom d'utilisateur n'est pas défini.";
+    header("Location: " . BASE_URL . "/pages/Connexion.php");
+    exit;
+}
 
     try {
         // Connexion à la base de données PostgreSQL
@@ -74,8 +75,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['statut'])) {
         $_SESSION['user']['statut'] = $statutChoisi;
 
     } catch (PDOException $e) {
-        echo "Erreur : " . $e->getMessage();
-        exit;
+        $_SESSION['error'] = "Erreur : " . $e->getMessage();
+    header("Location: " . BASE_URL . "/pages/ChoixStatut.php");
+    exit;
     }
 
     // Redirection selon le statut choisi

@@ -11,7 +11,6 @@ session_start();
 // Vérification des paramètres requis
 if (!isset($_SESSION['user']['id']) || !isset($_POST['from_user_id'])) {
     http_response_code(400);
-    echo json_encode(['error' => 'Données manquantes']);
     exit;
 }
 
@@ -42,21 +41,21 @@ try {
         );
     }
 
-    echo json_encode([
-        'success' => true,
-        'modified_count' => $unreadCount
-    ]);
+   // Après la mise à jour dans MongoDB
+header('Content-Type: application/json');
+header('Cache-Control: no-store');
 
-    // Après la mise à jour dans MongoDB
-    if ($unreadCount > 0) {
-        // Mettre à jour le cache côté client si nécessaire
-        header('Cache-Control: no-store');
-    }
+// Préparer toutes les données à retourner
+$response = [
+    'success' => true,
+    'modified_count' => $unreadCount,
+    'unread_count' => $unreadCount // ou tout autre info nécessaire
+];
 
-    echo json_encode([
-        'success' => true,
-        'unread_count' => $unreadCount // Retourne le nombre de messages marqués comme lus
-    ]);
+// Retourner le JSON **une seule fois**
+echo json_encode($response);
+exit;
+
     
 } catch (Exception $e) {
     http_response_code(500);

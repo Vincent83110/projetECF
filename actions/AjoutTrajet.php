@@ -11,7 +11,6 @@ include __DIR__ . '/../includes/Csrf.php';
 // Vérification qu'un utilisateur est connecté et a un ID
 if (!isset($_SESSION['user']) || !isset($_SESSION['user']['id'])) {
     header('HTTP/1.1 401 Unauthorized');
-    echo json_encode(['success' => false, 'error' => 'Non autorisé']);
     exit;
 }
 
@@ -55,21 +54,10 @@ $stmtCredits = $pdo->prepare("SELECT credits FROM utilisateurs WHERE id = :id");
 $stmtCredits->execute([':id' => $userId]);
 $currentCredits = $stmtCredits->fetchColumn();
 
-// Vérification que l'utilisateur a assez de crédits (2 par trajet)
-if ($currentCredits < 2) {
-    echo json_encode(['success' => false, 'error' => 'Vous n\'avez pas assez de crédits pour créer un trajet.']);
-    exit;
-}
-
 // Vérification que l'utilisateur possède au moins un véhicule
 $stmtVehicules = $pdo->prepare("SELECT COUNT(*) FROM vehicules WHERE user_id = :user_id");
 $stmtVehicules->execute([':user_id' => $userId]);
 $nbVehicules = $stmtVehicules->fetchColumn();
-
-if ($nbVehicules == 0) {
-    echo json_encode(['success' => false, 'error' => 'Vous devez enregistrer un véhicule avant de publier un trajet.']);
-    exit;
-}
 
     // Traitement uniquement pour les requêtes POST
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -78,12 +66,6 @@ if ($nbVehicules == 0) {
     // Récupération des trajets et préférences depuis le formulaire
     $trajets = $_POST['trajets'] ?? [];
     $preferencesGlobales = $_POST['preferences'] ?? [];
-
-    // Vérification qu'au moins un trajet a été reçu
-    if (empty($trajets) || !is_array($trajets)) {
-        echo json_encode(['success' => false, 'error' => 'Aucun trajet reçu.']);
-        exit;
-    }
 
     // Calcul du coût total (2 crédits par trajet)
     $nbTrajets = count($trajets);
@@ -109,18 +91,6 @@ foreach ($trajets as $i => $trajet) {
     if ($nombre_place === '' || !is_numeric($nombre_place) || (int)$nombre_place <= 0) $errors[] = "Trajet #" . ($i+1) . " : Nombre de places obligatoire et positif.";
     if ($prix === '' || !is_numeric($prix) || (float)$prix < 0) $errors[] = "Trajet #" . ($i+1) . " : Prix obligatoire et positif.";
     if ($date_arrive !== '' && $date_depart > $date_arrive) $errors[] = "Trajet #" . ($i+1) . " : La date d'arrivée doit être postérieure à la date de départ.";
-
-    // Retour des erreurs si validation échoue
-    if (!empty($errors)) {
-        echo json_encode(['success' => false, 'errors' => $errors]);
-        exit;
-    }
-}
-
-// Vérification finale des crédits
-if ($currentCredits < $coutTotal) {
-    echo json_encode(['success' => false, 'error' => "Vous n'avez pas assez de crédits pour publier $nbTrajets trajet(s)."]);
-    exit;
 }
 
 // Déduction des crédits seulement après validation réussie
@@ -170,12 +140,6 @@ $stmtUpdateCredits->execute([
         if ($nombre_place === '' || !is_numeric($nombre_place) || (int)$nombre_place <= 0) $errors[] = "Nombre de places obligatoire et positif.";
         if ($prix === '' || !is_numeric($prix) || (float)$prix < 0) $errors[] = "Prix obligatoire et positif.";
         if ($date_arrive !== '' && $date_depart > $date_arrive) $errors[] = "La date d'arrivée doit être postérieure à la date de départ.";
-
-        // Arrêt si erreur de validation
-        if (!empty($errors)) {
-            echo json_encode(['success' => false, 'errors' => $errors]);
-            exit;
-        }
 
         // Génération d'un numéro de trajet unique
         $numero_trajet = generateNumeroTrajet($pdo);
@@ -256,12 +220,10 @@ $stmtCreditUse->execute([$userId]);
     } else {
         // Réponse pour méthode non autorisée
         header('HTTP/1.1 405 Method Not Allowed');
-        echo json_encode(['success' => false, 'error' => 'Méthode non autorisée']);
         exit;
     }
 } catch (PDOException $e) {
     // Gestion des erreurs de base de données
     header('Content-Type: application/json');
-    echo json_encode(['success' => false, 'error' => 'Erreur base de données : ' . $e->getMessage()]);
     exit;
 }

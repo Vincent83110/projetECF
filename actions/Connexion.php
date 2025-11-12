@@ -27,29 +27,11 @@ try {
     $formEmail = $_POST['email'] ?? null;
     $formPassword = $_POST['password'] ?? null;
 
-    // Validation des champs obligatoires
-    if (!$formEmail || !$formPassword) {
-        echo "Veuillez remplir tous les champs.";
-        exit;
-    }
-
     // Recherche de l'utilisateur dans la table users
     $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email");
     $stmt->bindValue(':email', $formEmail);
     $stmt->execute();
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    // Vérification si l'utilisateur existe
-    if (!$user) {
-        echo "Aucun utilisateur trouvé pour cet email.";
-        exit;
-    }
-
-    // Vérification du mot de passe
-    if (!password_verify($formPassword, $user['password'])) {
-        echo "Mot de passe incorrect.";
-        exit;
-    }
 
     // Régénération de l'ID de session pour la sécurité
     session_regenerate_id(true);
@@ -71,11 +53,6 @@ try {
             $stmt_admin->bindValue(':email', $formEmail);
             $stmt_admin->execute();
             $admin_info = $stmt_admin->fetch(PDO::FETCH_ASSOC);
-
-            if (!$admin_info) {
-                echo "Aucun administrateur trouvé dans la table 'administrateur'.";
-                exit;
-            }
 
             // Construction de la session administrateur
             $_SESSION['user'] = array_merge($user, $admin_info);
@@ -128,11 +105,6 @@ try {
             $stmt_statut->bindValue(':email', $formEmail);
             $stmt_statut->execute();
             $statut_info = $stmt_statut->fetch(PDO::FETCH_ASSOC);
-
-            if (!$statut_info || !isset($statut_info['statut']) || !isset($statut_info['username'])) {
-                echo "Aucun statut trouvé pour cet utilisateur.";
-                exit;
-            }
 
             // Construction de la session utilisateur
             $_SESSION['user'] = array_merge($user, $statut_info);

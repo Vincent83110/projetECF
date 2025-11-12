@@ -19,39 +19,10 @@ try {
     $email = $_POST['email'] ?? null;
     $pass = $_POST['password'] ?? null;
 
-    // Vérification que tous les champs sont remplis
-    if (!$email || !$pass) {
-        echo "Veuillez remplir tous les champs.";
-        exit;
-    }
-
     // Recherche de l'utilisateur dans la table users avec rôle admin
     $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email AND role = 'admin'");
     $stmt->execute([':email' => $email]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    // Vérification si l'administrateur existe
-    if (!$user) {
-        echo "Administrateur non trouvé.";
-        exit;
-    }
-
-    // Vérification du mot de passe hashé
-    if (!password_verify($pass, $user['password'])) {
-        echo "Mot de passe incorrect.";
-        exit;
-    }
-
-    // Recherche des informations détaillées dans la table administrateur
-    $stmt2 = $pdo->prepare("SELECT * FROM administrateur WHERE email = :email");
-    $stmt2->execute([':email' => $email]);
-    $admin_info = $stmt2->fetch(PDO::FETCH_ASSOC);
-
-    // Vérification si les informations administrateur existent
-    if (!$admin_info) {
-        echo "Informations administrateur introuvables.";
-        exit;
-    }
 
     // Fusion des données utilisateur et administrateur dans la session
     $_SESSION['user'] = array_merge($user, $admin_info);
