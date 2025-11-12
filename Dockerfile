@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     unzip \
     git \
+    ca-certificates \
     && docker-php-ext-install pdo pdo_pgsql
 
 # Installer l'extension MongoDB pour PHP
