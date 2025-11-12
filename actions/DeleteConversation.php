@@ -9,7 +9,7 @@ if (file_exists(__DIR__ . '/../includes/ConfigLocal.php')) {
 require_once __DIR__ . '/../vendor/autoload.php';
 session_start();
 
-// Récupération des données (version compatible JSON et form-data)
+// Récupération des données 
 $data = json_decode(file_get_contents('php://input'), true) ?: $_POST;
 $currentUserId = $_SESSION['user']['id'];
 $otherUserId = $data['user_id'] ?? null;

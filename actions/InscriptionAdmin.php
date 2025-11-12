@@ -23,7 +23,7 @@ try {
     $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $usernamePgadmin, $passwordPgadmin);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Informations de l'administrateur à insérer (en dur ici)
+    // Informations de l'administrateur à insérer
     $adminEmail = 'admin9@gmail.com';
     $adminPassword = 'Admin13@';
     $role = 'admin';
@@ -58,7 +58,7 @@ try {
     // Récupération de l'ID de l'utilisateur créé
     $userId = $stmtUser->fetchColumn();
 
-    // 2. Insertion dans `administrateur` avec le même email et mot de passe
+    // 2. Insertion dans `administrateur`
     $stmtAdmin = $pdo->prepare("
         INSERT INTO administrateur (email, password)
         VALUES (:email, :password)

@@ -422,12 +422,12 @@ input, button{
     position: relative;
   }
   
-  /* Hide the links inside the navigation menu (except for logo/home) */
+  /* Cache les liens dans le menu (sauf le logo/accueil) */
   .topnav #myLinks {
     display: none;
   }
   
-  /* Style navigation menu links */
+  /* Style liens de navigation dans le menu */
   .topnav a {
     color: white;
     padding: 14px 16px;
@@ -436,7 +436,7 @@ input, button{
     display: block;
   }
   
-  /* Style the hamburger menu */
+  /* Style du menu hamburger */
   .topnav a.icon {
     background: #2A7E12;
     display: block;
@@ -445,13 +445,13 @@ input, button{
     top: 0;
   }
   
-  /* Add a grey background color on mouse-over */
+  /* Ajoute un arrière plan gris sur le survole de la souris*/
   .topnav a:hover {
     background-color: #2C9A0D;
     color: black;
   }
   
-  /* Style the active link (or home/logo) */
+  /* Style du lien actif (ou accueil/logo) */
   .active {
     background-color: #04AA6D;
     color: white;
@@ -851,7 +851,7 @@ input, button{
     }
 
     .text-block.expanded {
-        max-height: 600px; /* ou assez grand pour afficher le contenu */
+        max-height: 600px; 
       }
 
       .activeSeeMore{
@@ -920,7 +920,7 @@ input, button{
     }
     
     .text-block.expanded {
-        max-height: 600px; /* ou assez grand pour afficher le contenu */
+        max-height: 600px; 
       }
 
       .activeSeeMore{

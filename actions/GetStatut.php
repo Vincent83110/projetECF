@@ -20,7 +20,7 @@ try {
         exit;
     }
 
-    // Récupération du statut utilisateur (insensible à la casse)
+    // Récupération du statut utilisateur
     $stmt = $pdo->prepare("SELECT statut FROM utilisateurs WHERE LOWER(username) = LOWER(:username)");
     $stmt->execute([':username' => $pseudo]);
     $result = $stmt->fetch(PDO::FETCH_ASSOC);

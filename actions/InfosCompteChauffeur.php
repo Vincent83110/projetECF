@@ -13,7 +13,7 @@ try {
 
     // Récupération des informations de l'utilisateur depuis la session
     $user = $_SESSION['user'] ?? null;
-    $userIdUsers = $user['id'] ?? null; // id de la table users, important!
+    $userIdUsers = $user['id'] ?? null; // id de la table users
 
     // Redirection si l'utilisateur n'est pas connecté
     if (!$userIdUsers) {

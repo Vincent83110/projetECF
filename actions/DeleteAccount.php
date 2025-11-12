@@ -31,7 +31,7 @@ try {
     $target_username = $_GET['username'] ?? null;
 
     /* =========================================================
-       CAS 1 : ADMIN supprime un utilisateur classique (par username)
+       CAS 1 : ADMIN supprime un utilisateur classique par username
     ============================================================ */
     if ($role === 'admin' && $target_username) {
         $stmt = $pdo->prepare("SELECT id FROM utilisateurs WHERE username = :pseudo");

@@ -23,7 +23,7 @@ try {
         (header("Location: " . BASE_URL . "/AccueilECF.php"));
     }
 
-    // Récupération de l'ID du profil à afficher (soit depuis GET, soit depuis la session)
+    // Récupération de l'ID du profil à afficher
     $profil_id = isset($_GET['id']) ? (int)$_GET['id'] : $_SESSION['user']['id'];
 
     // 1. Recherche d'abord dans la table utilisateurs

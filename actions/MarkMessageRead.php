@@ -52,7 +52,7 @@ $response = [
     'unread_count' => $unreadCount // ou tout autre info nécessaire
 ];
 
-// Retourner le JSON **une seule fois**
+// Retourner le JSON
 echo json_encode($response);
 exit;
 
