@@ -1,7 +1,12 @@
 <?php
 // Chargement des dépendances et fichiers de configuration
 require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../includes/Config.php';
+if (file_exists(__DIR__ . '/../includes/ConfigLocal.php')) {
+    require_once __DIR__ . '/../includes/ConfigLocal.php'; // environnement local
+} else {
+    require_once __DIR__ . '/../includes/Config.php'; // pour Render
+}
+
 include __DIR__ . '/../includes/Csrf.php';
 
 // Importation des classes PHPMailer pour l'envoi d'emails

@@ -7,7 +7,12 @@ $notifications = [];
 if (isset($_SESSION['user']) && isset($_SESSION['user']['id']) && !empty($_SESSION['user']['id'])) {
     
     // Inclusion du fichier de configuration de la base de données
-    require_once __DIR__ . '/../includes/Config.php';
+    if (file_exists(__DIR__ . '/../includes/ConfigLocal.php')) {
+    require_once __DIR__ . '/../includes/ConfigLocal.php'; // environnement local
+} else {
+    require_once __DIR__ . '/../includes/Config.php'; // pour Render
+}
+    
 
     try {
         // Connexion à la base de données PostgreSQL

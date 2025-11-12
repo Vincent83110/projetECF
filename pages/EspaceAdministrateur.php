@@ -1,7 +1,12 @@
 <?php
 
 // Inclusion des fichiers nécessaires
-require_once __DIR__ . '/../includes/Config.php';
+if (file_exists(__DIR__ . '/../includes/ConfigLocal.php')) {
+    require_once __DIR__ . '/../includes/ConfigLocal.php'; // environnement local
+} else {
+    require_once __DIR__ . '/../includes/Config.php'; // pour Render
+}
+
 include __DIR__ . '/../includes/Auth.php';          // Gestion de l'authentification utilisateur
 include __DIR__ . '/../includes/HeaderProtection.php';      // Fonctions utilitaires
 include __DIR__ . '/../includes/Csrf.php';

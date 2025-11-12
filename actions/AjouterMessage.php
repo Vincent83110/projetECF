@@ -1,6 +1,11 @@
 <?php
 // Inclusion de l'autoloader Composer et de la protection CSRF
-require_once __DIR__ . '/../includes/Config.php';
+if (file_exists(__DIR__ . '/../includes/ConfigLocal.php')) {
+    require_once __DIR__ . '/../includes/ConfigLocal.php'; // environnement local
+} else {
+    require_once __DIR__ . '/../includes/Config.php'; // pour Render
+}
+
 require_once __DIR__ . '/../vendor/autoload.php';
 include __DIR__ . '/../includes/Csrf.php';
 

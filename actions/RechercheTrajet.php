@@ -1,7 +1,12 @@
 <?php 
 session_start();
 header('Content-Type: application/json');
-require_once __DIR__ . '/../includes/Config.php';
+if (file_exists(__DIR__ . '/../includes/ConfigLocal.php')) {
+    require_once __DIR__ . '/../includes/ConfigLocal.php'; // environnement local
+} else {
+    require_once __DIR__ . '/../includes/Config.php'; // pour Render
+}
+
 
 // Si connecté ET chauffeur → bloqué
 if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'chauffeur') {

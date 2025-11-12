@@ -1,6 +1,11 @@
 <?php 
 // Inclusion des fichiers nécessaires pour l'authentification, les informations du compte chauffeur, les notifications, les fonctions utilitaires, la sécurité et la configuration
-require_once __DIR__ . '/../includes/Config.php';
+if (file_exists(__DIR__ . '/../includes/ConfigLocal.php')) {
+    require_once __DIR__ . '/../includes/ConfigLocal.php'; // environnement local
+} else {
+    require_once __DIR__ . '/../includes/Config.php'; // pour Render
+}
+
 include __DIR__ . '/../includes/Auth.php';   // Gestion de l'authentification utilisateur
 include __DIR__ . '/../actions/Notif.php'; 
 include __DIR__ . '/../actions/InfosCompteChauffeur.php'; 

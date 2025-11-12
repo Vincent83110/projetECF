@@ -1,6 +1,11 @@
 <?php
 // Inclusions des fichiers de configuration et de sécurité
-require_once __DIR__ . '/../includes/Config.php';
+if (file_exists(__DIR__ . '/../includes/ConfigLocal.php')) {
+    require_once __DIR__ . '/../includes/ConfigLocal.php'; // environnement local
+} else {
+    require_once __DIR__ . '/../includes/Config.php'; // pour Render
+}
+
 include __DIR__ . '/../includes/Csrf.php';
 
 // Vérification qu'un utilisateur est connecté et a un ID

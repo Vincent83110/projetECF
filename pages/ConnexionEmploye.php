@@ -4,7 +4,12 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once __DIR__ . '/../includes/Config.php';
+if (file_exists(__DIR__ . '/../includes/ConfigLocal.php')) {
+    require_once __DIR__ . '/../includes/ConfigLocal.php'; // environnement local
+} else {
+    require_once __DIR__ . '/../includes/Config.php'; // pour Render
+}
+
 // Inclusion des fichiers de protection et sécurité
 include __DIR__ . '/../includes/HeaderProtection.php';
 include __DIR__ . '/../includes/Csrf.php';

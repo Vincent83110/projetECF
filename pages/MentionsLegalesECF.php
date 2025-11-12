@@ -1,6 +1,11 @@
 <?php 
 // Inclusion du fichier de protection d'en-tête
-require_once __DIR__ . '/../includes/Config.php';    
+if (file_exists(__DIR__ . '/../includes/ConfigLocal.php')) {
+    require_once __DIR__ . '/../includes/ConfigLocal.php'; // environnement local
+} else {
+    require_once __DIR__ . '/../includes/Config.php'; // pour Render
+}  
+  
 include __DIR__ . '/../includes/HeaderProtection.php';  // Fonctions utilitaires
 
 ?>

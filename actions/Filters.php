@@ -1,9 +1,13 @@
 <?php
+if (file_exists(__DIR__ . '/../includes/ConfigLocal.php')) {
+    require_once __DIR__ . '/../includes/ConfigLocal.php'; // environnement local
+} else {
+    require_once __DIR__ . '/../includes/Config.php'; // pour Render
+}
+
+
 // Définition du header pour une réponse JSON
 header('Content-Type: application/json; charset=utf-8');
-
-require_once __DIR__ . '/../includes/Config.php';
-
 try {
     // Connexion à la base de données PostgreSQL
     $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $usernamePgadmin, $passwordPgadmin);

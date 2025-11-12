@@ -9,7 +9,7 @@ desktop.ini
 #  Environnement / Configuration
 # ==============================
 .env
-config.local.php
+ConfigLocal.php
 config/*.local.php
 /secrets/
 /private/

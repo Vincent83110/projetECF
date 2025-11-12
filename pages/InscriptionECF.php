@@ -1,6 +1,11 @@
 <?php 
 // Inclusion des fichiers de sécurité et de protection CSRF
-require_once __DIR__ . '/../includes/Config.php';         
+if (file_exists(__DIR__ . '/../includes/ConfigLocal.php')) {
+    require_once __DIR__ . '/../includes/ConfigLocal.php'; // environnement local
+} else {
+    require_once __DIR__ . '/../includes/Config.php'; // pour Render
+} 
+        
 include __DIR__ . '/../includes/HeaderProtection.php';  // Fonctions utilitaires
 include __DIR__ . '/../includes/Csrf.php';
  ?>

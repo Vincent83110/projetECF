@@ -1,6 +1,11 @@
 <?php
 // Connexion à la base de données et inclusion de la protection CSRF
-require_once __DIR__ . '/../includes/Config.php';
+if (file_exists(__DIR__ . '/../includes/ConfigLocal.php')) {
+    require_once __DIR__ . '/../includes/ConfigLocal.php'; // environnement local
+} else {
+    require_once __DIR__ . '/../includes/Config.php'; // pour Render
+}
+
 include __DIR__ . '/../includes/Csrf.php';
 
 // Vérification que la méthode de requête est POST

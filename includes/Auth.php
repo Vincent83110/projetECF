@@ -4,7 +4,11 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once __DIR__ . '/Config.php';
+if (file_exists(__DIR__ . '/ConfigLocal.php')) {
+    require_once __DIR__ . '/ConfigLocal.php'; // environnement local
+} else {
+    require_once __DIR__ . '/Config.php'; // pour Render
+}
 
 // Variables par défaut pour l'état non connecté
 $estConnecte = false;

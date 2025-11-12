@@ -2,7 +2,12 @@
 // Démarrage de la session pour gérer l'état de connexion
 session_start();
 // Inclusion du fichier de configuration de la base de données
-require_once __DIR__ . '/../includes/Config.php';
+if (file_exists(__DIR__ . '/../includes/ConfigLocal.php')) {
+    require_once __DIR__ . '/../includes/ConfigLocal.php'; // environnement local
+} else {
+    require_once __DIR__ . '/../includes/Config.php'; // pour Render
+}
+
 
 try {
     // Connexion à la base de données PostgreSQL
