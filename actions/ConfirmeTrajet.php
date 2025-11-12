@@ -110,17 +110,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                              urlencode($trajetId) . "&user=" . urlencode($chauffeurUsername);
 
             foreach ($reservations as $user) {
-                try {
-                    $mail = new PHPMailer(true);
-                    // Configuration SMTP pour Gmail
-                    $mail->isSMTP();
-                    $mail->Host       = 'smtp.gmail.com';
-                    $mail->SMTPAuth   = true;
-                    $mail->Username   = 'pierrevincent720@gmail.com';
-                    $mail->Password   = 'tnhv khps ljpg inua';
-                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                    $mail->Port       = 587;
+               $mail = new PHPMailer(true);
+            try {
+                $mail->SMTPDebug = 0;  // Désactivation du debug SMTP
+                $mail->Debugoutput = function($str, $level) { error_log("SMTP DEBUG: $str"); };
 
+                 // Configuration du serveur SMTP
+                 $mail->isSMTP();
+                 $mail->Host       = 'smtp-relay.brevo.com';
+                 $mail->SMTPAuth   = true;
+                 $mail->Username   = '9b6d21001@smtp-brevo.com'; 
+                 $mail->Password   = '6yIHW1pCNrvSFsjD'; // clé api
+                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                 $mail->Port       = 587;
                     // Configuration de l'email
                     $mail->setFrom('pierrevincent720@gmail.com', 'ECO RIDE');
                     $mail->addAddress($user['email'], $user['username']);

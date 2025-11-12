@@ -144,12 +144,12 @@ try {
                  $mail->Host       = 'smtp-relay.brevo.com';
                  $mail->SMTPAuth   = true;
                  $mail->Username   = '9b6d21001@smtp-brevo.com'; 
-                 $mail->Password   = '6yIHW1pCNrvSFsjD';
+                 $mail->Password   = '6yIHW1pCNrvSFsjD'; // clé api
                  $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                  $mail->Port       = 587;
 
                 // Configuration de l'expéditeur et du destinataire
-                $mail->setFrom('9b6d21001@smtp-brevo.com', 'ECO RIDE');
+                $mail->setFrom('pierrevincent720@gmail.com', 'ECO RIDE');
                 $mail->addAddress($chauffeur['email'], $chauffeur['username']);
                 $mail->isHTML(true);
                 $mail->Subject = 'Nouvelle réservation sur votre trajet';

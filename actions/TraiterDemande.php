@@ -69,17 +69,19 @@ WHERE r.id = :reservation_id
         $stmtUpdate = $pdo->prepare("UPDATE reservation SET statut = 'acceptée' WHERE id = ?");
         $stmtUpdate->execute([$reservation_id]);
 
-        // Configuration et envoi d'un email au passager pour informer du refus
         $mail = new PHPMailer(true);
-        try {
-            // Configuration SMTP
-            $mail->isSMTP();
-            $mail->Host       = 'smtp.gmail.com';
-            $mail->SMTPAuth   = true;
-            $mail->Username   = 'pierrevincent720@gmail.com'; 
-            $mail->Password   = 'tnhv khps ljpg inua';
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            $mail->Port       = 587;
+            try {
+                $mail->SMTPDebug = 0;  // Désactivation du debug SMTP
+                $mail->Debugoutput = function($str, $level) { error_log("SMTP DEBUG: $str"); };
+
+                 // Configuration du serveur SMTP
+                 $mail->isSMTP();
+                 $mail->Host       = 'smtp-relay.brevo.com';
+                 $mail->SMTPAuth   = true;
+                 $mail->Username   = '9b6d21001@smtp-brevo.com'; 
+                 $mail->Password   = '6yIHW1pCNrvSFsjD'; // clé api
+                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                 $mail->Port       = 587;
 
             // Expéditeur et destinataire
             $mail->setFrom('pierrevincent720@gmail.com', 'ECO RIDE');
@@ -138,15 +140,18 @@ WHERE r.id = :reservation_id
 
         // Configuration et envoi d'un email au passager pour informer du refus
         $mail = new PHPMailer(true);
-        try {
-            // Configuration SMTP
-            $mail->isSMTP();
-            $mail->Host       = 'smtp.gmail.com';
-            $mail->SMTPAuth   = true;
-            $mail->Username   = 'pierrevincent720@gmail.com'; 
-            $mail->Password   = 'tnhv khps ljpg inua';
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            $mail->Port       = 587;
+            try {
+                $mail->SMTPDebug = 0;  // Désactivation du debug SMTP
+                $mail->Debugoutput = function($str, $level) { error_log("SMTP DEBUG: $str"); };
+
+                 // Configuration du serveur SMTP
+                 $mail->isSMTP();
+                 $mail->Host       = 'smtp-relay.brevo.com';
+                 $mail->SMTPAuth   = true;
+                 $mail->Username   = '9b6d21001@smtp-brevo.com'; 
+                 $mail->Password   = '6yIHW1pCNrvSFsjD'; // clé api
+                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                 $mail->Port       = 587;
 
             // Expéditeur et destinataire
             $mail->setFrom('pierrevincent720@gmail.com', 'ECO RIDE');
