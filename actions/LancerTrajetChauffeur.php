@@ -1,4 +1,7 @@
 <?php
+// Démarrage de session pour gestion des erreurs
+session_start();
+
 // Inclusion des fichiers de configuration et de protection CSRF
 if (file_exists(__DIR__ . '/../includes/ConfigLocal.php')) {
     require_once __DIR__ . '/../includes/ConfigLocal.php'; // environnement local
@@ -10,12 +13,16 @@ include __DIR__ . '/../includes/Csrf.php';
 
 // Vérification que la méthode de requête est POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    die("Méthode non autorisée.");
+    $_SESSION['error'] = "Méthode non autorisée.";
+    header("Location: " . BASE_URL . "/pages/TrajetIndividuel.php");
+    exit;
 }
 
 // Vérification CSRF pour prévenir les attaques
 if (!isset($_POST['csrf_token']) || !csrf_check($_POST['csrf_token'])) {
-    die("Erreur CSRF : action non autorisée !");
+    $_SESSION['error'] = "Erreur de sécurité CSRF.";
+    header("Location: " . BASE_URL . "/pages/TrajetIndividuel.php");
+    exit;
 }
 
 try {
@@ -30,7 +37,9 @@ try {
 
         // Validation des données requises
         if (!$numero_trajet || $action !== 'lancer') {
-            die("Données manquantes ou action invalide");
+            $_SESSION['error'] = "Données manquantes ou action invalide.";
+            header("Location: " . BASE_URL . "/pages/TrajetIndividuel.php");
+            exit;
         }
 
         // Met à jour le statut du trajet à 'en_cours'
@@ -54,8 +63,12 @@ try {
         header("Location: " . BASE_URL . "/pages/TrajetIndividuel.php?numero_trajet=" . urlencode($numero_trajet));
         exit;
     } else {
-        die("Méthode non autorisée");
+        $_SESSION['error'] = "Méthode non autorisée.";
+        header("Location: " . BASE_URL . "/pages/TrajetIndividuel.php");
+        exit;
     }
 } catch (PDOException $e) {
-    die("Erreur de connexion à la base de données : " . $e->getMessage());
+    $_SESSION['error'] = "Erreur de connexion à la base de données : " . $e->getMessage();
+    header("Location: " . BASE_URL . "/pages/TrajetIndividuel.php");
+    exit;
 }

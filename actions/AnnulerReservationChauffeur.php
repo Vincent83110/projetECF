@@ -9,17 +9,23 @@ include __DIR__ . '/../includes/Csrf.php';
 
 // Vérification de la session utilisateur
 if (!isset($_SESSION['user'])) {
-    die("Accès refusé.");
+    $_SESSION['error'] = "Accès refusé.";
+    header("Location: " . BASE_URL . "/pages/ConnexionUtilisateur.php");
+    exit;
 }
 
 // Vérification que la méthode est POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    die("Méthode non autorisée.");
+    $_SESSION['error'] = "Méthode non autorisée.";
+    header("Location: " . BASE_URL . "/pages/TrajetIndividuel.php");
+    exit;
 }
 
 // Vérification du token CSRF
 if (!isset($_POST['csrf_token']) || !csrf_check($_POST['csrf_token'])) {
-    die("Erreur CSRF : action non autorisée !");
+    $_SESSION['error'] = "Erreur CSRF : action non autorisée !";
+    header("Location: " . BASE_URL . "/pages/TrajetIndividuel.php");
+    exit;
 }
 
 // Définition du baseUrl selon environnement
@@ -65,7 +71,9 @@ try {
     $action = $_POST['action'] ?? null;
 
     if (!$trajet_id || $action !== 'annuler') {
-        die("Données manquantes ou action non valide.");
+        $_SESSION['error'] = "Données manquantes ou action non valide.";
+        header("Location: " . BASE_URL . "/pages/TrajetIndividuel.php");
+        exit;
     }
 
     // Récupération du trajet et du chauffeur
@@ -77,7 +85,11 @@ try {
     ");
     $stmtTrajet->execute([':trajet_id' => $trajet_id]);
     $trajet = $stmtTrajet->fetch(PDO::FETCH_ASSOC);
-    if (!$trajet) die("Trajet introuvable.");
+    if (!$trajet) {
+        $_SESSION['error'] = "Trajet introuvable.";
+        header("Location: " . BASE_URL . "/pages/TrajetIndividuel.php");
+        exit;
+    }
 
     // Récupération des passagers
     $stmtPassagers = $pdo->prepare("
@@ -122,5 +134,7 @@ try {
     exit;
 
 } catch (PDOException $e) {
-    die("Erreur : " . $e->getMessage());
+    $_SESSION['error'] = "Erreur lors de l'annulation : " . $e->getMessage();
+    header("Location: " . BASE_URL . "/pages/TrajetIndividuel.php");
+    exit;
 }

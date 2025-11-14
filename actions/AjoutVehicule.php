@@ -10,12 +10,16 @@ include __DIR__ . '/../includes/Csrf.php';
 
 // Vérification que la méthode de requête est POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    die("Méthode non autorisée.");
+    $_SESSION['error'] = "Méthode non autorisée.";
+    header("Location: " . BASE_URL . "/pages/InfosChauffeur.php");
+    exit;
 }
 
 // Vérification du token CSRF pour prévenir les attaques
 if (!isset($_POST['csrf_token']) || !csrf_check($_POST['csrf_token'])) {
-    die("Erreur CSRF : action non autorisée !");
+    $_SESSION['error'] = "Erreur CSRF : action non autorisée !";
+    header("Location: " . BASE_URL . "/pages/InfosChauffeur.php");
+    exit;
 }
 
 try {
@@ -38,7 +42,8 @@ try {
 
     // Vérification que l'utilisateur est connecté
     if (!$userId) {
-        header("Location:" .BASE_URL. "/pages/InfosChauffeur.php?error=1");
+        $_SESSION['error'] = "Utilisateur non connecté.";
+        header("Location:" .BASE_URL. "/pages/InfosChauffeur.php");
         exit;
     }
 
@@ -54,7 +59,8 @@ try {
         if (preg_match('/^([A-Z]{2})([0-9]{3})([A-Z]{2})$/', $plaque, $matches)) {
             $plaque = "{$matches[1]}-{$matches[2]}-{$matches[3]}";
         } else {
-            header("Location: " .BASE_URL. "/pages/InfosChauffeur.php?error=2");
+            $_SESSION['error'] = "Format de plaque d'immatriculation invalide.";
+            header("Location: " .BASE_URL. "/pages/InfosChauffeur.php");
             exit;
         }
 
@@ -67,7 +73,8 @@ try {
 
         // Vérification que tous les champs obligatoires sont remplis
         if (!$plaque || !$date || !$marque || !$modele || !$couleur || !$capacite ) {
-            header("Location: " .BASE_URL. "/pages/InfosChauffeur.php?error=1");
+            $_SESSION['error'] = "Tous les champs obligatoires doivent être remplis.";
+            header("Location: " .BASE_URL. "/pages/InfosChauffeur.php");
             exit;
         }
 
@@ -95,7 +102,8 @@ try {
 
 } catch (PDOException $e) {
     // Gestion des erreurs de base de données
-    echo "Erreur : " . $e->getMessage();
+    $_SESSION['error'] = "Erreur lors de l'ajout du véhicule : " . $e->getMessage();
+    header("Location: " .BASE_URL. "/pages/InfosChauffeur.php");
     exit;
 }
 ?>

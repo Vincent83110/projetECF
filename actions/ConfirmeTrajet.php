@@ -10,12 +10,16 @@ include __DIR__ . '/../includes/Csrf.php';
 
 // Vérification que la méthode est bien POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    die("Méthode non autorisée.");
+    $_SESSION['error'] = "Méthode non autorisée.";
+    header("Location: " . BASE_URL . "/pages/Historique.php");
+    exit;
 }
 
 // Vérification CSRF
 if (!isset($_POST['csrf_token']) || !csrf_check($_POST['csrf_token'])) {
-    die("Erreur CSRF : action non autorisée !");
+    $_SESSION['error'] = "Erreur CSRF : action non autorisée !";
+    header("Location: " . BASE_URL . "/pages/Historique.php");
+    exit;
 }
 
 // Définition du baseUrl selon environnement
@@ -60,7 +64,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $trajetId = $_POST['trajet_id'] ?? null;
 
     if (!$trajetId) {
-        die("Erreur: trajet_id non fourni");
+        $_SESSION['error'] = "Erreur: trajet_id non fourni";
+        header("Location: " . BASE_URL . "/pages/Historique.php");
+        exit;
     }
 
     try {
@@ -75,7 +81,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmtTrajet = $pdo->prepare("SELECT prix, id_utilisateur FROM infos_trajet WHERE id = :id");
         $stmtTrajet->execute([':id' => $trajetId]);
         $trajet = $stmtTrajet->fetch(PDO::FETCH_ASSOC);
-        if (!$trajet) throw new Exception("Trajet introuvable avec l'ID: $trajetId");
+        if (!$trajet) {
+            throw new Exception("Trajet introuvable avec l'ID: $trajetId");
+        }
 
         // 2. Récupération du nombre total de places réservées
         $stmtPlaces = $pdo->prepare("
@@ -97,18 +105,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ");
         $stmtUpdateTrajet->execute([':id' => $trajetId]);
 
-        // 5. Suppression des préférences
-        $stmtDeletePreferences = $pdo->prepare("DELETE FROM preferences WHERE trajet_id = :trajet_id");
-        $stmtDeletePreferences->execute([':trajet_id' => $trajetId]);
-
-        // 6. Mise à jour des réservations
+        // 5. Mise à jour des réservations
         $stmtUpdateReservations = $pdo->prepare("
             UPDATE reservation SET statut = 'termine' 
             WHERE trajet_id = :trajet_id AND statut = 'en_cours'
         ");
         $stmtUpdateReservations->execute([':trajet_id' => $trajetId]);
 
-        // 7. Récupération des passagers
+        // 6. Récupération des passagers
         $stmtRes = $pdo->prepare("
             SELECT u.email, u.username
             FROM reservation r
@@ -118,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmtRes->execute([':trajetId' => $trajetId]);
         $reservations = $stmtRes->fetchAll(PDO::FETCH_ASSOC);
 
-        // 8. Récupération du chauffeur
+        // 7. Récupération du chauffeur
         $stmtChauffeur = $pdo->prepare("
             SELECT u.username
             FROM utilisateurs u
@@ -131,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Commit transaction
         $pdo->commit();
 
-        // 9. Envoi des emails aux passagers
+        // 8. Envoi des emails aux passagers
         foreach ($reservations as $user) {
             $commentLink = $baseUrl . "/pages/ConnexionUtilisateur.php?redirect=PageAvis.php&trajet_id=" 
                             . urlencode($trajetId) . "&user=" . urlencode($chauffeurUsername);
@@ -161,10 +165,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     } catch (PDOException $e) {
         if (isset($pdo) && $pdo->inTransaction()) $pdo->rollBack();
-        die("Erreur PDO: " . $e->getMessage());
+        $_SESSION['error'] = "Erreur PDO: " . $e->getMessage();
+        header("Location: " . BASE_URL . "/pages/Historique.php");
+        exit;
     } catch (Exception $e) {
-        die("Erreur: " . $e->getMessage());
+        $_SESSION['error'] = "Erreur: " . $e->getMessage();
+        header("Location: " . BASE_URL . "/pages/Historique.php");
+        exit;
     }
 } else {
-    die("Erreur: Méthode non autorisée");
+    $_SESSION['error'] = "Erreur: Méthode non autorisée";
+    header("Location: " . BASE_URL . "/pages/Historique.php");
+    exit;
 }

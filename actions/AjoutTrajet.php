@@ -10,7 +10,8 @@ include __DIR__ . '/../includes/Csrf.php';
 
 // Vérification qu'un utilisateur est connecté et a un ID
 if (!isset($_SESSION['user']) || !isset($_SESSION['user']['id'])) {
-    header('HTTP/1.1 401 Unauthorized');
+    $_SESSION['error'] = "Utilisateur non connecté.";
+    header("Location: " . BASE_URL . "/pages/ConnexionUtilisateur.php");
     exit;
 }
 
@@ -19,12 +20,17 @@ $userId = $_SESSION['user']['id'];
 
 // Vérification que la méthode est POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    die("Méthode non autorisée.");
+    $_SESSION['error'] = "Méthode non autorisée.";
+    header("Location: " . BASE_URL . "/pages/InfosTrajetChauffeur.php");
+    exit;
 }
 
+// Utilisation de verifyCsrfToken() au lieu de csrf_check() 
 // Vérification du token CSRF
 if (!isset($_POST['csrf_token']) || !csrf_check($_POST['csrf_token'])) {
-    die("Erreur CSRF : action non autorisée !");
+    $_SESSION['error'] = "Erreur CSRF : action non autorisée !";
+    header("Location: " . BASE_URL . "/pages/InfosTrajetChauffeur.php");
+    exit;
 }
 
 try {
@@ -50,18 +56,14 @@ try {
     }
 
     // Récupération des crédits actuels de l'utilisateur
-$stmtCredits = $pdo->prepare("SELECT credits FROM utilisateurs WHERE id = :id");
-$stmtCredits->execute([':id' => $userId]);
-$currentCredits = $stmtCredits->fetchColumn();
+    $stmtCredits = $pdo->prepare("SELECT credits FROM utilisateurs WHERE id = :id");
+    $stmtCredits->execute([':id' => $userId]);
+    $currentCredits = $stmtCredits->fetchColumn();
 
-// Vérification que l'utilisateur possède au moins un véhicule
-$stmtVehicules = $pdo->prepare("SELECT COUNT(*) FROM vehicules WHERE user_id = :user_id");
-$stmtVehicules->execute([':user_id' => $userId]);
-$nbVehicules = $stmtVehicules->fetchColumn();
-
-    // Traitement uniquement pour les requêtes POST
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    header('Content-Type: application/json');
+    // Vérification que l'utilisateur possède au moins un véhicule
+    $stmtVehicules = $pdo->prepare("SELECT COUNT(*) FROM vehicules WHERE user_id = :user_id");
+    $stmtVehicules->execute([':user_id' => $userId]);
+    $nbVehicules = $stmtVehicules->fetchColumn();
 
     // Récupération des trajets et préférences depuis le formulaire
     $trajets = $_POST['trajets'] ?? [];
@@ -69,36 +71,57 @@ $nbVehicules = $stmtVehicules->fetchColumn();
 
     // Calcul du coût total (2 crédits par trajet)
     $nbTrajets = count($trajets);
-$coutTotal = 2 * $nbTrajets;
+    $coutTotal = 2 * $nbTrajets;
 
-// Validation complète de tous les trajets AVANT déduction des crédits
-foreach ($trajets as $i => $trajet) {
-    // Nettoyage des données
-    $adresse_depart = trim($trajet['adresse_depart'] ?? '');
-    $adresse_arrive = trim($trajet['adresse_arrive'] ?? '');
-    $date_depart = trim($trajet['date_depart'] ?? '');
-    $date_arrive = trim($trajet['date_arrive'] ?? '');
-    $heure_depart = trim($trajet['heure_depart'] ?? '');
-    $prix = trim($trajet['prix'] ?? '');
-    $nombre_place = trim($trajet['nombre_place'] ?? '');
-
-    // Validation des champs obligatoires
+    // Validation complète de tous les trajets AVANT déduction des crédits
     $errors = [];
-    if ($adresse_depart === '') $errors[] = "Trajet #" . ($i+1) . " : Adresse de départ obligatoire.";
-    if ($adresse_arrive === '') $errors[] = "Trajet #" . ($i+1) . " : Adresse d'arrivée obligatoire.";
-    if ($date_depart === '') $errors[] = "Trajet #" . ($i+1) . " : Date de départ obligatoire.";
-    if ($heure_depart === '') $errors[] = "Trajet #" . ($i+1) . " : Heure de départ obligatoire.";
-    if ($nombre_place === '' || !is_numeric($nombre_place) || (int)$nombre_place <= 0) $errors[] = "Trajet #" . ($i+1) . " : Nombre de places obligatoire et positif.";
-    if ($prix === '' || !is_numeric($prix) || (float)$prix < 0) $errors[] = "Trajet #" . ($i+1) . " : Prix obligatoire et positif.";
-    if ($date_arrive !== '' && $date_depart > $date_arrive) $errors[] = "Trajet #" . ($i+1) . " : La date d'arrivée doit être postérieure à la date de départ.";
-}
+    foreach ($trajets as $i => $trajet) {
+        // Nettoyage des données
+        $adresse_depart = trim($trajet['adresse_depart'] ?? '');
+        $adresse_arrive = trim($trajet['adresse_arrive'] ?? '');
+        $date_depart = trim($trajet['date_depart'] ?? '');
+        $date_arrive = trim($trajet['date_arrive'] ?? '');
+        $heure_depart = trim($trajet['heure_depart'] ?? '');
+        $prix = trim($trajet['prix'] ?? '');
+        $nombre_place = trim($trajet['nombre_place'] ?? '');
 
-// Déduction des crédits seulement après validation réussie
-$stmtUpdateCredits = $pdo->prepare("UPDATE utilisateurs SET credits = :credits WHERE id = :id");
-$stmtUpdateCredits->execute([
-    ':credits' => $currentCredits - $coutTotal,
-    ':id' => $userId
-]);
+        // Validation des champs obligatoires
+        if ($adresse_depart === '') $errors[] = "Trajet #" . ($i+1) . " : Adresse de départ obligatoire.";
+        if ($adresse_arrive === '') $errors[] = "Trajet #" . ($i+1) . " : Adresse d'arrivée obligatoire.";
+        if ($date_depart === '') $errors[] = "Trajet #" . ($i+1) . " : Date de départ obligatoire.";
+        if ($heure_depart === '') $errors[] = "Trajet #" . ($i+1) . " : Heure de départ obligatoire.";
+        if ($nombre_place === '' || !is_numeric($nombre_place) || (int)$nombre_place <= 0) $errors[] = "Trajet #" . ($i+1) . " : Nombre de places obligatoire et positif.";
+        if ($prix === '' || !is_numeric($prix) || (float)$prix < 0) $errors[] = "Trajet #" . ($i+1) . " : Prix obligatoire et positif.";
+        if ($date_arrive !== '' && $date_depart > $date_arrive) $errors[] = "Trajet #" . ($i+1) . " : La date d'arrivée doit être postérieure à la date de départ.";
+    }
+
+    // Si erreurs de validation, on arrête
+    if (!empty($errors)) {
+        $_SESSION['error'] = implode('<br>', $errors);
+        header("Location: " . BASE_URL . "/pages/InfosTrajetChauffeur.php");
+        exit;
+    }
+
+    // Vérification des crédits suffisants
+    if ($currentCredits < $coutTotal) {
+        $_SESSION['error'] = "Crédits insuffisants. Vous avez $currentCredits crédits mais besoin de $coutTotal crédits.";
+        header("Location: " . BASE_URL . "/pages/InfosTrajetChauffeur.php");
+        exit;
+    }
+
+    //Suppression de TOUTES les anciennes préférences de l'utilisateur
+    $stmtDeleteAllPref = $pdo->prepare("DELETE FROM preferences WHERE user_id = :user_id");
+    $stmtDeleteAllPref->execute([':user_id' => $userId]);
+
+    // Déduction des crédits seulement après validation réussie
+    $stmtUpdateCredits = $pdo->prepare("UPDATE utilisateurs SET credits = credits - :cout WHERE id = :id");
+    $stmtUpdateCredits->execute([
+        ':cout' => $coutTotal,
+        ':id' => $userId
+    ]);
+
+    // Mise à jour des crédits dans la session
+    $_SESSION['credits'] = $currentCredits - $coutTotal;
 
     // Préparation de la requête d'insertion des trajets
     $stmtInsert = $pdo->prepare("
@@ -112,7 +135,7 @@ $stmtUpdateCredits->execute([
         RETURNING id
     ");
 
-    // Préparation de la requête d'insertion des préférences
+    // Préparation de la requête d'insertion des préférences POUR CHAQUE TRAJET
     $stmtPref = $pdo->prepare("INSERT INTO preferences (texte, trajet_id, user_id) VALUES (:texte, :trajet_id, :user_id)");
 
     $lastTrajet = null;
@@ -129,17 +152,6 @@ $stmtUpdateCredits->execute([
         $prix = trim($trajet['prix'] ?? '');
         $nombre_place = trim($trajet['nombre_place'] ?? '');
         $id_vehicule = trim($trajet['id_vehicule'] ?? '');
-        $preferences = $preferencesGlobales;
-
-        // Validation des données
-        $errors = [];
-        if ($adresse_depart === '') $errors[] = "Adresse de départ obligatoire.";
-        if ($adresse_arrive === '') $errors[] = "Adresse d'arrivée obligatoire.";
-        if ($date_depart === '') $errors[] = "Date de départ obligatoire.";
-        if ($heure_depart === '') $errors[] = "Heure de départ obligatoire.";
-        if ($nombre_place === '' || !is_numeric($nombre_place) || (int)$nombre_place <= 0) $errors[] = "Nombre de places obligatoire et positif.";
-        if ($prix === '' || !is_numeric($prix) || (float)$prix < 0) $errors[] = "Prix obligatoire et positif.";
-        if ($date_arrive !== '' && $date_depart > $date_arrive) $errors[] = "La date d'arrivée doit être postérieure à la date de départ.";
 
         // Génération d'un numéro de trajet unique
         $numero_trajet = generateNumeroTrajet($pdo);
@@ -177,10 +189,10 @@ $stmtUpdateCredits->execute([
 
         // Enregistrement de l'utilisation des crédits
         $stmtCreditUse = $pdo->prepare("INSERT INTO credits_utilises (id_utilisateur, type_operation, quantite) VALUES (?, 'publication_trajet', -2)");
-$stmtCreditUse->execute([$userId]);
+        $stmtCreditUse->execute([$userId]);
 
         // Insertion des préférences associées au trajet
-        foreach ($preferences as $pref) {
+        foreach ($preferencesGlobales as $pref) {
             $prefClean = trim($pref);
             if ($prefClean !== '') {
                 $stmtPref->execute([
@@ -211,19 +223,20 @@ $stmtCreditUse->execute([$userId]);
 
     // Stockage du dernier trajet dans la session pour affichage
     $_SESSION['dernier_trajet'] = $lastTrajet;
+    $_SESSION['success'] = "Trajet(s) publié(s) avec succès ! Les anciennes préférences ont été supprimées.";
 
     // Redirection vers la page des trajets individuels
-    header("Location: " .BASE_URL. "/pages/TrajetIndividuel.php");
+    header("Location: " . BASE_URL . "/pages/TrajetIndividuel.php");
     exit;
 
-
-    } else {
-        // Réponse pour méthode non autorisée
-        header('HTTP/1.1 405 Method Not Allowed');
-        exit;
-    }
 } catch (PDOException $e) {
     // Gestion des erreurs de base de données
-    header('Content-Type: application/json');
+    $_SESSION['error'] = "Erreur de base de données : " . $e->getMessage();
+    header("Location: " . BASE_URL . "/pages/InfosTrajetChauffeur.php");
+    exit;
+} catch (Exception $e) {
+    // Gestion des autres erreurs
+    $_SESSION['error'] = "Erreur : " . $e->getMessage();
+    header("Location: " . BASE_URL . "/pages/InfosTrajetChauffeur.php");
     exit;
 }

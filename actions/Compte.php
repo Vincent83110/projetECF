@@ -8,6 +8,7 @@ if (file_exists(__DIR__ . '/../includes/ConfigLocal.php')) {
 
 // Vérification si l'utilisateur est connecté
 if (!isset($_SESSION['user'])) {
+    $_SESSION['error'] = "Utilisateur non connecté.";
     header("Location: " .BASE_URL. "/pages/ConnexionUtilisateur.php");
     exit;
 }
@@ -20,7 +21,9 @@ try {
 
      // 1. Vérification de la session utilisateur
     if (!isset($_SESSION['user']['id'])) {
-        (header("Location: " . BASE_URL . "/AccueilECF.php"));
+        $_SESSION['error'] = "Session utilisateur invalide.";
+        header("Location: " . BASE_URL . "/AccueilECF.php");
+        exit;
     }
 
     // Récupération de l'ID du profil à afficher
@@ -79,9 +82,13 @@ try {
     }
 
     // 3. Si aucun profil trouvé dans aucune table
-    die("Profil introuvable. L'ID $profil_id n'existe dans aucune table.");
+    $_SESSION['error'] = "Profil introuvable. L'ID $profil_id n'existe dans aucune table.";
+    header("Location: " . BASE_URL . "/AccueilECF.php");
+    exit;
 
 } catch (PDOException $e) {
-    die("Erreur de base de données : " . $e->getMessage());
+    $_SESSION['error'] = "Erreur de base de données : " . $e->getMessage();
+    header("Location: " . BASE_URL . "/AccueilECF.php");
+    exit;
 }
 ?>

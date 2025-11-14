@@ -10,18 +10,24 @@ include __DIR__ . '/../includes/Csrf.php';
 
 // Vérification que l'utilisateur est connecté
 if (!isset($_SESSION['user'])) {
-    die("Accès refusé.");
+    $_SESSION['error'] = "Accès refusé.";
+    header("Location: " . BASE_URL . "/pages/ConnexionUtilisateur.php");
+    exit;
 }
 
 
 // Vérification que la méthode est POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    die("Méthode non autorisée.");
+    $_SESSION['error'] = "Méthode non autorisée.";
+    header("Location: " . BASE_URL . "/pages/TrajetIndividuel.php");
+    exit;
 }
 
 // Vérification du token CSRF
 if (!isset($_POST['csrf_token']) || !csrf_check($_POST['csrf_token'])) {
-    die("Erreur CSRF : action non autorisée !");
+    $_SESSION['error'] = "Erreur CSRF : action non autorisée !";
+    header("Location: " . BASE_URL . "/pages/TrajetIndividuel.php");
+    exit;
 }
 
 try {
@@ -37,7 +43,9 @@ try {
 
         // Vérification des données obligatoires
         if (!$reservationId) {
-            die("Données manquantes.");
+            $_SESSION['error'] = "Données manquantes.";
+            header("Location: " .BASE_URL. "/pages/TrajetIndividuel.php");
+            exit;
         }
 
         // Vérification que la réservation appartient à l'utilisateur et récupération des infos
@@ -57,7 +65,9 @@ try {
 
         // Vérification que la réservation existe et appartient à l'utilisateur
         if (!$reservation) {
-            die("Réservation introuvable ou accès non autorisé.");
+            $_SESSION['error'] = "Réservation introuvable ou accès non autorisé.";
+            header("Location: " .BASE_URL. "/pages/TrajetIndividuel.php");
+            exit;
         }
 
         // Calcul du montant à rembourser (places * prix par place)
@@ -86,9 +96,13 @@ try {
         header("Location: " .BASE_URL. "/pages/TrajetIndividuel.php?cancel_success=1");
         exit;
     } else {
-        die("Méthode non autorisée.");
+        $_SESSION['error'] = "Méthode non autorisée.";
+        header("Location: " .BASE_URL. "/pages/TrajetIndividuel.php");
+        exit;
     }
 } catch (PDOException $e) {
     // Gestion des erreurs
-    die("Erreur : " . $e->getMessage());
+    $_SESSION['error'] = "Erreur lors de l'annulation : " . $e->getMessage();
+    header("Location: " .BASE_URL. "/pages/TrajetIndividuel.php");
+    exit;
 }

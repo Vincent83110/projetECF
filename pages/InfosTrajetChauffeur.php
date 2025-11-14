@@ -231,8 +231,80 @@ try {
 </select>
                   </div>
                 </div>
-                
-                <div class="popup" id="popupForm">
+    </div>
+  <div class="mainPrincipal2" id="trajets-container"></div>
+<div class="containerDiv3">
+    <div class="div3">
+        <label class="textLabel">Préférences (appliquées à tous les trajets)</label>
+        <div class="container-align2">
+            <!-- Préférences par défaut toujours affichées -->
+            <div>
+                <input type="checkbox" id="pref_non_fumeurs" name="preferences[]" value="non fumeurs">
+                <label for="pref_non_fumeurs" class="textLabel">Non-fumeurs</label>
+            </div>
+            <div>
+                <input type="checkbox" id="pref_pas_animaux" name="preferences[]" value="pas d'animaux">
+                <label for="pref_pas_animaux" class="textLabel">Pas d'animaux</label>
+            </div>
+            
+            <!-- Préférences personnalisées existantes (UNIQUEMENT celles qui ne sont pas les préférences par défaut) -->
+            <?php 
+            // Définir les préférences par défaut à exclure
+            $preferencesParDefaut = ['non fumeurs', 'pas d\'animaux', 'non-fumeurs', 'pas d animaux'];
+            
+            // Fonction pour normaliser le texte (minuscules, sans espaces superflus)
+            function normaliserPreference($texte) {
+                return trim(strtolower($texte));
+            }
+            
+            if (!empty($preferences)): 
+                foreach ($preferences as $pref): 
+                    if (isset($pref['texte'])):
+                        $prefNormalisee = normaliserPreference($pref['texte']);
+                        $estPreferenceDefaut = false;
+                        
+                        // Vérifier si cette préférence est une préférence par défaut
+                        foreach ($preferencesParDefaut as $defaut) {
+                            if ($prefNormalisee === normaliserPreference($defaut)) {
+                                $estPreferenceDefaut = true;
+                                break;
+                            }
+                        }
+                        
+                        // Afficher UNIQUEMENT si ce n'est PAS une préférence par défaut
+                        if (!$estPreferenceDefaut):
+            ?>
+                        <div class="preference-item">
+                            <input type="checkbox" id="pref_<?= $pref['id'] ?>" name="preferences[]" value="<?= htmlspecialchars($pref['texte']) ?>" checked>
+                            <label for="pref_<?= $pref['id'] ?>" class="textLabel"><?= htmlspecialchars($pref['texte']) ?></label>
+                        </div>
+            <?php 
+                        endif;
+                    endif;
+                endforeach;
+            endif; 
+            ?>
+            
+            <!-- Nouvelle préférence personnalisée -->
+            <div class="new-preference-form">
+                <input type="text" id="new-preference-input" placeholder="Nouvelle préférence">
+                <button type="button" class="ajout-preference-perso">+</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Boutons d'action -->
+    <div class="spaceButton">
+        <button type="button" id="add-trajet-btn" class="linkAjout">
+            <img src="<?= BASE_URL ?>/assets/images/plus2.svg" alt="pas d'image"> Ajouter un trajet
+        </button>
+        <div>
+            <button type="button" class="buttonSubmit open-popup">Confirmer</button>
+        </div>
+    </div>
+</div>
+<!-- Popup de confirmation -->
+  <div class="popup" id="popupForm">
                     <div class="popup-content">
                         <h2>Confirmation</h2>
                         <p> Êtes-vous sûr de vouloir soumettre ces informations et payer 
@@ -244,50 +316,8 @@ try {
                         </div>
                     </div>
                 </div>
-    </div>
-  <div class="mainPrincipal2" id="trajets-container"></div>
-<div class="containerDiv3">
-    <div class="div3">
-        <label class="textLabel">Préférences (appliquées à tous les trajets)</label>
-        <div class="container-align2">
-            <div>
-                <input type="checkbox" id="pref_non_fumeurs" name="preferences[]" value="non fumeurs">
-                <label for="pref_non_fumeurs" class="textLabel">Non-fumeurs</label>
-            </div>
-            <div>
-                <input type="checkbox" id="pref_pas_animaux" name="preferences[]" value="pas d'animaux">
-                <label for="pref_pas_animaux" class="textLabel">Pas d'animaux</label>
-            </div>
-            <!-- Préférences personnalisées existantes -->
-            <?php if (!empty($preferences)): ?>
-    <?php foreach ($preferences as $pref): ?>
-        <?php if (isset($pref['preference'])): ?>
-            <div class="preference-item">
-                <input type="checkbox" id="pref_<?= $pref['id'] ?>" name="preferences[]" value="<?= htmlspecialchars($pref['preference']) ?>">
-                <label for="pref_<?= $pref['id'] ?>" class="textLabel"><?= htmlspecialchars($pref['preference']) ?></label>
-            </div>
-        <?php endif; ?>
-    <?php endforeach; ?>
-<?php endif; ?>
-            <!-- Nouvelle préférence personnalisée -->
-            <div class="new-preference-form">
-                <input type="text" id="new-preference-input" name="preferences[]" placeholder="Nouvelle préférence">
-                <button type="button" class="ajout-preference-perso">+</button>
-            </div>
+            </form>
         </div>
-    </div>
-
-    <!-- Boutons d'action -->
-    <div class="spaceButton">
-        <button href="#" id="add-trajet-btn" class="linkAjout">
-            <img src="<?= BASE_URL ?>/assets/images/plus2.svg" alt="pas d'image"> Ajouter un trajet
-        </button>
-        <div>
-            <button type="button" class="buttonSubmit open-popup">Confirmer</button>
-        </div>
-    </div>
-</div>
-
 </main>
 
     <footer> 

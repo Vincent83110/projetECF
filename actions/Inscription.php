@@ -9,12 +9,16 @@ include __DIR__ . '/../includes/Csrf.php';
 
 // Vérification que la méthode de requête est POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    die("Méthode non autorisée.");
+    $_SESSION['error'] = "Méthode non autorisée.";
+    header("Location: " . BASE_URL . "/pages/InscriptionECF.php");
+    exit();
 }
 
 // Vérification CSRF pour prévenir les attaques
 if (!isset($_POST['csrf_token']) || !csrf_check($_POST['csrf_token'])) {
-    die("Erreur CSRF : action non autorisée !");
+    $_SESSION['error'] = "Erreur CSRF : action non autorisée !";
+    header("Location: " . BASE_URL . "/pages/InscriptionECF.php");
+    exit();
 }
 
 try {
@@ -32,11 +36,13 @@ try {
 
     // Validation des données
     if (!filter_var($formEmail, FILTER_VALIDATE_EMAIL)) {
-        header("Location: " . BASE_URL . "/pages/InscriptionECF.php?error=Email invalide.");
+        $_SESSION['error'] = "Email invalide.";
+        header("Location: " . BASE_URL . "/pages/InscriptionECF.php");
         exit();
     }
     if (empty($formEmail) || empty($formPassword) || empty($formUsername)) {
-        header("Location: " . BASE_URL . "/pages/InscriptionECF.php?error=Veuillez remplir tous les champs.");
+        $_SESSION['error'] = "Veuillez remplir tous les champs.";
+        header("Location: " . BASE_URL . "/pages/InscriptionECF.php");
         exit();
     }
 
@@ -44,7 +50,8 @@ try {
     $checkEmail = $pdo->prepare("SELECT COUNT(*) FROM users WHERE email = :email");
     $checkEmail->execute([':email' => $formEmail]);
     if ($checkEmail->fetchColumn() > 0) {
-        header("Location: " . BASE_URL . "/pages/InscriptionECF.php?error=Email déjà utilisé.");
+        $_SESSION['error'] = "Email déjà utilisé.";
+        header("Location: " . BASE_URL . "/pages/InscriptionECF.php");
         exit();
     }
 
@@ -52,7 +59,8 @@ try {
     $checkUsername = $pdo->prepare("SELECT COUNT(*) FROM users WHERE username = :username");
     $checkUsername->execute([':username' => $formUsername]);
     if ($checkUsername->fetchColumn() > 0) {
-        header("Location: " . BASE_URL . "/pages/InscriptionECF.php?error=Nom d'utilisateur déjà utilisé.");
+        $_SESSION['error'] = "Nom d'utilisateur déjà utilisé.";
+        header("Location: " . BASE_URL . "/pages/InscriptionECF.php");
         exit();
     }
 
@@ -82,7 +90,9 @@ $stmt2->bindValue(':credits', 20, PDO::PARAM_INT);
 
 if (!$stmt2->execute()) {
     $errorInfo = $stmt2->errorInfo();
-    die("Erreur lors de l'insertion dans utilisateurs : " . $errorInfo[2]);
+    $_SESSION['error'] = "Erreur lors de l'inscription : " . $errorInfo[2];
+    header("Location: " . BASE_URL . "/pages/InscriptionECF.php");
+    exit();
 }
 
     // Stockage des informations utilisateur dans la session
@@ -99,6 +109,8 @@ if (!$stmt2->execute()) {
     exit;
 
 } catch (PDOException $e) {
-    echo "Erreur de connexion ou d'exécution : " . $e->getMessage();
+    $_SESSION['error'] = "Erreur de connexion ou d'exécution : " . $e->getMessage();
+    header("Location: " . BASE_URL . "/pages/InscriptionECF.php");
+    exit();
 }
 ?>

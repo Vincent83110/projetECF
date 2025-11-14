@@ -10,12 +10,16 @@ include __DIR__ . '/../includes/Csrf.php';
 
 // Vérification que la méthode est POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    die("Méthode non autorisée.");
+    $_SESSION['error'] = "Méthode non autorisée.";
+    header("Location: " . BASE_URL . "/pages/ConnexionUtilisateur.php");
+    exit;
 }
 
 // Vérification CSRF pour prévenir les attaques
 if (!isset($_POST['csrf_token']) || !csrf_check($_POST['csrf_token'])) {
-    die("Erreur CSRF : action non autorisée !");
+    $_SESSION['error'] = "Erreur CSRF : action non autorisée !";
+    header("Location: " . BASE_URL . "/pages/ConnexionUtilisateur.php");
+    exit;
 }
 
 try {
@@ -134,15 +138,19 @@ try {
                     header("Location: " . BASE_URL . "/pages/CompteUtilisateurPassagerChauffeur.php");
                     exit;
                 default:
-                    echo "Statut d'utilisateur inconnu.";
+                    $_SESSION['error'] = "Statut d'utilisateur inconnu.";
+                    header("Location: " . BASE_URL . "/pages/ConnexionUtilisateur.php");
                     exit;
             }
 
         default:
-            echo "Rôle inconnu.";
+            $_SESSION['error'] = "Rôle inconnu.";
+            header("Location: " . BASE_URL . "/pages/ConnexionUtilisateur.php");
             exit;
     }
 
 } catch (PDOException $e) {
-    echo "Erreur de connexion : " . $e->getMessage();
+    $_SESSION['error'] = "Erreur de connexion : " . $e->getMessage();
+    header("Location: " . BASE_URL . "/pages/ConnexionUtilisateur.php");
+    exit;
 }

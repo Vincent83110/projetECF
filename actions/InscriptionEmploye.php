@@ -10,12 +10,16 @@ include __DIR__ . '/../includes/Csrf.php';
 
 // Vérification que la méthode de requête est POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    die("Méthode non autorisée.");
+    $_SESSION['error'] = "Méthode non autorisée.";
+    header("Location: " . BASE_URL . "/pages/EspaceAdministrateur.php");
+    exit();
 }
 
 // Vérification CSRF pour prévenir les attaques
 if (!isset($_POST['csrf_token']) || !csrf_check($_POST['csrf_token'])) {
-    die("Erreur CSRF : action non autorisée !");
+    $_SESSION['error'] = "Erreur CSRF : action non autorisée !";
+    header("Location: " . BASE_URL . "/pages/EspaceAdministrateur.php");
+    exit();
 }
 
 try {
@@ -35,13 +39,15 @@ try {
 
     // Validation de l'email
     if (!filter_var($formEmail, FILTER_VALIDATE_EMAIL)) {
-        header("Location: " . BASE_URL . "/pages/EspaceAdministrateur.php?error=Email invalide.");
+        $_SESSION['error'] = "Email invalide.";
+        header("Location: " . BASE_URL . "/pages/EspaceAdministrateur.php");
         exit();
     }
 
     // Vérification des champs obligatoires
     if (empty($formEmail) || empty($formPassword) || empty($formPrenom) || empty($formNom) || empty($formFonction) || empty($formTelephone) || empty($formDate_embauche)) {
-        header("Location: " . BASE_URL . "/pages/EspaceAdministrateur.php?error=Veuillez remplir tous les champs.");
+        $_SESSION['error'] = "Veuillez remplir tous les champs.";
+        header("Location: " . BASE_URL . "/pages/EspaceAdministrateur.php");
         exit();
     }
 
@@ -51,7 +57,8 @@ try {
     $check->execute();
 
     if ($check->fetchColumn() > 0) {
-        header("Location: " . BASE_URL . "/pages/EspaceAdministrateur.php?error=Email déjà utilisé.");
+        $_SESSION['error'] = "Email déjà utilisé.";
+        header("Location: " . BASE_URL . "/pages/EspaceAdministrateur.php");
         exit();
     }
 
@@ -88,7 +95,8 @@ try {
 
     // Validation de la transaction
     $pdo->commit();
-    header("Location: " . BASE_URL . "/pages/EspaceAdministrateur.php?success=Inscription réussie !");
+    $_SESSION['success'] = "Inscription réussie !";
+    header("Location: " . BASE_URL . "/pages/EspaceAdministrateur.php");
     exit();
 
 } catch (PDOException $e) {
@@ -96,5 +104,7 @@ try {
     if ($pdo->inTransaction()) {
         $pdo->rollBack();
     }
-    echo "Erreur de connexion à la base de données : " . $e->getMessage();
+    $_SESSION['error'] = "Erreur de connexion à la base de données : " . $e->getMessage();
+    header("Location: " . BASE_URL . "/pages/EspaceAdministrateur.php");
+    exit();
 }

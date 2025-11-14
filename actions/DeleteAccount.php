@@ -10,6 +10,7 @@ if (file_exists(__DIR__ . '/../includes/ConfigLocal.php')) {
 
 // Vérification que l'utilisateur est connecté
 if (!isset($_SESSION['user'])) {
+    $_SESSION['error'] = "Utilisateur non connecté.";
     header("Location:" . BASE_URL . "/pages/ConnexionUtilisateur.php");
     exit;
 }
@@ -47,10 +48,12 @@ try {
             $stmtDeleteUser = $pdo->prepare("DELETE FROM users WHERE username = :pseudo");
             $stmtDeleteUser->execute([':pseudo' => $target_username]);
             
-            header("Location: " . BASE_URL . "/pages/EspaceAdministrateur.php?Compte_supprimée");
+            $_SESSION['success'] = "Compte supprimé avec succès.";
+            header("Location: " . BASE_URL . "/pages/EspaceAdministrateur.php");
             exit;
         } else {
-            header("Location: " . BASE_URL . "/pages/EspaceAdministrateur.php?error=utilisateur_introuvable");
+            $_SESSION['error'] = "Utilisateur introuvable.";
+            header("Location: " . BASE_URL . "/pages/EspaceAdministrateur.php");
             exit;
         }
     }
@@ -79,10 +82,12 @@ try {
             $stmtDeleteUser->execute([':id' => $employe['user_id']]);
 
             // Redirection immédiate
-            header("Location: " . BASE_URL . "/pages/EspaceAdministrateur.php?message=employe_supprime");
+            $_SESSION['success'] = "Employé supprimé avec succès.";
+            header("Location: " . BASE_URL . "/pages/EspaceAdministrateur.php");
             exit;
         } else {
-            header("Location: " . BASE_URL . "/pages/EspaceAdministrateur.php?error=employe_introuvable");
+            $_SESSION['error'] = "Employé introuvable.";
+            header("Location: " . BASE_URL . "/pages/EspaceAdministrateur.php");
             exit;
         }
     }
@@ -110,7 +115,8 @@ try {
         session_unset();
         session_destroy();
 
-        header("Location: " . BASE_URL . "/pages/ConnexionUtilisateur.php?message=compte_supprime");
+        $_SESSION['success'] = "Votre compte a été supprimé avec succès.";
+        header("Location: " . BASE_URL . "/pages/ConnexionUtilisateur.php");
         exit;
     }
 
@@ -135,12 +141,14 @@ try {
         session_unset();
         session_destroy();
         
-        header("Location: " . BASE_URL . "/pages/ConnexionUtilisateur.php?message=compte_supprime");
+        $_SESSION['success'] = "Votre compte a été supprimé avec succès.";
+        header("Location: " . BASE_URL . "/pages/ConnexionUtilisateur.php");
         exit;
     }
 
 } catch (Exception $e) {
     // Gestion des erreurs
-    header("Location: " . BASE_URL . "/pages/EspaceAdministrateur.php?error=suppression_impossible");
+    $_SESSION['error'] = "Erreur lors de la suppression : " . $e->getMessage();
+    header("Location: " . BASE_URL . "/pages/EspaceAdministrateur.php");
     exit;
 }

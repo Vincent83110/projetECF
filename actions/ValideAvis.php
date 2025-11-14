@@ -1,4 +1,7 @@
 <?php
+// Démarrage de session pour gestion des erreurs
+session_start();
+
 if (file_exists(__DIR__ . '/../includes/ConfigLocal.php')) {
     require_once __DIR__ . '/../includes/ConfigLocal.php'; // environnement local
 } else {
@@ -9,11 +12,15 @@ include __DIR__ . '/../includes/Csrf.php';
 include __DIR__ . '/../includes/Auth.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    die("Méthode non autorisée.");
+    $_SESSION['error'] = "Méthode non autorisée.";
+    header("Location: " . BASE_URL . "/pages/AvisEmployesTotal.php");
+    exit;
 }
 
 if (!isset($_POST['csrf_token']) || !csrf_check($_POST['csrf_token'])) {
-    die("Erreur CSRF : action non autorisée !");
+    $_SESSION['error'] = "Erreur de sécurité CSRF.";
+    header("Location: " . BASE_URL . "/pages/AvisEmployesTotal.php");
+    exit;
 }
 
 try {
@@ -110,5 +117,7 @@ if ($trajetData) {
     exit;
 
 } catch (PDOException $e) {
-    die("Erreur de connexion à la base de données : " . $e->getMessage());
+    $_SESSION['error'] = "Erreur de connexion à la base de données : " . $e->getMessage();
+    header("Location: " . BASE_URL . "/pages/AvisEmployesTotal.php");
+    exit;
 }

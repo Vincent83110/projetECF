@@ -8,15 +8,28 @@ if (file_exists(__DIR__ . '/../includes/ConfigLocal.php')) {
 }
 include __DIR__ . '/../includes/Csrf.php';
 
+// Démarrage de session pour gestion des erreurs
+session_start();
+
 // Vérification rôle utilisateur
 if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'utilisateur' || 
     !in_array($_SESSION['user']['statut'], ['chauffeur', 'passager_chauffeur'])) {
-    die("Accès interdit");
+    $_SESSION['error'] = "Accès interdit.";
+    header("Location: " . BASE_URL . "/pages/ConnexionUtilisateur.php");
+    exit;
 }
 
 // Vérification POST + CSRF
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') die("Méthode non autorisée.");
-if (!isset($_POST['csrf_token']) || !csrf_check($_POST['csrf_token'])) die("Erreur CSRF");
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    $_SESSION['error'] = "Méthode non autorisée.";
+    header("Location: " . BASE_URL . "/pages/TrajetIndividuel.php");
+    exit;
+}
+if (!isset($_POST['csrf_token']) || !csrf_check($_POST['csrf_token'])) {
+    $_SESSION['error'] = "Erreur de sécurité CSRF.";
+    header("Location: " . BASE_URL . "/pages/TrajetIndividuel.php");
+    exit;
+}
 
 // Connexion base
 $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $usernamePgadmin, $passwordPgadmin);
@@ -55,7 +68,11 @@ try {
     $notification_id = $_POST['notification_id'] ?? null;
     $action = $_POST['action'] ?? null;
 
-    if (!$reservation_id || !$action) die("Données manquantes.");
+    if (!$reservation_id || !$action) {
+        $_SESSION['error'] = "Données manquantes.";
+        header("Location: " . BASE_URL . "/pages/TrajetIndividuel.php");
+        exit;
+    }
 
     // Récupération infos réservation + trajet + passager + chauffeur
     $stmt = $pdo->prepare("
@@ -70,7 +87,11 @@ try {
     ");
     $stmt->execute([':reservation_id' => $reservation_id]);
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
-    if (!$data) die("Réservation introuvable.");
+    if (!$data) {
+        $_SESSION['error'] = "Réservation introuvable.";
+        header("Location: " . BASE_URL . "/pages/TrajetIndividuel.php");
+        exit;
+    }
 
     $pdo->beginTransaction();
 
@@ -118,5 +139,7 @@ try {
 
 } catch (Exception $e) {
     if ($pdo->inTransaction()) $pdo->rollBack();
-    die("Erreur : " . $e->getMessage());
+    $_SESSION['error'] = "Erreur lors du traitement de la demande : " . $e->getMessage();
+    header("Location: " . BASE_URL . "/pages/TrajetIndividuel.php");
+    exit;
 }

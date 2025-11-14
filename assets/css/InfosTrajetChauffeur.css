@@ -211,6 +211,10 @@ flex-direction: row;
   margin: 10%;
 }
 
+.imageIcon{
+  color: black;
+} 
+
 .removeTrajet{
   background-color: red; 
   color: white;
@@ -379,7 +383,8 @@ flex-direction: row;
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: #374957;
+    color: black;
+    background-color: #f4f4f4;
     font-size: 20px;
     font-weight: 500;
     gap: 5px;

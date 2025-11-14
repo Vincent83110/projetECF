@@ -85,13 +85,6 @@ document.querySelector('.open-popup').addEventListener('click', () => {
   document.getElementById('popupForm').style.display = 'block';
 });
 
-const closeBtn = document.getElementById('close-popup');
-if (closeBtn) {
-  closeBtn.addEventListener('click', () => {
-    document.getElementById('popupForm').style.display = 'none';
-  });
-}
-
 const cancelBtn = document.getElementById('cancel-popup');
 if (cancelBtn) {
   cancelBtn.addEventListener('click', () => {
@@ -128,18 +121,17 @@ document.getElementById("add-trajet-btn").addEventListener("click", (e) => {
 
   let optionsVehicules = '<option value="">-- Choisir un véhicule --</option>';
 
-if (vehiculesDisponibles.length > 0) {
-  vehiculesDisponibles.forEach(v => {
-    optionsVehicules += `
-      <option value="${v.id}">
-        ${v.marque} ${v.modele}
-      </option>
-    `;
-  });
-} else {
-  optionsVehicules += '<option value="">Aucun véhicule disponible</option>';
-}
-
+  if (vehiculesDisponibles.length > 0) {
+    vehiculesDisponibles.forEach(v => {
+      optionsVehicules += `
+        <option value="${v.id}">
+          ${v.marque} ${v.modele}
+        </option>
+      `;
+    });
+  } else {
+    optionsVehicules += '<option value="">Aucun véhicule disponible</option>';
+  }
 
   vehiculeForm.innerHTML = `
    <div class="back">
@@ -194,8 +186,8 @@ if (vehiculesDisponibles.length > 0) {
       <div class="divLablel7-1">
         <label class="textLabel">Véhicule</label>
         <select name="trajets[${index}][id_vehicule]" class="Cars" required>
-    ${optionsVehicules}
-  </select>
+          ${optionsVehicules}
+        </select>
       </div>
     </div>
     <div class="div4">
@@ -244,7 +236,21 @@ document.addEventListener("click", (event) => {
     }
 });
 
-// Confirmation de soumission du formulaire
+// Permettre l'ajout de préférence avec la touche Entrée
+document.getElementById("new-preference-input").addEventListener("keypress", function(e) {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        document.querySelector(".ajout-preference-perso").click();
+    }
+});
+
+// Soumission directe du formulaire 
+// Les préférences sont maintenant gérées directement dans AjoutTrajet.php
 document.getElementById("confirmSubmit").addEventListener("click", () => {
-  document.getElementById("infos-chauffeur").submit();
+    document.getElementById("infos-chauffeur").submit();
+});
+
+// Initialisation au chargement de la page
+document.addEventListener('DOMContentLoaded', function() {
+    updateCreditDisplay();
 });

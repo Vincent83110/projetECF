@@ -8,9 +8,20 @@ if (file_exists(__DIR__ . '/../includes/ConfigLocal.php')) {
 include __DIR__ . '/../includes/Csrf.php';
 include __DIR__ . '/../includes/Auth.php';
 
+// Démarrage de session pour gestion des erreurs
+session_start();
+
 // Vérification POST
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') die("Méthode non autorisée.");
-if (!isset($_POST['csrf_token']) || !csrf_check($_POST['csrf_token'])) die("Erreur CSRF");
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    $_SESSION['error'] = "Méthode non autorisée.";
+    header("Location: " . BASE_URL . "/pages/ConnexionUtilisateur.php");
+    exit;
+}
+if (!isset($_POST['csrf_token']) || !csrf_check($_POST['csrf_token'])) {
+    $_SESSION['error'] = "Erreur de sécurité CSRF.";
+    header("Location: " . BASE_URL . "/pages/ConnexionUtilisateur.php");
+    exit;
+}
 
 // Connexion à la base
 $pdo = new PDO("pgsql:host=$host;dbname=$dbname", $usernamePgadmin, $passwordPgadmin);
@@ -46,6 +57,7 @@ function sendBrevoMail($toEmail, $toName, $subject, $htmlContent, $textContent) 
 
 try {
     if (!$estConnecte || !isset($_SESSION['user'])) {
+        $_SESSION['error'] = "Vous devez être connecté pour effectuer cette action.";
         header("Location: " . BASE_URL . "/pages/ConnexionUtilisateur.php");
         exit;
     }
@@ -54,7 +66,11 @@ try {
     $trajet_id = $_POST['trajet_id'] ?? null;
     $places_demandees = filter_input(INPUT_POST, 'nombre_places', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]) ?? 1;
 
-    if (!$trajet_id) die("Aucun trajet spécifié.");
+    if (!$trajet_id) {
+        $_SESSION['error'] = "Aucun trajet spécifié.";
+        header("Location: " . BASE_URL . "/pages/ConnexionUtilisateur.php");
+        exit;
+    }
 
     $pdo->beginTransaction();
 
@@ -62,22 +78,42 @@ try {
     $utilisateur = $pdo->prepare("SELECT credits FROM utilisateurs WHERE id = ?");
     $utilisateur->execute([$user_id]);
     $utilisateur = $utilisateur->fetch(PDO::FETCH_ASSOC);
-    if (!$utilisateur) die("Utilisateur non trouvé.");
+    if (!$utilisateur) {
+        $_SESSION['error'] = "Utilisateur non trouvé.";
+        header("Location: " . BASE_URL . "/pages/ConnexionUtilisateur.php");
+        exit;
+    }
 
     // Récupération infos trajet
     $trajet = $pdo->prepare("SELECT nombre_place, prix, id_utilisateur, numero_trajet FROM infos_trajet WHERE id = ?");
     $trajet->execute([$trajet_id]);
     $trajet = $trajet->fetch(PDO::FETCH_ASSOC);
-    if (!$trajet) die("Trajet non trouvé.");
+    if (!$trajet) {
+        $_SESSION['error'] = "Trajet non trouvé.";
+        header("Location: " . BASE_URL . "/pages/ConnexionUtilisateur.php");
+        exit;
+    }
 
-    if ($places_demandees > $trajet['nombre_place']) die("Nombre de places demandé trop élevé.");
+    if ($places_demandees > $trajet['nombre_place']) {
+        $_SESSION['error'] = "Nombre de places demandé trop élevé.";
+        header("Location: " . BASE_URL . "/pages/ConnexionUtilisateur.php");
+        exit;
+    }
     $prix_total = $trajet['prix'] * $places_demandees;
-    if ($utilisateur['credits'] < $prix_total) die("Crédits insuffisants.");
+    if ($utilisateur['credits'] < $prix_total) {
+        $_SESSION['error'] = "Crédits insuffisants.";
+        header("Location: " . BASE_URL . "/pages/ConnexionUtilisateur.php");
+        exit;
+    }
 
     // Vérification réservation existante
     $stmtCheck = $pdo->prepare("SELECT * FROM reservation WHERE trajet_id = ? AND user_id = ?");
     $stmtCheck->execute([$trajet_id, $user_id]);
-    if ($stmtCheck->fetch()) die("Vous avez déjà réservé ce trajet.");
+    if ($stmtCheck->fetch()) {
+        $_SESSION['error'] = "Vous avez déjà réservé ce trajet.";
+        header("Location: " . BASE_URL . "/pages/ConnexionUtilisateur.php");
+        exit;
+    }
 
     // Création réservation
     $stmtRes = $pdo->prepare("INSERT INTO reservation (user_id, trajet_id, statut, nombre_places) VALUES (?, ?, 'en_attente', ?) RETURNING id");
@@ -116,5 +152,7 @@ try {
 
 } catch (Exception $e) {
     if ($pdo->inTransaction()) $pdo->rollBack();
-    die("Erreur : " . $e->getMessage());
+    $_SESSION['error'] = "Erreur lors de la réservation : " . $e->getMessage();
+    header("Location: " . BASE_URL . "/pages/ConnexionUtilisateur.php");
+    exit;
 }
